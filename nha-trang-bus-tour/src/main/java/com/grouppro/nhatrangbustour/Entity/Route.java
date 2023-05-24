@@ -31,15 +31,13 @@ public class Route implements Serializable {
     private String RouteName;
     @Column(name = "ParentRouteID", updatable = false)
     private Long ParentRouteID;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonManagedReference
-    @JoinColumn(name = "StationID")
-    private Long EndStationID;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonManagedReference
-    @JoinColumn(name = "StationID")
-    private Long StartStaionID;
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
     private List<StationRoute> stationRouteList;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JsonBackReference
+    private List<TicketType> TickeTypeList;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JsonBackReference
+    private List<Trip> TripList;
 }

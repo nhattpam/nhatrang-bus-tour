@@ -15,19 +15,28 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "Driver")
-@Table(name = "tblDriver")
-public class Driver implements Serializable {
+@Entity(name = "Service")
+@Table(name = "tblService")
+public class Service implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "DriverID", updatable = false)
-    private Long DriverID;
-    @Column(name = "DriverPhone", nullable = false, length = 20)
-    private String DriverPhone;
+    @Column(name = "ServiceID", updatable = false)
+    private Long ServiceID;
     @Nationalized
-    @Column(name = "DriverName",nullable = false)
-    private String DriverName;
+    @Column(
+            name = "ServiceNumber",
+            nullable = false,
+            length = 100
+    )
+    private String ServiceNumber;
+    @Nationalized
+    @Column(
+            name = "ServiceName",
+            nullable = false,
+            length = 100
+    )
+    private String ServiceName;
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
-    private List<Trip> TripList;
+    private List<Ticket> TicketList;
 }

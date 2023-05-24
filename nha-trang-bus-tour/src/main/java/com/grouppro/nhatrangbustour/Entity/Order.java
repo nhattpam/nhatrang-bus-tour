@@ -7,33 +7,36 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Nationalized;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "PriceFrame")
-@Table(name = "tblPriceFrame")
-public class PriceFrame implements Serializable {
+@Entity(name = "Order")
+@Table(name = "tblOrder")
+public class Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "PriceFrameID", updatable = false)
-    private Long PriceFrameID;
-    @Nationalized
-    @Column(name = "PriceFrameName", nullable = false)
-    private String PriceFrameName;
+    @Column(name = "OrderID", updatable = false)
+    private Long OrderID;
+    @Column(name = "OrderDate", nullable = false)
+    private LocalDate OrderDate ;
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonManagedReference
-    @JoinColumn(name = "RouteID")
-    private Route RouteID;
+    @JoinColumn(name = "UserID")
+    private Long UserID;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonManagedReference
+    @JoinColumn(name = "PaymentID")
+    private Long PaymentID;
+
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
-    private List<PriceFrameTicket> PriceFrameList;
-    @OneToMany(fetch = FetchType.LAZY)
-    @JsonBackReference
-    private List<Trip> TripList;
+    private List<Ticket> TicketList;
+
 }
