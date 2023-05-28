@@ -27,9 +27,9 @@ public class StationRoute implements Serializable {
     @ManyToOne
     @JsonManagedReference
     @JoinColumn(name = "StationID")
-    private Long StationID;
+    private Station Station;
     @ManyToOne
     @JsonManagedReference
     @JoinColumn(name = "RouteID")
-    private Long RouteID;
+    private Route Route;
 }

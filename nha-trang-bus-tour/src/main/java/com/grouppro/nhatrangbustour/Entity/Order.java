@@ -29,11 +29,11 @@ public class Order implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonManagedReference
     @JoinColumn(name = "UserID")
-    private Long UserID;
+    private User User;
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonManagedReference
     @JoinColumn(name = "PaymentID")
-    private Long PaymentID;
+    private Payment Payment;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference

@@ -40,4 +40,7 @@ public class Route implements Serializable {
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Trip> TripList;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JsonBackReference
+    private List<PriceFrame> PriceFrameList;
 }

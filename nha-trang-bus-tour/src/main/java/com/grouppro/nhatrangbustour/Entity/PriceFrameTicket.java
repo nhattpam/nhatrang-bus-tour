@@ -25,9 +25,9 @@ public class PriceFrameTicket implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonManagedReference
     @JoinColumn(name = "PriceFrameID")
-    private PriceFrame PriceFrameID;
+    private PriceFrame PriceFrame;
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonManagedReference
     @JoinColumn(name = "TicketTypeID")
-    private TicketType TicketTypeID;
+    private TicketType TicketType;
 }

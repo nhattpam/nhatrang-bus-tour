@@ -27,7 +27,7 @@ public class TicketType implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonManagedReference
     @JoinColumn(name = "RouteID")
-    private Route RouteID;
+    private Route Route;
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Ticket> TicketList;

@@ -1,5 +1,6 @@
 package com.grouppro.nhatrangbustour.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,6 +12,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Builder
@@ -30,17 +32,20 @@ public class Trip implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonManagedReference
     @JoinColumn(name = "RouteID")
-    private Long RouteID;
+    private Route Route;
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonManagedReference
     @JoinColumn(name = "BusID")
-    private Long BusID;
+    private Bus Bus;
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonManagedReference
-    @JoinColumn(name = "TripID")
-    private Long DriverID;
+    @JoinColumn(name = "DriverID")
+    private Driver Driver;
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonManagedReference
     @JoinColumn(name = "PriceFrameID")
-    private Long PriceFrameID;
+    private PriceFrame PriceFrame;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JsonBackReference
+    private List<Ticket> TicketList;
 }
