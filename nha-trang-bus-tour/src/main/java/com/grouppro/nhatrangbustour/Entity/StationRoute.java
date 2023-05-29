@@ -15,7 +15,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "StationRoute")
-@Table(name = "tblStationRoute")
+@Table(name = "StationRoute")
 public class StationRoute implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

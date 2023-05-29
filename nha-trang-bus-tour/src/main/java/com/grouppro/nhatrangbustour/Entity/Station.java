@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "Station")
-@Table(name = "tblStation")
+@Table(name = "Station")
 public class Station implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,6 +40,6 @@ public class Station implements Serializable {
     private String StationLocation;
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
-    private List<StationRoute> stationRouteList;
+    private List<StationRoute> stationRoute;
 
 }
