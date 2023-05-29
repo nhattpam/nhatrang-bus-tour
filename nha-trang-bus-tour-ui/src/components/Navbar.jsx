@@ -1,8 +1,9 @@
 import React from 'react'
+import admin from './img/admin.png'
 
 const Navbar = () => {
   return (
-    <div>Navbar</div>
+    <img src={admin} alt="Logo" />
   )
 }
 
