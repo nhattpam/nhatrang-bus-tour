@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "User")
-@Table(name = "tblUser")
+@Table(name = "User")
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,6 +45,6 @@ public class User implements Serializable {
     private String UserPhone;
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
-    private List<Order> OrderList;
+    private List<Order> Order;
 
 }

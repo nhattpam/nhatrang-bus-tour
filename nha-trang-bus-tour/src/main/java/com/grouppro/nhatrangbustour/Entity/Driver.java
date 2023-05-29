@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "Driver")
-@Table(name = "tblDriver")
+@Table(name = "Driver")
 public class Driver implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,5 +29,5 @@ public class Driver implements Serializable {
     private String DriverName;
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
-    private List<Trip> TripList;
+    private List<Trip> Trip;
 }

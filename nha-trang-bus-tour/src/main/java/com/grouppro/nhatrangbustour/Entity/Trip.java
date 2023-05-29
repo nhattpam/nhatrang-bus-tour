@@ -19,7 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "Trip")
-@Table(name = "tblTrip")
+@Table(name = "Trip")
 public class Trip implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,5 +47,5 @@ public class Trip implements Serializable {
     private PriceFrame PriceFrame;
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
-    private List<Ticket> TicketList;
+    private List<Ticket> Ticket;
 }

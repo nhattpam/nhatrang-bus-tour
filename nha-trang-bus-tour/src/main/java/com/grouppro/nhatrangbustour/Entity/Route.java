@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "Route")
-@Table(name = "tblRoute")
+@Table(name = "Route")
 public class Route implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,14 +33,14 @@ public class Route implements Serializable {
     private Long ParentRouteID;
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
-    private List<StationRoute> stationRouteList;
+    private List<StationRoute> stationRoute;
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
-    private List<TicketType> TickeTypeList;
+    private List<TicketType> TickeType;
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
-    private List<Trip> TripList;
+    private List<Trip> Trip;
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
-    private List<PriceFrame> PriceFrameList;
+    private List<PriceFrame> PriceFrame;
 }
