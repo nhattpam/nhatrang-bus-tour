@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "Service")
-@Table(name = "tblService")
+@Table(name = "Service")
 public class Service implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,5 +38,5 @@ public class Service implements Serializable {
     private String ServiceName;
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
-    private List<Ticket> TicketList;
+    private List<Ticket> Ticket;
 }
