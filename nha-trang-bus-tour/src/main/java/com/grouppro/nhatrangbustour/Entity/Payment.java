@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "Payment")
-@Table(name = "tblPayment")
+@Table(name = "Payment")
 public class Payment implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,5 +30,5 @@ public class Payment implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
-    private List<Order> OrderList;
+    private List<Order> Order;
 }

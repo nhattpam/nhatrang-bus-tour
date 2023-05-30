@@ -14,7 +14,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "PriceFrameTicket")
-@Table(name = "tblPriceFrameTicket")
+@Table(name = "PriceFrameTicket")
 public class PriceFrameTicket implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

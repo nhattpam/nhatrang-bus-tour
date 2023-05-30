@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "TicketType")
-@Table(name = "tblTicketType")
+@Table(name = "TicketType")
 public class TicketType implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,8 +30,8 @@ public class TicketType implements Serializable {
     private Route Route;
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
-    private List<Ticket> TicketList;
+    private List<Ticket> Ticket;
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
-    private List<PriceFrameTicket> PriceFrameTickeList;
+    private List<PriceFrameTicket> PriceFrameTicket;
 }
