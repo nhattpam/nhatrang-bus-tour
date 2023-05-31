@@ -4,7 +4,7 @@ const Footer = () => {
     return (
         <div>
             <footer class="main-footer">
-                <strong>Nha Trang<a href="http://adminlte.io">AdminLTE.io</a>.</strong>
+                <strong>Nha Trang</strong>
                 
             </footer>
 
