@@ -7,35 +7,40 @@ import SideBar from './components/SideBar';
 import ListUsers from './components/users/ListUsers';
 import ListOrders from './components/orders/ListOrders';
 import ListBuses from './components/buses/ListBuses';
+import ListTickets from './components/tickets/ListTickets';
+import ListFeedbacks from './components/feedbacks/ListFeedbacks';
+import ListDrivers from './components/drivers/ListDrivers';
 
 function App() {
   return (
 
     <>
       <div id="content">
-                {/* Page Wrapper */}
+        {/* Page Wrapper */}
 
-                <div id="wrapper">
-                    <SideBar />
-                    {/* Content Wrapper */}
+        <div id="wrapper">
+          <SideBar />
+          {/* Content Wrapper */}
 
-                    <div id="content-wrapper" class="d-flex flex-column">
-                        {/* Main Content */}
+          <div id="content-wrapper" class="d-flex flex-column">
+            {/* Main Content */}
 
-                        <div id="content">
-                            <Header />
-                            
-                        </div>
-                    </div>
-                </div>
-
+            <div id="content">
+              <Header />
             </div>
+          </div>
+        </div>
+
+      </div>
 
       <Routes>
         <Route path='/' element={<Home />}></Route>
         <Route path='/list_users' element={<ListUsers />}></Route>
         <Route path='/list_orders' element={<ListOrders />}></Route>
-        <Route path='/list_buses' element={<ListUsers />}></Route>
+        <Route path='/list_buses' element={<ListBuses />}></Route>
+        <Route path='/list_tickets' element={<ListTickets />}></Route>
+        <Route path='/list_drivers' element={<ListDrivers />}></Route>
+        <Route path='/list_feedbacks' element={<ListFeedbacks />}></Route>
 
       </Routes>
 
@@ -43,6 +48,6 @@ function App() {
 
 
   );
-}
+};
 
 export default App;

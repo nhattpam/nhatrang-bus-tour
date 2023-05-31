@@ -3,7 +3,7 @@ import App from '../../App'
 const ListUsers = () => {
   return (
     <>
-      
+      USER
     </>
   )
 }

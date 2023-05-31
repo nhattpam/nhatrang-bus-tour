@@ -46,12 +46,59 @@ const SideBar = () => {
                     </a>
                     <div id="collapseUtilities" className="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                         <div className="bg-white py-2 collapse-inner rounded">
-                        <Link className="collapse-item" to="/list_orders">List Orders</Link>
-                          
+                            <Link className="collapse-item" to="/list_orders">List Orders</Link>
+
+                        </div>
+                    </div>
+
+                </li>
+                {/* Nav Item - Pages Collapse Menu */}
+                <li className="nav-item">
+                    <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+                        <i className="fas fa-fw fa-folder" />
+                        <span>Ticket Management</span>
+                    </a>
+                    <div id="collapsePages" className="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                        <div className="bg-white py-2 collapse-inner rounded">
+                            <Link className="collapse-item" to="/list_tickets">List Tickets</Link>
                         </div>
                     </div>
                 </li>
-                
+                {/* Nav Item - Charts */}
+                <li className="nav-item">
+                    <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTickets" aria-expanded="true" aria-controls="collapsePages">
+                        <i className="fas fa-fw fa-folder" />
+                        <span>Bus Management</span>
+                    </a>
+                    <div id="collapseTickets" className="collapse" aria-labelledby="headingTickets" data-parent="#accordionSidebar">
+                        <div className="bg-white py-2 collapse-inner rounded">
+                            <Link className="collapse-item" to="/list_buses">List Buses</Link>
+                        </div>
+                    </div>
+                </li>
+                <li className="nav-item">
+                    <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFeedbacks" aria-expanded="true" aria-controls="collapsePages">
+                        <i className="fas fa-fw fa-folder" />
+                        <span>Feedback Management</span>
+                    </a>
+                    <div id="collapseFeedbacks" className="collapse" aria-labelledby="headingFeedback" data-parent="#accordionSidebar">
+                        <div className="bg-white py-2 collapse-inner rounded">
+                            <Link className="collapse-item" to="/list_feedbacks">List Feedbacks</Link>
+                        </div>
+                    </div>
+                </li>
+
+                <li className="nav-item">
+                    <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDrivers" aria-expanded="true" aria-controls="collapsePages">
+                        <i className="fas fa-fw fa-folder" />
+                        <span>Driver Management</span>
+                    </a>
+                    <div id="collapseDrivers" className="collapse" aria-labelledby="headingFeedback" data-parent="#accordionSidebar">
+                        <div className="bg-white py-2 collapse-inner rounded">
+                            <Link className="collapse-item" to="/list_drivers">List Drivers</Link>
+                        </div>
+                    </div>
+                </li>
 
 
             </ul>
