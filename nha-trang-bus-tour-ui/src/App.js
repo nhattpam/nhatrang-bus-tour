@@ -15,24 +15,6 @@ function App() {
   return (
 
     <>
-      <div id="content">
-        {/* Page Wrapper */}
-
-        <div id="wrapper">
-          <SideBar />
-          {/* Content Wrapper */}
-
-          <div id="content-wrapper" class="d-flex flex-column">
-            {/* Main Content */}
-
-            <div id="content">
-              <Header />
-            </div>
-          </div>
-        </div>
-
-      </div>
-
       <Routes>
         <Route path='/' element={<Home />}></Route>
         <Route path='/list_users' element={<ListUsers />}></Route>

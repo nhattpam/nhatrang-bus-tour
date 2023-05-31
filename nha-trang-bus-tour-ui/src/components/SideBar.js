@@ -29,7 +29,7 @@ const SideBar = () => {
                 {/* Nav Item - Pages Collapse Menu */}
                 <li className="nav-item">
                     <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                        <i className="fas fa-fw fa-cog" />
+                    <i className="fas fa-user"/>
                         <span>User Management</span>
                     </a>
                     <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -55,7 +55,7 @@ const SideBar = () => {
                 {/* Nav Item - Pages Collapse Menu */}
                 <li className="nav-item">
                     <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-                        <i className="fas fa-fw fa-folder" />
+                        <i className="fas fa-fw fa-folder" /><i class="fas fa-ticket"></i>
                         <span>Ticket Management</span>
                     </a>
                     <div id="collapsePages" className="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
