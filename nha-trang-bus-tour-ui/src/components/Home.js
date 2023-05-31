@@ -10,7 +10,7 @@ const Home = () => {
                     <div className="container-fluid">
                         <div className="row mb-2">
                             <div className="col-sm-6">
-                                <h1 className="m-0 text-dark">Dashboard</h1>
+                                <h1 className="m-0">Dashboard</h1>
                             </div>{/* /.col */}
                             <div className="col-sm-6">
                                 <ol className="breadcrumb float-sm-right">
@@ -125,14 +125,15 @@ const Home = () => {
                                     <div className="card-header">
                                         <h3 className="card-title">Direct Chat</h3>
                                         <div className="card-tools">
-                                            <span data-toggle="tooltip" title="3 New Messages" className="badge badge-primary">3</span>
+                                            <span title="3 New Messages" className="badge badge-primary">3</span>
                                             <button type="button" className="btn btn-tool" data-card-widget="collapse">
                                                 <i className="fas fa-minus" />
                                             </button>
-                                            <button type="button" className="btn btn-tool" data-toggle="tooltip" title="Contacts" data-widget="chat-pane-toggle">
+                                            <button type="button" className="btn btn-tool" title="Contacts" data-widget="chat-pane-toggle">
                                                 <i className="fas fa-comments" />
                                             </button>
-                                            <button type="button" className="btn btn-tool" data-card-widget="remove"><i className="fas fa-times" />
+                                            <button type="button" className="btn btn-tool" data-card-widget="remove">
+                                                <i className="fas fa-times" />
                                             </button>
                                         </div>
                                     </div>
@@ -207,7 +208,7 @@ const Home = () => {
                                             <ul className="contacts-list">
                                                 <li>
                                                     <a href="#">
-                                                        <img className="contacts-list-img" src="dist/img/user1-128x128.jpg" />
+                                                        <img className="contacts-list-img" src="dist/img/user1-128x128.jpg" alt="User Avatar" />
                                                         <div className="contacts-list-info">
                                                             <span className="contacts-list-name">
                                                                 Count Dracula
@@ -221,7 +222,7 @@ const Home = () => {
                                                 {/* End Contact Item */}
                                                 <li>
                                                     <a href="#">
-                                                        <img className="contacts-list-img" src="dist/img/user7-128x128.jpg" />
+                                                        <img className="contacts-list-img" src="dist/img/user7-128x128.jpg" alt="User Avatar" />
                                                         <div className="contacts-list-info">
                                                             <span className="contacts-list-name">
                                                                 Sarah Doe
@@ -235,7 +236,7 @@ const Home = () => {
                                                 {/* End Contact Item */}
                                                 <li>
                                                     <a href="#">
-                                                        <img className="contacts-list-img" src="dist/img/user3-128x128.jpg" />
+                                                        <img className="contacts-list-img" src="dist/img/user3-128x128.jpg" alt="User Avatar" />
                                                         <div className="contacts-list-info">
                                                             <span className="contacts-list-name">
                                                                 Nadia Jolie
@@ -249,7 +250,7 @@ const Home = () => {
                                                 {/* End Contact Item */}
                                                 <li>
                                                     <a href="#">
-                                                        <img className="contacts-list-img" src="dist/img/user5-128x128.jpg" />
+                                                        <img className="contacts-list-img" src="dist/img/user5-128x128.jpg" alt="User Avatar" />
                                                         <div className="contacts-list-info">
                                                             <span className="contacts-list-name">
                                                                 Nora S. Vans
@@ -263,7 +264,7 @@ const Home = () => {
                                                 {/* End Contact Item */}
                                                 <li>
                                                     <a href="#">
-                                                        <img className="contacts-list-img" src="dist/img/user6-128x128.jpg" />
+                                                        <img className="contacts-list-img" src="dist/img/user6-128x128.jpg" alt="User Avatar" />
                                                         <div className="contacts-list-info">
                                                             <span className="contacts-list-name">
                                                                 John K.
@@ -277,7 +278,7 @@ const Home = () => {
                                                 {/* End Contact Item */}
                                                 <li>
                                                     <a href="#">
-                                                        <img className="contacts-list-img" src="dist/img/user8-128x128.jpg" />
+                                                        <img className="contacts-list-img" src="dist/img/user8-128x128.jpg" alt="User Avatar" />
                                                         <div className="contacts-list-info">
                                                             <span className="contacts-list-name">
                                                                 Kenneth M.
@@ -433,7 +434,7 @@ const Home = () => {
                                     </div>
                                     {/* /.card-body */}
                                     <div className="card-footer clearfix">
-                                        <button type="button" className="btn btn-info float-right"><i className="fas fa-plus" /> Add item</button>
+                                        <button type="button" className="btn btn-primary float-right"><i className="fas fa-plus" /> Add item</button>
                                     </div>
                                 </div>
                                 {/* /.card */}
@@ -450,10 +451,10 @@ const Home = () => {
                                         </h3>
                                         {/* card tools */}
                                         <div className="card-tools">
-                                            <button type="button" className="btn btn-primary btn-sm daterange" data-toggle="tooltip" title="Date range">
+                                            <button type="button" className="btn btn-primary btn-sm daterange" title="Date range">
                                                 <i className="far fa-calendar-alt" />
                                             </button>
-                                            <button type="button" className="btn btn-primary btn-sm" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                            <button type="button" className="btn btn-primary btn-sm" data-card-widget="collapse" title="Collapse">
                                                 <i className="fas fa-minus" />
                                             </button>
                                         </div>
@@ -539,9 +540,10 @@ const Home = () => {
                                         <div className="card-tools">
                                             {/* button with a dropdown */}
                                             <div className="btn-group">
-                                                <button type="button" className="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown">
-                                                    <i className="fas fa-bars" /></button>
-                                                <div className="dropdown-menu float-right" role="menu">
+                                                <button type="button" className="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" data-offset={-52}>
+                                                    <i className="fas fa-bars" />
+                                                </button>
+                                                <div className="dropdown-menu" role="menu">
                                                     <a href="#" className="dropdown-item">Add new event</a>
                                                     <a href="#" className="dropdown-item">Clear events</a>
                                                     <div className="dropdown-divider" />
@@ -574,8 +576,8 @@ const Home = () => {
                 {/* /.content */}
             </div>
             {/* /.content-wrapper */}
-
         </div>
+
     )
 }
 

@@ -4,25 +4,27 @@ import Footer from './components/Footer';
 import Home from './components/Home';
 import { Route, Routes } from 'react-router-dom';
 import SideBar from './components/SideBar';
+import ListUsers from './components/users/ListUsers';
+import ListOrders from './components/orders/ListOrders';
+import ListBuses from './components/buses/ListBuses';
 
 function App() {
   return (
-    // <>
-    //   <Routes>
-    //     <Route path='/' element={<Main/>}></Route>
-    //     <Route path='/admin' element={<Navbar />}></Route>
-    //   </Routes>
-    // </>
+
     <>
-     <Header />
-     <Home />
-     <SideBar />
-     <Footer />
-     
+      <Header />
+      <SideBar />
+      <Routes>
+        <Route path='/' element={<Home />}></Route>
+        <Route path='/users/list_users' element={<ListUsers/>}></Route>
+        <Route path='/orders/list_orders' element={<ListOrders/>}></Route>
+        <Route path='/buses/list_buses' element={<ListUsers/>}></Route>
+
+      </Routes>
 
     </>
 
-    
+
   );
 }
 
