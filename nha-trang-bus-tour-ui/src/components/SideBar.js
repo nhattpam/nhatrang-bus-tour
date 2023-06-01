@@ -41,7 +41,7 @@ const SideBar = () => {
                 {/* Nav Item - Utilities Collapse Menu */}
                 <li className="nav-item">
                     <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-                        <i className="fas fa-fw fa-wrench" />
+                        <i className="fas fa-box"/>
                         <span>Order Management</span>
                     </a>
                     <div id="collapseUtilities" className="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
@@ -55,7 +55,7 @@ const SideBar = () => {
                 {/* Nav Item - Pages Collapse Menu */}
                 <li className="nav-item">
                     <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-                        <i className="fas fa-fw fa-folder" /><i class="fas fa-ticket"></i>
+                        <i className="fas fa-ticket-alt" /><i class="fas fa-ticket"></i>
                         <span>Ticket Management</span>
                     </a>
                     <div id="collapsePages" className="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
@@ -67,7 +67,7 @@ const SideBar = () => {
                 {/* Nav Item - Charts */}
                 <li className="nav-item">
                     <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTickets" aria-expanded="true" aria-controls="collapsePages">
-                        <i className="fas fa-fw fa-folder" />
+                        <i className="fas fa-bus" />
                         <span>Bus Management</span>
                     </a>
                     <div id="collapseTickets" className="collapse" aria-labelledby="headingTickets" data-parent="#accordionSidebar">
@@ -78,7 +78,7 @@ const SideBar = () => {
                 </li>
                 <li className="nav-item">
                     <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFeedbacks" aria-expanded="true" aria-controls="collapsePages">
-                        <i className="fas fa-fw fa-folder" />
+                        <i className="fas fa-comment-alt" />
                         <span>Feedback Management</span>
                     </a>
                     <div id="collapseFeedbacks" className="collapse" aria-labelledby="headingFeedback" data-parent="#accordionSidebar">
@@ -90,7 +90,7 @@ const SideBar = () => {
 
                 <li className="nav-item">
                     <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDrivers" aria-expanded="true" aria-controls="collapsePages">
-                        <i className="fas fa-fw fa-folder" />
+                        <i className="fas fa-male" />
                         <span>Driver Management</span>
                     </a>
                     <div id="collapseDrivers" className="collapse" aria-labelledby="headingFeedback" data-parent="#accordionSidebar">
