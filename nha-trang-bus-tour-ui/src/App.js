@@ -8,8 +8,9 @@ import ListUsers from './components/users/ListUsers';
 import ListOrders from './components/orders/ListOrders';
 import ListBuses from './components/buses/ListBuses';
 import ListTickets from './components/tickets/ListTickets';
-import ListFeedbacks from './components/feedbacks/ListFeedbacks';
 import ListDrivers from './components/drivers/ListDrivers';
+import ListTrips from './components/trips/ListTrips';
+import ListStation from './components/stations/ListStation';
 
 function App() {
   return (
@@ -22,7 +23,8 @@ function App() {
         <Route path='/list_buses' element={<ListBuses />}></Route>
         <Route path='/list_tickets' element={<ListTickets />}></Route>
         <Route path='/list_drivers' element={<ListDrivers />}></Route>
-        <Route path='/list_feedbacks' element={<ListFeedbacks />}></Route>
+        <Route path='/list_trips' element={<ListTrips />}></Route>
+        <Route path='/list_stations' element={<ListStation />}></Route>
 
       </Routes>
 

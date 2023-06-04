@@ -26,23 +26,11 @@ const SideBar = () => {
                 <div className="sidebar-heading">
                     Management
                 </div>
-                {/* Nav Item - Pages Collapse Menu */}
-                <li className="nav-item">
-                    <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                    <i className="fas fa-user"/>
-                        <span>User Management</span>
-                    </a>
-                    <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                        <div className="bg-white py-2 collapse-inner rounded">
-                            <Link className="collapse-item" to="/list_users">List Users</Link>
-                        </div>
-                    </div>
-                </li>
                 {/* Nav Item - Utilities Collapse Menu */}
                 <li className="nav-item">
                     <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
                         <i className="fas fa-box"/>
-                        <span>Order Management</span>
+                        <span>Order </span>
                     </a>
                     <div id="collapseUtilities" className="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                         <div className="bg-white py-2 collapse-inner rounded">
@@ -52,11 +40,13 @@ const SideBar = () => {
                     </div>
 
                 </li>
+                
+                
                 {/* Nav Item - Pages Collapse Menu */}
                 <li className="nav-item">
                     <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
                         <i className="fas fa-ticket-alt" /><i class="fas fa-ticket"></i>
-                        <span>Ticket Management</span>
+                        <span>Ticket </span>
                     </a>
                     <div id="collapsePages" className="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                         <div className="bg-white py-2 collapse-inner rounded">
@@ -64,11 +54,35 @@ const SideBar = () => {
                         </div>
                     </div>
                 </li>
+                <li className="nav-item">
+                    <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFeedbacks" aria-expanded="true" aria-controls="collapsePages">
+                        <i className="fas fa-suitcase" />
+                        <span>Trip </span>
+                    </a>
+                    <div id="collapseFeedbacks" className="collapse" aria-labelledby="headingFeedback" data-parent="#accordionSidebar">
+                        <div className="bg-white py-2 collapse-inner rounded">
+                            <Link className="collapse-item" to="/list_trips">List Trips</Link>
+                        </div>
+                    </div>
+                </li>
+
+                <li className="nav-item">
+                    <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseStations" aria-expanded="true" aria-controls="collapsePages">
+                        <i className="fas fa-home" />
+                        <span>Station </span>
+                    </a>
+                    <div id="collapseStations" className="collapse" aria-labelledby="headingStation" data-parent="#accordionSidebar">
+                        <div className="bg-white py-2 collapse-inner rounded">
+                            <Link className="collapse-item" to="/list_stations">List Stations</Link>
+                        </div>
+                    </div>
+                </li>
+                
                 {/* Nav Item - Charts */}
                 <li className="nav-item">
                     <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTickets" aria-expanded="true" aria-controls="collapsePages">
                         <i className="fas fa-bus" />
-                        <span>Bus Management</span>
+                        <span>Bus </span>
                     </a>
                     <div id="collapseTickets" className="collapse" aria-labelledby="headingTickets" data-parent="#accordionSidebar">
                         <div className="bg-white py-2 collapse-inner rounded">
@@ -76,22 +90,12 @@ const SideBar = () => {
                         </div>
                     </div>
                 </li>
-                <li className="nav-item">
-                    <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFeedbacks" aria-expanded="true" aria-controls="collapsePages">
-                        <i className="fas fa-comment-alt" />
-                        <span>Feedback Management</span>
-                    </a>
-                    <div id="collapseFeedbacks" className="collapse" aria-labelledby="headingFeedback" data-parent="#accordionSidebar">
-                        <div className="bg-white py-2 collapse-inner rounded">
-                            <Link className="collapse-item" to="/list_feedbacks">List Feedbacks</Link>
-                        </div>
-                    </div>
-                </li>
+                
 
                 <li className="nav-item">
                     <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDrivers" aria-expanded="true" aria-controls="collapsePages">
                         <i className="fas fa-male" />
-                        <span>Driver Management</span>
+                        <span>Driver </span>
                     </a>
                     <div id="collapseDrivers" className="collapse" aria-labelledby="headingFeedback" data-parent="#accordionSidebar">
                         <div className="bg-white py-2 collapse-inner rounded">
@@ -99,10 +103,23 @@ const SideBar = () => {
                         </div>
                     </div>
                 </li>
+                {/* Nav Item - Pages Collapse Menu */}
+                <li className="nav-item">
+                    <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                    <i className="fas fa-user"/>
+                        <span>User </span>
+                    </a>
+                    <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div className="bg-white py-2 collapse-inner rounded">
+                            <Link className="collapse-item" to="/list_users">List Users</Link>
+                        </div>
+                    </div>
+                </li>
 
 
             </ul>
             {/* End of Sidebar */}
+            
 
 
         </>

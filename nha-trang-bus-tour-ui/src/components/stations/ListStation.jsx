@@ -1,8 +1,8 @@
 import React from 'react'
-import App from '../../App'
-import Header from "../Header";
-import SideBar from "../SideBar";
-const ListUsers = () => {
+import Header from '../Header'
+import SideBar from '../SideBar'
+
+const ListStation = () => {
   return (
     <>
     {/* Page Wrapper */}
@@ -20,7 +20,7 @@ const ListUsers = () => {
 
                     {/* Page Heading */}
 
-                    <h1 class="h3 mb-2 text-gray-800">List Users</h1>
+                    <h1 class="h3 mb-2 text-gray-800">List Stations</h1>
                     
 
                    {/* DataTales Example */}
@@ -31,24 +31,21 @@ const ListUsers = () => {
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>User Id</th>
-                                            <th>Email</th>
+                                            <th>Station Id</th>
+                                            <th>Location</th>
                                             <th>Name</th>
-                                            <th>Phone</th>
                                         </tr>
                                     </thead>
                                   
                                     <tbody>
                                         <tr>
                                             <td>Tiger Nixon</td>
-                                            <td>61</td>
                                             <td>2011/04/25</td>
                                             <td>$320,800</td>
                                         </tr>
                                         <tr>
                                             <td>Garrett Winters</td>
                                             <td>63</td>
-                                            <td>2011/07/25</td>
                                             <td>$170,750</td>
                                         </tr>
                                     </tbody>
@@ -68,4 +65,4 @@ const ListUsers = () => {
   )
 }
 
-export default ListUsers
+export default ListStation

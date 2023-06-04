@@ -1,8 +1,7 @@
 import React from 'react'
-import App from '../../App'
 import Header from "../Header";
 import SideBar from "../SideBar";
-const ListUsers = () => {
+const ListTrips = () => {
   return (
     <>
     {/* Page Wrapper */}
@@ -20,7 +19,7 @@ const ListUsers = () => {
 
                     {/* Page Heading */}
 
-                    <h1 class="h3 mb-2 text-gray-800">List Users</h1>
+                    <h1 class="h3 mb-2 text-gray-800">List Trips</h1>
                     
 
                    {/* DataTales Example */}
@@ -31,10 +30,13 @@ const ListUsers = () => {
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>User Id</th>
-                                            <th>Email</th>
-                                            <th>Name</th>
-                                            <th>Phone</th>
+                                            <th>Trip Id</th>
+                                            <th>Arrival Time</th>
+                                            <th>Departure Time</th>
+                                            <th>Bus</th>
+                                            <th>Driver</th>
+                                            <th>Price Frame</th>
+                                            <th>Route</th>
                                         </tr>
                                     </thead>
                                   
@@ -44,11 +46,17 @@ const ListUsers = () => {
                                             <td>61</td>
                                             <td>2011/04/25</td>
                                             <td>$320,800</td>
+                                            <td>2011/04/25</td>
+                                            <td>$320,800</td>
+                                            <td>$320,800</td>
                                         </tr>
                                         <tr>
                                             <td>Garrett Winters</td>
                                             <td>63</td>
                                             <td>2011/07/25</td>
+                                            <td>$170,750</td>
+                                            <td>$170,750</td>
+                                            <td>$170,750</td>
                                             <td>$170,750</td>
                                         </tr>
                                     </tbody>
@@ -68,4 +76,4 @@ const ListUsers = () => {
   )
 }
 
-export default ListUsers
+export default ListTrips
