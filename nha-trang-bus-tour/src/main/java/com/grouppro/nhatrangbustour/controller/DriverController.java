@@ -40,13 +40,19 @@ public class DriverController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("There is no driver");
         }
     }
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "When Driver created successfully!"),
+            @ApiResponse(responseCode = "400", description = "When Driver can't be created - Object is not valid!")
+    })
     @Operation(summary = "Create a new driver ")
     @PostMapping("/")
-    public ResponseEntity<?> addDriver(@RequestParam(defaultValue = "0") Integer input) {
-        if (input == 0) {
-            return ResponseEntity.ok("default value here:" + input);
+    public ResponseEntity<?> addDriver(@RequestParam("drivername")String name, @RequestParam("driverphone") String phone) {
+        Long id = driverService.saveDriver(name, phone);
+        if (id == null) {
+            return new ResponseEntity<>("Can't create Driver", HttpStatus.BAD_REQUEST);
         } else {
-            return ResponseEntity.ok("value:" + input);
+
+            return new ResponseEntity<>(id,HttpStatus.CREATED);
         }
     }
 }

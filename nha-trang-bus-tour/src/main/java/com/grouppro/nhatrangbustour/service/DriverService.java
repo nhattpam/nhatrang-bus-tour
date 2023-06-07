@@ -19,4 +19,16 @@ public class DriverService implements IDriverService {
     public List<Driver> getDrivers() {
         return driverRepostory.findAll();
     }
+
+    @Override
+    public Long saveDriver(String driverName, String driverphone) {
+        Driver driver = new Driver();
+        driver.setDriverName(driverName);
+        driver.setDriverPhone(driverphone);
+        driverRepostory.save(driver);
+        if(driver!=null){
+            return driver.getDriverId();
+        }
+        return null;
+    }
 }

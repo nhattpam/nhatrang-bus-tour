@@ -19,13 +19,13 @@ public class PriceFrameTicket implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PriceFrameTicketID", updatable = false)
-    private Long PriceFrameTicketID;
+    private Long priceFrameTicketId;
     @Column(name = "Price", nullable = false)
-    private Double Price;
+    private Double price;
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonManagedReference
     @JoinColumn(name = "PriceFrameID")
-    private PriceFrame PriceFrame;
+    private PriceFrame priceFrame;
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonManagedReference
     @JoinColumn(name = "TicketTypeID")

@@ -21,28 +21,28 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "UserID", updatable = false)
-    private Long UserID;
+    private Long userId;
     @Nationalized
     @Column(
             name = "UserName",
             nullable = false,
             length = 100
     )
-    private String UserName;
+    private String userName;
     @Nationalized
     @Column(
             name = "UserEmail",
             nullable = false,
             length = 100
     )
-    private String UserEmail;
+    private String userEmail;
     @Nationalized
     @Column(
             name = "UserPhone",
             nullable = false,
             length = 100
     )
-    private String UserPhone;
+    private String userPhone;
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Order> Order;

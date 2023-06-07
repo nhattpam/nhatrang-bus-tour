@@ -23,21 +23,21 @@ public class Station implements Serializable {
     @Column(name = "StationID",
             updatable = false
     )
-    private Long StationID;
+    private Long stationId;
     @Nationalized
     @Column(
             name = "StationName",
             nullable = false,
             length = 100
     )
-    private String StationName;
+    private String stationName;
     @Nationalized
     @Column(
             name = "StationLocation",
             nullable = false,
             length = 100
     )
-    private String StationLocation;
+    private String stationLocation;
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
     private List<StationRoute> stationRoute;

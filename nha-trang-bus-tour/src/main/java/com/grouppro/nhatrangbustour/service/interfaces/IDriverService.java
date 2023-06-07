@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface IDriverService {
     List<Driver> getDrivers();
+    Long saveDriver(String driverName, String driverphone);
 }

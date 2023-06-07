@@ -23,13 +23,13 @@ public class StationRoute implements Serializable {
             name = "StationRouteID",
             updatable = false
     )
-    private Long StationRouteID;
+    private Long stationRouteId;
     @ManyToOne
     @JsonManagedReference
     @JoinColumn(name = "StationID")
-    private Station Station;
+    private Station station;
     @ManyToOne
     @JsonManagedReference
     @JoinColumn(name = "RouteID")
-    private Route Route;
+    private Route route;
 }

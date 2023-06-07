@@ -27,7 +27,7 @@ public class BusService implements IBusService {
         bus.setSeat(seat);
         busRepostory.save(bus);
         if(bus!=null){
-            return bus.getBusID();
+            return bus.getBusId();
         }
         return null;
     }
