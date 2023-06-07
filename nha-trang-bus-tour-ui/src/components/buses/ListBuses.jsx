@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import App from '../../App'
 import Header from "../Header";
 import SideBar from "../SideBar";
 import busService from '../../services/bus.service';
-
 
 
 const ListBuses = () => {
@@ -12,9 +10,11 @@ const ListBuses = () => {
     useEffect(() => {
         busService.getAllBuses().then((res) => {
             console.log(res.data);
+            
             setBusList(res.data);
         }).catch((error) => {
             console.log(error);
+            console.log('lol');
         });
     }, []);
 
@@ -56,7 +56,7 @@ const ListBuses = () => {
                                                     
                                                     busList.map((e) => (
                                                         <tr>
-                                                            <td key={e.busID}>{e.busID}</td>
+                                                            <td key={e.busID}>{e.name}</td>
                                                             <td key={e.busNumber}>{e.busNumber}</td>
                                                             <td key={e.seat}>{e.seat}</td>
                                                         </tr>
