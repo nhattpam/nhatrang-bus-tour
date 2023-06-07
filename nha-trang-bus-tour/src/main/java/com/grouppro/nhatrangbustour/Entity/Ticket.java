@@ -20,47 +20,47 @@ public class Ticket implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "TicketID", updatable = false)
-    private Long TicketID;
+    private Long ticketId;
     @Nationalized
     @Column(
             name = "PassengerName",
             nullable = false,
             length = 100
     )
-    private String PassengerName;
+    private String passengerName;
     @Nationalized
     @Column(
             name = "PassengerPhone",
             nullable = false,
             length = 100
     )
-    private String PassengerPhone;
+    private String passengerPhone;
     @Nationalized
     @Column(
             name = "PassengerEmail",
             nullable = false,
             length = 100
     )
-    private String PassengerEmail;
+    private String passengerEmail;
     @Nationalized
     @Column(
             name = "Feedback",
             nullable = false,
             length = 100
     )
-    private String Feedback;
+    private String feedback;
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonManagedReference
     @JoinColumn(name = "TripID")
-    private Trip Trip;
+    private Trip trip;
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonManagedReference
     @JoinColumn(name = "OrderID")
-    private Order Order;
+    private Order order;
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonManagedReference
     @JoinColumn(name = "ServiceID")
-    private Service Service;
+    private Service service;
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonManagedReference
     @JoinColumn(name = "TicketTypeID")

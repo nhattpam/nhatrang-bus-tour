@@ -23,17 +23,17 @@ public class Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "OrderID", updatable = false)
-    private Long OrderID;
+    private Long orderId;
     @Column(name = "OrderDate", nullable = false)
-    private LocalDate OrderDate ;
+    private LocalDate orderDate ;
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonManagedReference
     @JoinColumn(name = "UserID")
-    private User User;
+    private User user;
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonManagedReference
     @JoinColumn(name = "PaymentID")
-    private Payment Payment;
+    private Payment payment;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference

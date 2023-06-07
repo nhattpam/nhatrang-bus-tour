@@ -21,21 +21,21 @@ public class Service implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ServiceID", updatable = false)
-    private Long ServiceID;
+    private Long serviceId;
     @Nationalized
     @Column(
             name = "ServiceNumber",
             nullable = false,
             length = 100
     )
-    private String ServiceNumber;
+    private String serviceNumber;
     @Nationalized
     @Column(
             name = "ServiceName",
             nullable = false,
             length = 100
     )
-    private String ServiceName;
+    private String serviceName;
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Ticket> Ticket;

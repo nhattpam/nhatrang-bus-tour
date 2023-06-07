@@ -21,12 +21,12 @@ public class Driver implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "DriverID", updatable = false)
-    private Long DriverID;
+    private Long driverId;
     @Column(name = "DriverPhone", nullable = false, length = 20)
-    private String DriverPhone;
+    private String driverPhone;
     @Nationalized
     @Column(name = "DriverName",nullable = false)
-    private String DriverName;
+    private String driverName;
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Trip> Trip;

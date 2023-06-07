@@ -22,14 +22,14 @@ public class PriceFrame implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PriceFrameID", updatable = false)
-    private Long PriceFrameID;
+    private Long priceFrameId;
     @Nationalized
     @Column(name = "PriceFrameName", nullable = false)
-    private String PriceFrameName;
+    private String priceFrameName;
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonManagedReference
     @JoinColumn(name = "RouteID")
-    private Route Route;
+    private Route route;
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
     private List<PriceFrameTicket> PriceFrame;

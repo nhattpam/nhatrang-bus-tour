@@ -22,11 +22,11 @@ public class Payment implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PaymentID", updatable = false)
-    private Long PaymentID;
+    private Long paymentId;
     @Column(name = "PaymentDate", nullable = false)
-    private LocalDate PaymentDate;
+    private LocalDate paymentDate;
     @Column(name = "PaymentMethod", nullable = false)
-    private String PaymentMethod;
+    private String paymentMethod;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference

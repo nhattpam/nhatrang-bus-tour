@@ -21,16 +21,16 @@ public class Route implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "RouteID", updatable = false)
-    private Long RouteID;
+    private Long routeId;
     @Nationalized
     @Column(
             name = "RouteName",
             nullable = false,
             length = 100
     )
-    private String RouteName;
+    private String routeName;
     @Column(name = "ParentRouteID", updatable = false)
-    private Long ParentRouteID;
+    private Long parentRouteID;
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
     private List<StationRoute> stationRoute;

@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface BusRepostory extends JpaRepository<Bus, Long> {
-
+    List<Bus> findAll();
+//    boolean existsByBusID(Long BusId);
 }

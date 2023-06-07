@@ -21,13 +21,13 @@ public class TicketType implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "TicketTypeID", updatable = false)
-    private Long TicketTypeID;
+    private Long ticketTypeId;
     @Column(name = "TicketTypeName", nullable = false)
-    private String TicketTypeName;
+    private String ticketTypeName;
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonManagedReference
     @JoinColumn(name = "RouteID")
-    private Route Route;
+    private Route route;
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Ticket> Ticket;

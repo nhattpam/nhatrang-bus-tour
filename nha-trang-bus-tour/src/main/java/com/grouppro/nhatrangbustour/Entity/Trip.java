@@ -24,27 +24,27 @@ public class Trip implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "TripID", updatable = false)
-    private Long TripID;
+    private Long tripID;
     @Column(name = "DepartureTime", nullable = false)
-    private LocalDate DepartureTime;
+    private LocalDate departureTime;
     @Column(name = "ArrivalTime", nullable = false)
-    private LocalDate ArrivalTime;
+    private LocalDate arrivalTime;
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonManagedReference
     @JoinColumn(name = "RouteID")
-    private Route Route;
+    private Route route;
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonManagedReference
     @JoinColumn(name = "BusID")
-    private Bus Bus;
+    private Bus bus;
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonManagedReference
     @JoinColumn(name = "DriverID")
-    private Driver Driver;
+    private Driver driver;
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonManagedReference
     @JoinColumn(name = "PriceFrameID")
-    private PriceFrame PriceFrame;
+    private PriceFrame priceFrame;
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Ticket> Ticket;
