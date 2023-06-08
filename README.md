@@ -9,4 +9,4 @@ This project is for SWD392
  + Trần Quốc Khang (MO)
 
 FE: https://nha-trang-bus-tour.firebaseapp.com/
-BE: [http://nhatrangbustourbackend-env.eba-ksxs24vb.ap-northeast-1.elasticbeanstalk.com/swagger-ui/index.html](https://nhatrangbustourbackend.azurewebsites.net/swagger-ui/index.html)
+BE: https://nhatrangbustourbackend.azurewebsites.net/swagger-ui/index.html
