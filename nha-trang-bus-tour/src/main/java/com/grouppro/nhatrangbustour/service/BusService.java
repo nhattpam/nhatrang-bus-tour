@@ -9,6 +9,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -22,6 +23,11 @@ public class BusService implements IBusService {
     @Override
     public List<Bus> getBuses() {
         return busRepostory.findAll();
+    }
+
+    @Override
+    public List<Bus> getBusById(Long id) {
+        return busRepostory.findAllById(Collections.singleton(id));
     }
 
     @Override

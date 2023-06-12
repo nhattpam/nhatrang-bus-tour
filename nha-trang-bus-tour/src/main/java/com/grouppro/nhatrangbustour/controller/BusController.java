@@ -29,10 +29,16 @@ public class BusController {
             @ApiResponse(responseCode = "404", description = "When don't have any Bus"),
             @ApiResponse( content = @Content(schema = @Schema(implementation = Bus.class)))
     })
-    @Operation(summary = "Get all buses")
+    @Operation(summary = "Get all buses, or a specific bus by id")
     @GetMapping("/Buses")
-    public ResponseEntity<?> getBuses() {
-        List<Bus> buses =busService.getBuses();
+    public ResponseEntity<?> getBuses(@RequestParam(required = false,name = "busid") Long busid) {
+        List<Bus> buses;
+        if (busid==null){
+            buses =busService.getBuses();
+        }
+        else {
+            buses =busService.getBusById(busid);
+        }
         if (!buses.isEmpty()) {
             return ResponseEntity.ok(buses);
         } else {
