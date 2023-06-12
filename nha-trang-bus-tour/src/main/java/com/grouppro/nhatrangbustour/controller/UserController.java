@@ -19,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "User-API")
+@Tag(name = "users")
 @RequestMapping("api/users")
 @Slf4j
 public class UserController {

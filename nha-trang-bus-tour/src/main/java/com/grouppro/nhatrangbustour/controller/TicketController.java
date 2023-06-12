@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "Ticket-API")
-@RequestMapping("api/ticket")
+@Tag(name = "tickets")
+@RequestMapping("api/tickets")
 public class TicketController {
     @GetMapping("/")
     public ResponseEntity<?> testMethod(@RequestParam(defaultValue = "0") Integer input) {
@@ -18,7 +18,7 @@ public class TicketController {
             return ResponseEntity.ok("value:" + input);
         }
     }
-    @PostMapping("/addTicket")
+    @PostMapping("/")
     public ResponseEntity<?> testMethod2(@RequestParam(defaultValue = "0") Integer input) {
         if (input == 0) {
             return ResponseEntity.ok("default value here:" + input);

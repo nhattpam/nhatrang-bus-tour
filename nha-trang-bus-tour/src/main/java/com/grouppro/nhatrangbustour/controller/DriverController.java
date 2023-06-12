@@ -20,8 +20,8 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "Driver-API")
-@RequestMapping("api/driver")
+@Tag(name = "drivers")
+@RequestMapping("api/drivers")
 public class DriverController {
     private final IDriverService driverService;
     @ApiResponses(value = {
@@ -29,7 +29,7 @@ public class DriverController {
             @ApiResponse( content = @Content(schema = @Schema(implementation = Driver.class)))
     })
     @Operation(summary = "Get all drivers, or a specific driver by id")
-    @GetMapping("/Drivers")
+    @GetMapping("/")
     public ResponseEntity<?> getDrivers(@RequestParam(required=false, name = "driverid") Long driverid ) {
         List<Driver> drivers;
         if (driverid==null){

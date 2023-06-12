@@ -20,7 +20,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "Bus-API")
+@Tag(name = "buses")
 @RequestMapping("api/buses")
 @Slf4j
 public class BusController {
@@ -30,7 +30,7 @@ public class BusController {
             @ApiResponse( content = @Content(schema = @Schema(implementation = Bus.class)))
     })
     @Operation(summary = "Get all buses, or a specific bus by id")
-    @GetMapping("/Buses")
+    @GetMapping("/")
     public ResponseEntity<?> getBuses(@RequestParam(required = false,name = "busid") Long busid) {
         List<Bus> buses;
         if (busid==null){
@@ -50,7 +50,7 @@ public class BusController {
             @ApiResponse(responseCode = "400", description = "When Bus can't be created - Object is not valid!")
     })
     @Operation(summary = "Create a new bus")
-    @PostMapping("/addBus")
+    @PostMapping("/")
     public ResponseEntity<?> testMethod2(@RequestParam("busnumber") String busnumber,@RequestParam("seat") int seat) {
         Long id = busService.save(busnumber,seat);
         if (id == null) {

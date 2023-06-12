@@ -19,8 +19,8 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "Order-API")
-@RequestMapping("api/order")
+@Tag(name = "orders")
+@RequestMapping("api/orders")
 public class OrderController {
     private final IOrderService orderService;
     @ApiResponses(value = {
@@ -28,7 +28,7 @@ public class OrderController {
             @ApiResponse( content = @Content(schema = @Schema(implementation = Driver.class)))
     })
     @Operation(summary = "Get all orders, or a specific order by id")
-    @GetMapping("/Orders")
+    @GetMapping("/")
     public ResponseEntity<?> getOrders(@RequestParam(required = false, name = "orderid") Long orderid) {
         List<Order> orders;
         if (orderid==null){
@@ -43,7 +43,7 @@ public class OrderController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("There is no driver");
         }
     }
-    @PostMapping("/addOrder")
+    @PostMapping("/")
     public ResponseEntity<?> testMethod2(@RequestParam(defaultValue = "0") Integer input) {
         if (input == 0) {
             return ResponseEntity.ok("default value here:" + input);
