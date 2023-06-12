@@ -7,6 +7,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -18,6 +19,11 @@ public class DriverService implements IDriverService {
     @Override
     public List<Driver> getDrivers() {
         return driverRepostory.findAll();
+    }
+
+    @Override
+    public List<Driver> getDriverById(Long id) {
+        return driverRepostory.findAllById(Collections.singleton(id));
     }
 
     @Override

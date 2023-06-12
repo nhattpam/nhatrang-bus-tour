@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.apache.bcel.classfile.Module;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,10 +28,15 @@ public class DriverController {
             @ApiResponse(responseCode = "404", description = "When don't have any Driver"),
             @ApiResponse( content = @Content(schema = @Schema(implementation = Driver.class)))
     })
-    @Operation(summary = "Get all drivers")
+    @Operation(summary = "Get all drivers, or a specific driver by id")
     @GetMapping("/Drivers")
-    public ResponseEntity<?> getDrivers() {
-        List<Driver> drivers = driverService.getDrivers();
+    public ResponseEntity<?> getDrivers(@RequestParam(required=false, name = "driverid") Long driverid ) {
+        List<Driver> drivers;
+        if (driverid==null){
+            drivers = driverService.getDrivers();
+        }else {
+            drivers=driverService.getDriverById(driverid);
+        }
         if (!drivers.isEmpty()) {
             return ResponseEntity.ok(drivers);
         } else {
