@@ -62,7 +62,10 @@ private final IBusService busService;
     @Operation(summary = "Create a new bus")
     @PostMapping("/")
     public ResponseEntity<?> addBus(@RequestParam("busnumber") String busnumber,@RequestParam("seat") int seat) {
-        Long id = busService.save(busnumber,seat);
+        Bus bus = new Bus();
+        bus.setBusNumber(busnumber);
+        bus.setSeat(seat);
+        Long id = busService.save(bus);
         if (id == null) {
             return new ResponseEntity<>("Can't create bus", HttpStatus.BAD_REQUEST);
         } else {

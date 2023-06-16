@@ -21,14 +21,16 @@ public class BusService implements IBusService {
     }
 
     @Override
-    public Long save(String BusNumber, int seat) {
-        Bus bus = new Bus();
-        bus.setBusNumber(BusNumber);
-        bus.setSeat(seat);
+    public Long save(Bus bus) {
         busRepostory.save(bus);
         if(bus!=null){
             return bus.getBusId();
         }
         return null;
+    }
+
+    @Override
+    public Bus getBusById(Long bid) {
+        return busRepostory.getReferenceById(bid);
     }
 }

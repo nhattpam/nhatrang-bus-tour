@@ -1,8 +1,17 @@
 package com.grouppro.nhatrangbustour.controller;
 
+import com.grouppro.nhatrangbustour.Entity.Order;
+import com.grouppro.nhatrangbustour.Entity.Ticket;
+import com.grouppro.nhatrangbustour.service.TicketService;
+import com.grouppro.nhatrangbustour.service.TicketTypeService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,27 +19,48 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "tickets")
 @RequestMapping("api/tickets")
 public class TicketController {
+    private final TicketService ticketService;
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "404", description = "When don't have any Ticket"),
+            @ApiResponse( content = @Content(schema = @Schema(implementation = Ticket.class)))
+    })
     @Operation(summary = "Get all tickets")
     @GetMapping("/")
-    public ResponseEntity<?> getTickets(@RequestParam(defaultValue = "0") Integer input) {
-        if (input == 0) {
-            return ResponseEntity.ok("default value here:" + input);
+    public ResponseEntity<?> getTickets() {
+        List<Ticket> tickets = ticketService.getTickets();
+        if (!tickets.isEmpty()) {
+            return ResponseEntity.ok(tickets);
         } else {
-            return ResponseEntity.ok("value:" + input);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("There is no ticket");
         }
     }
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "When Ticket created successfully!"),
+            @ApiResponse(responseCode = "400", description = "When Ticket can't be created - Object is not valid!")
+    })
     @Operation(summary = "Create a new ticket")
     @PostMapping("/")
-    public ResponseEntity<?> addTicket(@RequestParam(defaultValue = "0") Integer input) {
-        if (input == 0) {
-            return ResponseEntity.ok("default value here:" + input);
+    public ResponseEntity<?> addTicket(@RequestParam("passengername") String name, @RequestParam("passengerphone")String phone,
+                                       @RequestParam("passengeremail")String email, @RequestParam("feedback") String feedback,
+                                       @RequestParam("trip") Long tid, @RequestParam("order")Long oid,
+                                       @RequestParam("service")Long sid, @RequestParam("tickettype")Long ttid) {
+        Ticket ticket = new Ticket();
+        ticket.setPassengerName(name);
+        ticket.setPassengerPhone(phone);
+        ticket.setPassengerEmail(email);
+        ticket.setFeedback(feedback);
+        Long id = ticketService.saveTicket(ticket,tid,oid,sid,ttid);
+        if (id == null) {
+            return new ResponseEntity<>("Can't create Ticket", HttpStatus.BAD_REQUEST);
         } else {
-            return ResponseEntity.ok("value:" + input);
+            return new ResponseEntity<>(id,HttpStatus.CREATED);
         }
     }
 }

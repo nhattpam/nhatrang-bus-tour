@@ -1,6 +1,7 @@
 package com.grouppro.nhatrangbustour.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,16 +28,16 @@ public class Order implements Serializable {
     @Column(name = "OrderDate", nullable = false)
     private LocalDate orderDate ;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @JsonIgnore
     @JoinColumn(name = "UserID")
     private User user;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @JsonIgnore
     @JoinColumn(name = "PaymentID")
     private Payment payment;
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JsonBackReference
+    @JsonIgnore
     private List<Ticket> Ticket;
 
 }

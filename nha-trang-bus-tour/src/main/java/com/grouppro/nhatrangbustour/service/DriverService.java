@@ -21,14 +21,16 @@ public class DriverService implements IDriverService {
     }
 
     @Override
-    public Long saveDriver(String driverName, String driverphone) {
-        Driver driver = new Driver();
-        driver.setDriverName(driverName);
-        driver.setDriverPhone(driverphone);
+    public Long saveDriver(Driver driver) {
         driverRepostory.save(driver);
         if(driver!=null){
             return driver.getDriverId();
         }
         return null;
+    }
+
+    @Override
+    public Driver getDriverById(Long did) {
+        return driverRepostory.getReferenceById(did);
     }
 }

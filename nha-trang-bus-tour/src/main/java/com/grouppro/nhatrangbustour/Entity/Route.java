@@ -1,6 +1,8 @@
 package com.grouppro.nhatrangbustour.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -32,15 +34,15 @@ public class Route implements Serializable {
     @Column(name = "ParentRouteID", updatable = false)
     private Long parentRouteID;
     @OneToMany(fetch = FetchType.LAZY)
-    @JsonBackReference
+    @JsonIgnore
     private List<StationRoute> stationRoute;
     @OneToMany(fetch = FetchType.LAZY)
-    @JsonBackReference
-    private List<TicketType> TickeType;
+    @JsonIgnore
+    private List<TicketType> TicketType;
     @OneToMany(fetch = FetchType.LAZY)
-    @JsonBackReference
+    @JsonIgnore
     private List<Trip> Trip;
     @OneToMany(fetch = FetchType.LAZY)
-    @JsonBackReference
+    @JsonIgnore
     private List<PriceFrame> PriceFrame;
 }

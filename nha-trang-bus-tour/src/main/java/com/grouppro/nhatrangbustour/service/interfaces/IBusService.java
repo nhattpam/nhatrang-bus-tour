@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface IBusService {
     List<Bus> getBuses();
-    Long save(String BusNumber, int seat);
+    Long save(Bus bus);
+    Bus getBusById(Long bid);
 }

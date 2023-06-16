@@ -1,6 +1,8 @@
 package com.grouppro.nhatrangbustour.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,6 +28,6 @@ public class Bus implements Serializable {
     @Column(name = "Seat", nullable = false)
     private int seat;
     @OneToMany(fetch = FetchType.LAZY)
-    @JsonBackReference
+    @JsonIgnore
     private List<Trip> Trip;
 }

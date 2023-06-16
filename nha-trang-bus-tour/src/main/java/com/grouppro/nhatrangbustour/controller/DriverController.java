@@ -47,7 +47,10 @@ public class DriverController {
     @Operation(summary = "Create a new driver ")
     @PostMapping("/")
     public ResponseEntity<?> addDriver(@RequestParam("drivername")String name, @RequestParam("driverphone") String phone) {
-        Long id = driverService.saveDriver(name, phone);
+        Driver driver = new Driver();
+        driver.setDriverName(name);
+        driver.setDriverPhone(phone);
+        Long id = driverService.saveDriver(driver);
         if (id == null) {
             return new ResponseEntity<>("Can't create Driver", HttpStatus.BAD_REQUEST);
         } else {
