@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-@CrossOrigin(origins = "https://nha-trang-bus-tour.web.app")
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "buses")
