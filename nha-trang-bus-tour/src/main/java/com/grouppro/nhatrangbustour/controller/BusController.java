@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "buses")
@@ -60,10 +62,7 @@ private final IBusService busService;
     })
     @Operation(summary = "Create a new bus")
     @PostMapping("/")
-    public ResponseEntity<?> addBus(@RequestParam("busnumber") String busnumber,@RequestParam("seat") int seat) {
-        Bus bus = new Bus();
-        bus.setBusNumber(busnumber);
-        bus.setSeat(seat);
+    public ResponseEntity<?> addBus(@RequestBody Bus bus) {
         Long id = busService.save(bus);
         if (id == null) {
             return new ResponseEntity<>("Can't create bus", HttpStatus.BAD_REQUEST);

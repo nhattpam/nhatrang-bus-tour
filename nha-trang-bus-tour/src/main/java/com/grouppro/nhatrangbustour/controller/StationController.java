@@ -42,10 +42,8 @@ public class StationController {
     })
     @Operation(summary = "Create a new station ")
     @PostMapping("/")
-    public ResponseEntity<?> addStation(@RequestParam("stationname")String name, @RequestParam("stationlocation") String location) {
-        Station station =new Station();
-        station.setStationName(name);
-        station.setStationLocation(location);
+    public ResponseEntity<?> addStation(@RequestBody Station station) {
+        
         Long id = stationService.saveStation(station);
         if (id == null) {
             return new ResponseEntity<>("Can't create Station", HttpStatus.BAD_REQUEST);

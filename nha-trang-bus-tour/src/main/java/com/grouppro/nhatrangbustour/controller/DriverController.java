@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
@@ -46,10 +47,7 @@ public class DriverController {
     })
     @Operation(summary = "Create a new driver ")
     @PostMapping("/")
-    public ResponseEntity<?> addDriver(@RequestParam("drivername")String name, @RequestParam("driverphone") String phone) {
-        Driver driver = new Driver();
-        driver.setDriverName(name);
-        driver.setDriverPhone(phone);
+    public ResponseEntity<?> addDriver(@RequestBody Driver driver) {
         Long id = driverService.saveDriver(driver);
         if (id == null) {
             return new ResponseEntity<>("Can't create Driver", HttpStatus.BAD_REQUEST);
