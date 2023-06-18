@@ -3,19 +3,19 @@ import axios from "axios";
 
 const BASE_API_URL = "http://localhost:8080/api"
 // const BASE_API_URL = "https://api.sampleapis.com/beers";
-class BusService{
+class TicketService{
     
-    getAllBuses()
+    getAllTickets()
     {
         // return axios.get(BASE_API_URL + "/ale");
-        return axios.get(BASE_API_URL + "/buses/");
+        return axios.get(BASE_API_URL + "/tickets/");
 
     }
 
-    saveBus(bus)
+    saveTicket(ticket)
     {
-        return axios.post(BASE_API_URL + "/buses/", bus);
+        return axios.post(BASE_API_URL + "/tickets/", ticket);
     }
 }
 
-export default new BusService();
+export default new TicketService();
