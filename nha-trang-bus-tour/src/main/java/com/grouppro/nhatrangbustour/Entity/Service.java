@@ -38,6 +38,6 @@ public class Service implements Serializable {
     )
     private String serviceName;
     @OneToMany(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonBackReference
     private List<Ticket> Ticket;
 }

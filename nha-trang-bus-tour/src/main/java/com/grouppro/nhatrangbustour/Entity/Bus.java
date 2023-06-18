@@ -28,6 +28,6 @@ public class Bus implements Serializable {
     @Column(name = "Seat", nullable = false)
     private int seat;
     @OneToMany(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonBackReference
     private List<Trip> Trip;
 }

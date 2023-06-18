@@ -28,16 +28,16 @@ public class Order implements Serializable {
     @Column(name = "OrderDate", nullable = false)
     private LocalDate orderDate ;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
     @JoinColumn(name = "UserID")
+    @JsonBackReference
     private User user;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
     @JoinColumn(name = "PaymentID")
+    @JsonBackReference
     private Payment payment;
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonBackReference
     private List<Ticket> Ticket;
 
 }

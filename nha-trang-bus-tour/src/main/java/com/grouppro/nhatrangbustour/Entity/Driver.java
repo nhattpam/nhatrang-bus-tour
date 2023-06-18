@@ -30,6 +30,6 @@ public class Driver implements Serializable {
     @Column(name = "DriverName",nullable = false)
     private String driverName;
     @OneToMany(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonBackReference
     private List<Trip> Trip;
 }

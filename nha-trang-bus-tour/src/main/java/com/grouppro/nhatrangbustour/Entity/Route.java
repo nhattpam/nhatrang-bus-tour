@@ -19,6 +19,8 @@ import java.util.List;
 @AllArgsConstructor
 @Entity(name = "Route")
 @Table(name = "Route")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
 public class Route implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,15 +36,15 @@ public class Route implements Serializable {
     @Column(name = "ParentRouteID", updatable = false)
     private Long parentRouteID;
     @OneToMany(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonBackReference
     private List<StationRoute> stationRoute;
     @OneToMany(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonBackReference
     private List<TicketType> TicketType;
     @OneToMany(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonBackReference
     private List<Trip> Trip;
     @OneToMany(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonBackReference
     private List<PriceFrame> PriceFrame;
 }
