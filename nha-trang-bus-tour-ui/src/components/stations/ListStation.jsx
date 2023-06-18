@@ -1,68 +1,87 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../Header'
 import SideBar from '../SideBar'
+import stationService from '../../services/station.service';
 
 const ListStation = () => {
-  return (
-    <>
-    {/* Page Wrapper */}
 
-    <div id="wrapper">
-      <SideBar />
-      {/* Content Wrapper */}
 
-      <div id="content-wrapper" class="d-flex flex-column">
-        {/* Main Content */}
+    const [stationList, setStationList] = useState([]);
 
-        <div id="content">
-          <Header />
-          <div class="container-fluid">
+    useEffect(() => {
+        stationService.getAllStations().then((res) => {
+            console.log(res.data);
 
-                    {/* Page Heading */}
+            setStationList(res.data);
+        }).catch((error) => {
+            console.log(error);
+            console.log('lol');
+        });
+    }, []);
 
-                    <h1 class="h3 mb-2 text-gray-800">List Stations</h1>
-                    
+    return (
+        <>
+            {/* Page Wrapper */}
 
-                   {/* DataTales Example */}
+            <div id="wrapper">
+                <SideBar />
+                {/* Content Wrapper */}
 
-                    <div class="card shadow mb-4">
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>Station Id</th>
-                                            <th>Location</th>
-                                            <th>Name</th>
-                                        </tr>
-                                    </thead>
-                                  
-                                    <tbody>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>2011/04/25</td>
-                                            <td>$320,800</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Garrett Winters</td>
-                                            <td>63</td>
-                                            <td>$170,750</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                <div id="content-wrapper" class="d-flex flex-column">
+                    {/* Main Content */}
+
+                    <div id="content">
+                        <Header />
+                        <div class="container-fluid">
+
+                            {/* Page Heading */}
+
+                            <h1 class="h3 mb-2 text-gray-800">List Stations</h1>
+
+
+                            {/* DataTales Example */}
+
+                            <div class="card shadow mb-4">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Station Id</th>
+                                                    <th>Name</th>
+                                                    <th>Location</th>
+
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                {
+
+                                                    stationList.map((e) => (
+                                                        <tr>
+                                                            <td key={e.stationId}>{e.stationId}</td>
+                                                            <td key={e.stationName}>{e.stationName}</td>
+                                                            <td key={e.stationLocation}>{e.stationLocation}</td>
+                                                        </tr>
+                                                    ))
+
+                                                }
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
+
                         </div>
+                        {/* /.container-fluid */}
+
                     </div>
-
                 </div>
-                {/* /.container-fluid */}
+            </div>
 
-        </div>
-      </div>
-    </div>
-
-  </>
-  )
+        </>
+    )
 }
 
 export default ListStation
