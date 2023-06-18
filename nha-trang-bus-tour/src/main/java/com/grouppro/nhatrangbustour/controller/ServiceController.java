@@ -6,6 +6,7 @@ import com.grouppro.nhatrangbustour.service.interfaces.IServiceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -18,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "services")
+@Tag(name = "Services-API")
 @RequestMapping("api/services")
 public class ServiceController {
     private final IServiceService serviceService;
@@ -42,10 +43,7 @@ public class ServiceController {
     })
     @Operation(summary = "Create a new service ")
     @PostMapping("/")
-    public ResponseEntity<?> addService(@RequestParam("servicenumber")String number, @RequestParam("servicename") String name) {
-        Service service = new Service();
-        service.setServiceNumber(number);
-        service.setServiceName(name);
+    public ResponseEntity<?> addService(@RequestBody Service service) {
         Long id = serviceService.saveService(service);
         if (id == null) {
             return new ResponseEntity<>("Can't create Service", HttpStatus.BAD_REQUEST);

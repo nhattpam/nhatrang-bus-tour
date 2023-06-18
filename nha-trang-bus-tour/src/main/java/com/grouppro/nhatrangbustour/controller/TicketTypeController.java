@@ -6,6 +6,7 @@ import com.grouppro.nhatrangbustour.service.interfaces.ITicketTypeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -41,10 +42,8 @@ public class TicketTypeController {
             @ApiResponse(responseCode = "400", description = "When Ticket Type can't be created - Object is not valid!")
     })
     @Operation(summary = "Create a new ticket type ")
-    @PostMapping("/")
-    public ResponseEntity<?> addTicketType(@RequestParam("tickettypename")String name, @RequestParam("route") Long rid) {
-        TicketType ticketType = new TicketType();
-        ticketType.setTicketTypeName(name);
+    @PostMapping("/{rid}")
+    public ResponseEntity<?> addTicketType(@RequestBody TicketType ticketType, @PathVariable Long rid) {
         Long id = ticketTypeService.saveTicketType(ticketType, rid);
         if (id == null) {
             return new ResponseEntity<>("Can't create Ticket Type", HttpStatus.BAD_REQUEST);

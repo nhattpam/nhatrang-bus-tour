@@ -26,13 +26,13 @@ public class TicketType implements Serializable {
     @Column(name = "TicketTypeName", nullable = false)
     private String ticketTypeName;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonManagedReference
     @JoinColumn(name = "RouteID")
     private Route route;
     @OneToMany(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonBackReference
     private List<Ticket> Ticket;
     @OneToMany(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonBackReference
     private List<PriceFrameTicket> PriceFrameTicket;
 }

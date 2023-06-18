@@ -29,22 +29,22 @@ public class Trip implements Serializable {
     @Column(name = "ArrivalTime", nullable = false)
     private LocalDate arrivalTime;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonManagedReference
     @JoinColumn(name = "RouteID")
     private Route route;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonManagedReference
     @JoinColumn(name = "BusID")
     private Bus bus;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonManagedReference
     @JoinColumn(name = "DriverID")
     private Driver driver;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonManagedReference
     @JoinColumn(name = "PriceFrameID")
     private PriceFrame priceFrame;
     @OneToMany(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonBackReference
     private List<Ticket> Ticket;
 }

@@ -51,19 +51,19 @@ public class Ticket implements Serializable {
     )
     private String feedback;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonManagedReference
     @JoinColumn(name = "TripID")
     private Trip trip;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonManagedReference
     @JoinColumn(name = "OrderID")
     private Order order;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonManagedReference
     @JoinColumn(name = "ServiceID")
     private Service service;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonManagedReference
     @JoinColumn(name = "TicketTypeID")
     private TicketType ticketType;
 }

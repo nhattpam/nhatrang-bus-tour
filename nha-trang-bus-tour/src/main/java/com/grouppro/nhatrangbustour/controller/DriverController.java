@@ -5,6 +5,7 @@ import com.grouppro.nhatrangbustour.service.interfaces.IDriverService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,7 +23,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "drivers")
+@Tag(name = "Drivers-API")
 @RequestMapping("api/drivers")
 public class DriverController {
     private final IDriverService driverService;
@@ -46,10 +47,7 @@ public class DriverController {
     })
     @Operation(summary = "Create a new driver ")
     @PostMapping("/")
-    public ResponseEntity<?> addDriver(@RequestParam("drivername")String name, @RequestParam("driverphone") String phone) {
-        Driver driver = new Driver();
-        driver.setDriverName(name);
-        driver.setDriverPhone(phone);
+    public ResponseEntity<?> addDriver(@RequestBody Driver driver) {
         Long id = driverService.saveDriver(driver);
         if (id == null) {
             return new ResponseEntity<>("Can't create Driver", HttpStatus.BAD_REQUEST);

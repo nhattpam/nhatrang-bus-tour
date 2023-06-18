@@ -41,7 +41,7 @@ public class Station implements Serializable {
     )
     private String stationLocation;
     @OneToMany(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonBackReference
     private List<StationRoute> stationRoute;
 
 }

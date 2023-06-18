@@ -13,11 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -25,7 +21,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "orders")
+@Tag(name = "Orders-API")
 @RequestMapping("api/orders")
 public class OrderController {
     private final OrderService orderService;
@@ -48,8 +44,8 @@ public class OrderController {
             @ApiResponse(responseCode = "400", description = "When Order can't be created - Object is not valid!")
     })
     @Operation(summary = "Create an order")
-    @PostMapping("/")
-    public ResponseEntity<?> addOrder(@RequestParam("user")Long uid, @RequestParam("payment")Long pid) {
+    @PostMapping("/{uid}/{pid}")
+    public ResponseEntity<?> addOrder(@PathVariable Long uid, @PathVariable Long pid) {
         Order order = new Order();
         LocalDate date = LocalDate.now();
         order.setOrderDate(date);

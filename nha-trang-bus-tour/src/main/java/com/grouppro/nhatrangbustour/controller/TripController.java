@@ -6,6 +6,7 @@ import com.grouppro.nhatrangbustour.service.interfaces.ITripService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -42,13 +43,10 @@ public class TripController {
             @ApiResponse(responseCode = "400", description = "When Trip can't be created - Object is not valid!")
     })
     @Operation(summary = "Create a new trip ")
-    @PostMapping("/")
-    public ResponseEntity<?> addTrio(@RequestParam("departureTime")LocalDate depart, @RequestParam("arrivalTime") LocalDate arrival,
-                                     @RequestParam("route")Long rid, @RequestParam("driver")Long did, @RequestParam("bus") Long bid,
-                                     @RequestParam("priceframe")Long pfid) {
-        Trip trip = new Trip();
-        trip.setDepartureTime(depart);
-        trip.setArrivalTime(arrival);
+    @PostMapping("/{rid}/{did}/{bid}/{pfid}")
+    public ResponseEntity<?> addTrio(@RequestBody Trip trip,
+                                     @PathVariable Long rid, @PathVariable Long did, @PathVariable Long bid,
+                                     @PathVariable Long pfid) {
         Long id = tripService.saveTrip(trip,bid,did,rid,pfid);
         if (id == null) {
             return new ResponseEntity<>("Can't create trip", HttpStatus.BAD_REQUEST);

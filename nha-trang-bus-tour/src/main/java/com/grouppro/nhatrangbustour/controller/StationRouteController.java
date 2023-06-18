@@ -48,8 +48,8 @@ public class StationRouteController {
             @ApiResponse(responseCode = "400", description = "When StaionRoute can't be created - Object is not valid!")
     })
     @Operation(summary = "Create a new stationroute ")
-    @PostMapping("/")
-    public ResponseEntity<?> addStationRoute(@RequestParam("stationid")Long sid, @RequestParam("routeid") Long rid) {
+    @PostMapping("/{sid}/{rid}")
+    public ResponseEntity<?> addStationRoute(@PathVariable Long sid, @PathVariable Long rid) {
         StationRoute stationRoute = new StationRoute();
         Route route = routeService.getRouteByID(rid);
         stationRoute.setRoute(route);

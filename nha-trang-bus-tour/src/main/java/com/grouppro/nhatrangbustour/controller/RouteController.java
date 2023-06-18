@@ -8,6 +8,7 @@ import com.grouppro.nhatrangbustour.service.interfaces.IRouteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -20,7 +21,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "routes")
+@Tag(name = "Routes-API")
 @RequestMapping("api/routes")
 public class RouteController {
     private final IRouteService routeService;
@@ -45,10 +46,7 @@ public class RouteController {
     })
     @Operation(summary = "Create a new Route ")
     @PostMapping("/")
-    public ResponseEntity<?> addRoute(@RequestParam("routename")String name, @RequestParam("parentid") Long parentid) {
-        Route route = new Route();
-        route.setRouteName(name);
-        route.setParentRouteID(parentid);
+    public ResponseEntity<?> addRoute(@RequestBody Route route) {
         Long id = routeService.saveRoute(route);
         if (id == null) {
             return new ResponseEntity<>("Can't create Station", HttpStatus.BAD_REQUEST);

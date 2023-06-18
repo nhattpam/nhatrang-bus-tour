@@ -30,6 +30,6 @@ public class Payment implements Serializable {
     private String paymentMethod;
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonBackReference
     private List<Order> Order;
 }

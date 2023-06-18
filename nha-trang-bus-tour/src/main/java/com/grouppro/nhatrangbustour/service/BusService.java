@@ -22,8 +22,8 @@ public class BusService implements IBusService {
 
     @Override
     public Long save(Bus bus) {
-        busRepostory.save(bus);
-        if(bus!=null){
+        if(bus != null){
+            busRepostory.save(bus);
             return bus.getBusId();
         }
         return null;

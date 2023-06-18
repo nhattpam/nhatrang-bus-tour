@@ -26,13 +26,13 @@ public class PriceFrame implements Serializable {
     @Column(name = "PriceFrameName", nullable = false)
     private String priceFrameName;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonManagedReference
     @JoinColumn(name = "RouteID")
     private Route route;
     @OneToMany(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonBackReference
     private List<PriceFrameTicket> PriceFrameTicket;
     @OneToMany(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonBackReference
     private List<Trip> Trip;
 }

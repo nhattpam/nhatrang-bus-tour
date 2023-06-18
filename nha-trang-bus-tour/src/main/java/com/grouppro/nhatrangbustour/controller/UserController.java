@@ -61,11 +61,7 @@ public class UserController {
     })
     @Operation(summary = "Create a new user")
     @PostMapping("/")
-    public ResponseEntity<?> Register(@RequestParam("username") String username, @RequestParam("email") String email) {
-        User user = new User();
-        user.setUserName(username);
-        user.setUserPhone(" ");
-        user.setUserEmail(email);
+    public ResponseEntity<?> Register(@RequestBody User user) {
         Long id = userService.Register(user);
         if (id == null) {
             return new ResponseEntity<>("Can't create user", HttpStatus.BAD_REQUEST);

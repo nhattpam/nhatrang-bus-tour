@@ -6,6 +6,7 @@ import com.grouppro.nhatrangbustour.service.PaymentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -19,7 +20,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "payments")
+@Tag(name = "Payments-API")
 @RequestMapping("api/payments")
 public class PaymentController {
     private final PaymentService paymentService;
@@ -43,11 +44,9 @@ public class PaymentController {
     })
     @Operation(summary = "Create a new Payment")
     @PostMapping("/")
-    public ResponseEntity<?> addDriver(@RequestParam("method") String method) {
-        Payment payment = new Payment();
+    public ResponseEntity<?> addDriver(@RequestBody Payment payment) {
         LocalDate date = LocalDate.now();
         payment.setPaymentDate(date);
-        payment.setPaymentMethod(method);
         Long id = paymentService.savePayment(payment);
         if (id == null) {
             return new ResponseEntity<>("Can't create Payment", HttpStatus.BAD_REQUEST);

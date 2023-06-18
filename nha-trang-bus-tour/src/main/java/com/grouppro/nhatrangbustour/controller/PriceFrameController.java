@@ -8,6 +8,7 @@ import com.grouppro.nhatrangbustour.service.interfaces.IRouteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -20,7 +21,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "priceframes")
+@Tag(name = "PriceFrames-API")
 @RequestMapping("api/priceframes")
 public class PriceFrameController {
     private final IPriceFrameService priceFrameService;
@@ -44,11 +45,9 @@ public class PriceFrameController {
             @ApiResponse(responseCode = "400", description = "When Price Frame can't be created - Object is not valid!")
     })
     @Operation(summary = "Create a new Price Frame ")
-    @PostMapping("/")
-    public ResponseEntity<?> addPriceFrame(@RequestParam("priceframe")String name, @RequestParam("routeid") Long routeid) {
+    @PostMapping("/{rid}")
+    public ResponseEntity<?> addPriceFrame(@RequestBody PriceFrame priceFrame, @PathVariable Long routeid) {
         Route route = routeService.getRouteByID(routeid);
-        PriceFrame priceFrame = new PriceFrame();
-        priceFrame.setPriceFrameName(name);
         priceFrame.setRoute(route);
         Long id = priceFrameService.savePriceFrame(priceFrame);
         if (id == null) {

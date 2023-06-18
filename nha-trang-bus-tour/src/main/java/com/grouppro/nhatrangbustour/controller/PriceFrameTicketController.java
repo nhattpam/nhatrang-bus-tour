@@ -6,6 +6,7 @@ import com.grouppro.nhatrangbustour.service.PriceFrameTicketService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -18,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "priceframetickets")
+@Tag(name = "PriceFrameTickets-API")
 @RequestMapping("api/priceframetickets")
 public class PriceFrameTicketController {
     private final PriceFrameTicketService priceFrameTicketService;
@@ -41,11 +42,9 @@ public class PriceFrameTicketController {
             @ApiResponse(responseCode = "400", description = "When Price Frame Ticket can't be created - Object is not valid!")
     })
     @Operation(summary = "Create a new price frame ticket ")
-    @PostMapping("/")
-    public ResponseEntity<?> addPriceFrameTicket(@RequestParam("price")Double price, @RequestParam("priceframe") Long pfid,
-                                                 @RequestParam("tickettype") Long ttid) {
-        PriceFrameTicket priceFrameTicket = new PriceFrameTicket();
-        priceFrameTicket.setPrice(price);
+    @PostMapping("/{pfid}/{ttid}")
+    public ResponseEntity<?> addPriceFrameTicket(@RequestBody PriceFrameTicket priceFrameTicket, @PathVariable Long pfid,
+                                                 @PathVariable Long ttid) {
         Long id = priceFrameTicketService.savePriceFrameTicket(priceFrameTicket, pfid,ttid);
         if (id == null) {
             return new ResponseEntity<>("Can't create Price Frame Ticket", HttpStatus.BAD_REQUEST);

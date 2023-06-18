@@ -26,11 +26,11 @@ public class StationRoute implements Serializable {
     )
     private Long stationRouteId;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonManagedReference
     @JoinColumn(name = "StationID")
     private Station station;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonManagedReference
     @JoinColumn(name = "RouteID")
     private Route route;
 }
