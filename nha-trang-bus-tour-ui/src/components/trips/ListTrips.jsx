@@ -43,7 +43,7 @@ const ListTrips = () => {
                             <div class="card shadow mb-4">
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <table class="table table-bordered" id="" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
                                                     <th>Trip Id</th>
@@ -64,6 +64,10 @@ const ListTrips = () => {
                                                             <td key={e.tripID}>{e.tripID}</td>
                                                             <td key={e.departureTime}>{e.departureTime}</td>
                                                             <td key={e.arrivalTime}>{e.arrivalTime}</td>
+                                                            <td key={e.bus.busNumber}>{e.bus.busNumber}</td>
+                                                            <td key={e.driver.driverName}>{e.driver.driverName}</td>
+                                                            <td key={e.priceFrame.priceFrameName}>{e.priceFrame.priceFrameName}</td>
+                                                            <td key={e.route.routeName}>{e.route.routeName}</td>
                                                         </tr>
                                                     ))
 
