@@ -20,13 +20,13 @@ const ListBuses = () => {
             });
     }, []);
 
-    const deleteBus = (busId) => {
-        busService.deleteBus(busId).then((res) => {
-            setMsg("Delete bus successfully!");
-        }).catch((error) => {
-            console.log(error);
-        });
-    };
+    // const deleteBus = (busId) => {
+    //     busService.deleteBus(busId).then((res) => {
+    //         setMsg("Delete bus successfully!");
+    //     }).catch((error) => {
+    //         console.log(error);
+    //     });
+    // };
 
     return (
         <>
