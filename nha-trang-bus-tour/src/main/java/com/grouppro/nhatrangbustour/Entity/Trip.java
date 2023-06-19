@@ -19,6 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity(name = "Trip")
 @Table(name = "Trip")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Trip implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,4 +48,11 @@ public class Trip implements Serializable {
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Ticket> Ticket;
+
+    public Bus getBus(){
+        if (bus != null) {
+            return bus;
+        }
+        return null;
+    }
 }

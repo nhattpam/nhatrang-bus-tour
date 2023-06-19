@@ -2,6 +2,7 @@ package com.grouppro.nhatrangbustour.controller;
 
 import com.grouppro.nhatrangbustour.Entity.Driver;
 import com.grouppro.nhatrangbustour.Entity.Trip;
+import com.grouppro.nhatrangbustour.response.TripResponse;
 import com.grouppro.nhatrangbustour.service.interfaces.ITripService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -15,7 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,14 +32,28 @@ public class TripController {
     })
     @Operation(summary = "Get all trips")
     @GetMapping("/")
-    public ResponseEntity<?> getTrips() {
+    public ResponseEntity<List<TripResponse>> getTrips() {
         List<Trip> trips = tripService.getTrips();
-        if (!trips.isEmpty()) {
-            return ResponseEntity.ok(trips);
+        List<TripResponse> tripResponses = trips.stream()
+                .map(trip -> new TripResponse(
+                        trip.getTripID(),
+                        trip.getDepartureTime(),
+                        trip.getArrivalTime(),
+                        trip.getBus(),
+                        trip.getDriver(),
+                        trip.getPriceFrame(),
+                        trip.getRoute()
+                ))
+                .collect(Collectors.toList());
+
+        if (!tripResponses.isEmpty()) {
+            return ResponseEntity.ok(tripResponses);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("There is no trip");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.emptyList());
         }
     }
+
+
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "When Trip created successfully!"),
             @ApiResponse(responseCode = "400", description = "When Trip can't be created - Object is not valid!")

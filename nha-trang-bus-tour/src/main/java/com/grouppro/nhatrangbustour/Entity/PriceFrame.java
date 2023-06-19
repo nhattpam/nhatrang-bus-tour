@@ -17,6 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity(name = "PriceFrame")
 @Table(name = "PriceFrame")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class PriceFrame implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
