@@ -7,17 +7,26 @@ import { Link } from 'react-router-dom';
 
 const ListBuses = () => {
     const [busList, setBusList] = useState([]);
+    const [msg, setMsg] = useState('');
 
     useEffect(() => {
-        busService.getAllBuses().then((res) => {
-            console.log(res.data);
+        busService.getAllBuses()
+            .then((res) => {
+                console.log(res.data);
+                setBusList(res.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
 
-            setBusList(res.data);
+    const deleteBus = (busId) => {
+        busService.deleteBus(busId).then((res) => {
+            setMsg("Delete bus successfully!");
         }).catch((error) => {
             console.log(error);
-            console.log('lol');
         });
-    }, []);
+    };
 
     return (
         <>
@@ -38,7 +47,9 @@ const ListBuses = () => {
 
                             <h1 class="h3 mb-2 text-gray-800">List Buses</h1>
 
-
+                            {
+                                msg && <p className='text-center text-success'>{msg}</p>
+                            }
                             {/* DataTales Example */}
 
                             <div class="card shadow mb-4">
@@ -63,12 +74,12 @@ const ListBuses = () => {
                                                             <td key={e.seat}>{e.seat}</td>
                                                             <td>
                                                                 <div className="btn-group" role="group">
-                                                                    <Link className="btn btn-primary" to={`/edit_bus/${e.busId}`}>
+                                                                    <Link className="btn btn-primary" to={"/edit_bus/" + e.busId}>
                                                                         Edit
                                                                     </Link>
-                                                                    <Link className="btn btn-danger" to={`/delete_bus/${e.busId}`}>
+                                                                    {/* <a className="btn btn-danger" onClick={() => deleteBus(e.busId)}>
                                                                         Delete
-                                                                    </Link>
+                                                                    </a> */}
                                                                 </div>
                                                             </td>
 

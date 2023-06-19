@@ -19,6 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity(name = "Station")
 @Table(name = "Station")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Station implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,7 +42,7 @@ public class Station implements Serializable {
     )
     private String stationLocation;
     @OneToMany(fetch = FetchType.LAZY)
-    @JsonBackReference
+    @JsonIgnore
     private List<StationRoute> stationRoute;
 
 }

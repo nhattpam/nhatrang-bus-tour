@@ -38,24 +38,27 @@ private final IBusService busService;
     }
     @Operation(summary = "Get a bus by its ID")
     @GetMapping("/{busId}")
-    public ResponseEntity<?> getBusByID(@RequestParam(defaultValue = "0") Integer input,
-                                        @PathVariable("busId") Long busId) {
-        if (input == 0) {
-            return ResponseEntity.ok("default value here:" + input);
+    public ResponseEntity<?> getBusByID(@PathVariable("busId") Long busId) {
+        Bus bus = busService.getBusById(busId);
+        if (bus != null) {
+            return ResponseEntity.ok(bus);
         } else {
-            return ResponseEntity.ok("value:" + input);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Bus not found");
         }
     }
+
     @Operation(summary = "Delete a bus by its ID")
-    @DeleteMapping("/{busID}")
-    public ResponseEntity<?> deleteBusById(@RequestParam(defaultValue = "0") Integer input,
-                                           @PathVariable("busId") Long busId) {
-        if (input == 0) {
-            return ResponseEntity.ok("default value here:" + input);
-        } else {
-            return ResponseEntity.ok("value:" + input);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteBus(@PathVariable Long id) {
+        try {
+            busService.deleteBusById(id);
+            return ResponseEntity.ok("Bus deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to delete bus: " + e.getMessage());
         }
     }
+
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "When Bus created successfully!"),
             @ApiResponse(responseCode = "400", description = "When Bus can't be created - Object is not valid!")
@@ -71,5 +74,27 @@ private final IBusService busService;
             return new ResponseEntity<>(id,HttpStatus.CREATED);
         }
     }
+    
+    @Operation(summary = "Update a bus by its ID")
+    @PutMapping("/{busID}")
+    public ResponseEntity<?> updateBus(@PathVariable("busID") Long busId, @RequestBody Bus updatedBus) {
+        Bus existingBus = busService.getBusById(busId);
+        if (existingBus == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Bus not found");
+        }
+
+        existingBus.setBusNumber(updatedBus.getBusNumber());
+        existingBus.setSeat(updatedBus.getSeat());
+        // Update any other properties you need to modify
+
+        Long id = busService.save(existingBus);
+        if (id == null) {
+            return new ResponseEntity<>("Can't update bus", HttpStatus.BAD_REQUEST);
+        } else {
+
+            return new ResponseEntity<>(id,HttpStatus.CREATED);
+        }
+    }
+
     
 }

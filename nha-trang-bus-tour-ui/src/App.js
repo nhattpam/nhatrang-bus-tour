@@ -28,8 +28,8 @@ function App() {
         <Route path='/list_orders' element={<ListOrders />}></Route>
         <Route path='/list_buses' element={<ListBuses />}></Route>
         <Route path='/add_bus' element={<AddBus/>}></Route>
-        <Route path='/edit_bus' element={<EditBus/>}></Route>
-        <Route path='/delete_bus' element={<DeleteBus/>}></Route>
+        <Route path='/edit_bus/:busId' element={<EditBus/>}></Route>
+        <Route path='/delete_bus/:busId' element={<DeleteBus/>}></Route>
         <Route path='/list_tickets' element={<ListTickets />}></Route>
         <Route path='/list_drivers' element={<ListDrivers />}></Route>
         <Route path='/add_driver' element={<AddDriver />}></Route>

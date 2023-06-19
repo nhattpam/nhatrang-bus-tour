@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -30,7 +31,21 @@ public class BusService implements IBusService {
     }
 
     @Override
-    public Bus getBusById(Long bid) {
-        return busRepostory.getReferenceById(bid);
+    public Bus getBusById(Long busId) {
+        return busRepostory.findById(busId).orElse(null);
     }
+    
+    @Override
+    public void deleteBusById(Long id) {
+    Optional<Bus> busOptional = busRepostory.findById(id);
+    
+    if (busOptional.isPresent()) {
+        Bus bus = busOptional.get();
+        busRepostory.delete(bus);
+    } else {
+        throw new IllegalArgumentException("Bus not found with id: " + id);
+    }
+}
+
+    
 }

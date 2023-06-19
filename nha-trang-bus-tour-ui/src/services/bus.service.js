@@ -16,6 +16,19 @@ class BusService{
     {
         return axios.post(BASE_API_URL + "/buses/", bus);
     }
+
+    updateBus(id, bus){
+        return axios.put(BASE_API_URL + "/buses/"+ id, bus);
+    }
+    
+
+    getBusById(id){
+        return axios.get(BASE_API_URL + "/buses/"+ id);
+    }
+
+    deleteBus(id){
+        return axios.delete(BASE_API_URL + "/buses/"+ id);
+    }
 }
 
 export default new BusService();
