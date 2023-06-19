@@ -25,12 +25,15 @@ public class Order implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "OrderID", updatable = false)
     private Long orderId;
+
     @Column(name = "OrderDate", nullable = false)
     private LocalDate orderDate ;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "UserID")
     @JsonBackReference
     private User user;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PaymentID")
     @JsonBackReference
@@ -40,4 +43,19 @@ public class Order implements Serializable {
     @JsonBackReference
     private List<Ticket> Ticket;
 
+    // Add getters and setters for paymentId and userId
+
+    public Long getPaymentId() {
+        if (payment != null) {
+            return payment.getPaymentId();
+        }
+        return null;
+    }
+
+    public Long getUserId() {
+        if (user != null) {
+            return user.getUserId();
+        }
+        return null;
+    }
 }

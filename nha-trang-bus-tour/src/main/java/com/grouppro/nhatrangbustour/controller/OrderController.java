@@ -2,6 +2,7 @@ package com.grouppro.nhatrangbustour.controller;
 
 import com.grouppro.nhatrangbustour.Entity.Order;
 import com.grouppro.nhatrangbustour.Entity.Payment;
+import com.grouppro.nhatrangbustour.response.OrderResponse;
 import com.grouppro.nhatrangbustour.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -20,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -35,14 +38,19 @@ public class OrderController {
     })
     @Operation(summary = "Get all orders")
     @GetMapping("/")
-    public ResponseEntity<?> getOrders() {
+    public ResponseEntity<List<OrderResponse>> getOrders() {
         List<Order> orders = orderService.getOrders();
-        if (!orders.isEmpty()) {
-            return ResponseEntity.ok(orders);
+        List<OrderResponse> orderResponses = orders.stream()
+                .map(order -> new OrderResponse(order.getOrderId(), order.getOrderDate(), order.getPaymentId(), order.getUserId()))
+                .collect(Collectors.toList());
+
+        if (!orderResponses.isEmpty()) {
+            return ResponseEntity.ok(orderResponses);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("There is no order");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.emptyList());
         }
     }
+
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "When Order created successfully!"),
             @ApiResponse(responseCode = "400", description = "When Order can't be created - Object is not valid!")

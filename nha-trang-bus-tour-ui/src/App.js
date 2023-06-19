@@ -16,6 +16,7 @@ import AddDriver from './components/drivers/AddDriver';
 import AddStation from './components/stations/AddStation';
 import EditBus from './components/buses/EditBus';
 import DeleteBus from './components/buses/DeleteBus';
+import ListPayments from './components/payments/ListPayments';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
         <Route path='/list_trips' element={<ListTrips />}></Route>
         <Route path='/list_stations' element={<ListStation />}></Route>
         <Route path='/add_station' element={<AddStation />}></Route>
+        <Route path='/list_payments' element={<ListPayments />}></Route>
       </Routes>
 
     </>
