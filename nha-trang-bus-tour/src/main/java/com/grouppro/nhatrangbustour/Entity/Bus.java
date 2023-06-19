@@ -18,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity(name = "Bus")
 @Table(name = "Bus")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Bus implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

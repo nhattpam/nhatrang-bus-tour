@@ -19,6 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity(name = "Driver")
 @Table(name = "Driver")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Driver implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
