@@ -49,7 +49,7 @@ const ListOrders = () => {
                         <tr>
                           <th>Order Id</th>
                           <th>Order Date</th>
-                          <th>Payment Id</th>
+                          <th>Payment Method</th>
                           <th>User Id</th>
 
                         </tr>
@@ -61,7 +61,7 @@ const ListOrders = () => {
                             <tr>
                               <td key={e.orderId}>{e.orderId}</td>
                               <td key={e.orderDate}>{e.orderDate}</td>
-                              <td key={e.paymentId}>{e.paymentId}</td>
+                              <td key={e.payment.paymentMethod}>{e.payment.paymentMethod}</td>
                               <td key={e.userId}>{e.userId}</td>
                             </tr>
                           ))

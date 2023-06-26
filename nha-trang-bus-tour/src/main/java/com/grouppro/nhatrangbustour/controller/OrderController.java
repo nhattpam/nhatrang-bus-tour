@@ -25,6 +25,7 @@ import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
@@ -42,7 +43,7 @@ public class OrderController {
     public ResponseEntity<List<OrderResponse>> getOrders() {
         List<Order> orders = orderService.getOrders();
         List<OrderResponse> orderResponses = orders.stream()
-                .map(order -> new OrderResponse(order.getOrderId(), order.getOrderDate(), order.getPaymentId(), order.getUserId()))
+                .map(order -> new OrderResponse(order.getOrderId(), order.getOrderDate(), order.getPayment(), order.getUserId()))
                 .collect(Collectors.toList());
 
         if (!orderResponses.isEmpty()) {
@@ -58,11 +59,11 @@ public class OrderController {
     })
     @Operation(summary = "Create an order")
     @PostMapping("/")
-    public ResponseEntity<?> addOrder(@RequestParam("user")Long uid, @RequestParam("payment")Long pid) {
+    public ResponseEntity<?> addOrder(@RequestParam("user") Long uid, @RequestParam("payment") Long pid) {
         Order order = new Order();
         LocalDate date = LocalDate.now();
         order.setOrderDate(date);
-        Long id =orderService.saveOrder(order, pid,uid);
+        Long id = orderService.saveOrder(order, pid, uid);
         if (id == null) {
             return new ResponseEntity<>("Can't create Order", HttpStatus.BAD_REQUEST);
         } else {

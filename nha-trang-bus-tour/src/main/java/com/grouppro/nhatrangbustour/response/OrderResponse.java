@@ -1,9 +1,25 @@
 package com.grouppro.nhatrangbustour.response;
 
+import com.grouppro.nhatrangbustour.Entity.Payment;
 import java.io.Serializable;
 import java.time.LocalDate;
 
 public class OrderResponse {
+
+    private Long orderId;
+    private LocalDate orderDate;
+    private Payment payment;
+    private Long userId;
+
+    public OrderResponse(Long orderId, LocalDate orderDate, Payment payment, Long userId) {
+        this.orderId = orderId;
+        this.orderDate = orderDate;
+        this.payment = payment;
+        this.userId = userId;
+    }
+
+    
+    // Add getters and setters
 
     public Long getOrderId() {
         return orderId;
@@ -21,12 +37,12 @@ public class OrderResponse {
         this.orderDate = orderDate;
     }
 
-    public Long getPaymentId() {
-        return paymentId;
+    public Payment getPayment() {
+        return payment;
     }
 
-    public void setPaymentId(Long paymentId) {
-        this.paymentId = paymentId;
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 
     public Long getUserId() {
@@ -36,18 +52,4 @@ public class OrderResponse {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
-    private Long orderId;
-    private LocalDate orderDate;
-    private Long paymentId;
-    private Long userId;
-
-    public OrderResponse(Long orderId, LocalDate orderDate, Long paymentId, Long userId) {
-        this.orderId = orderId;
-        this.orderDate = orderDate;
-        this.paymentId = paymentId;
-        this.userId = userId;
-    }
-
-    
-    // Add getters and setters
 }
