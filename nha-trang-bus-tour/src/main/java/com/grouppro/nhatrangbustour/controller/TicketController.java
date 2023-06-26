@@ -23,7 +23,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "tickets")
+@Tag(name = "Ticket-API")
 @RequestMapping("api/tickets")
 public class TicketController {
     private final TicketService ticketService;

@@ -68,4 +68,20 @@ public class TripService implements ITripService {
     public Trip getTripByid(Long tid) {
         return tripRepository.getReferenceById(tid);
     }
+
+    @Override
+    public List<Trip> searchTrip(String from, String to) {
+        List<Trip> trips = new ArrayList<>();
+        List<Route> routes = routeService.SearchRoute(from,to);
+        if (!routes.isEmpty()){
+            for (Route item: routes) {
+                System.out.println(item.getRouteId());
+                List<Trip> trips1 = tripRepository.findAllByRoute(item);
+                trips.addAll(trips1);
+            }
+        }else {
+            throw new RuntimeException("Can't find trip");
+        }
+        return trips;
+    }
 }

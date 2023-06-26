@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "priceframetickets")
+@Tag(name = "Price-Frame-Ticket-API")
 @RequestMapping("api/priceframetickets")
 public class PriceFrameTicketController {
     private final PriceFrameTicketService priceFrameTicketService;

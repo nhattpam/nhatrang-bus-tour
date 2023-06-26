@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "tickettypes")
+@Tag(name = "Ticket-Type-API")
 @RequestMapping("api/tickettypes")
 public class TicketTypeController {
     private final ITicketTypeService ticketTypeService;

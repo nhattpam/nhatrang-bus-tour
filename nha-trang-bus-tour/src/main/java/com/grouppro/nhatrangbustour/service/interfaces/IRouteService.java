@@ -10,5 +10,6 @@ public interface IRouteService {
     List<Route> getRoutes();
     Long saveRoute(Route route);
     Route getRouteByID(Long rid);
+    List<Route> SearchRoute(String fromDestination, String toDestination);
 
 }

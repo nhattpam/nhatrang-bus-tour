@@ -20,7 +20,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "priceframes")
+@Tag(name = "Price-Frame")
 @RequestMapping("api/priceframes")
 public class PriceFrameController {
     private final IPriceFrameService priceFrameService;

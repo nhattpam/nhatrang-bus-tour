@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "services")
+@Tag(name = "Service-API")
 @RequestMapping("api/services")
 public class ServiceController {
     private final IServiceService serviceService;

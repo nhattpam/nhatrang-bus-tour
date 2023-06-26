@@ -22,7 +22,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "stationroute")
+@Tag(name = "Station-Route-API")
 @RequestMapping("api/stationroute")
 public class StationRouteController {
     private final IStationRouteService stationRouteService;

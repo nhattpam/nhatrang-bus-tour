@@ -19,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "payments")
+@Tag(name = "Payment-API")
 @RequestMapping("api/payments")
 public class PaymentController {
     private final PaymentService paymentService;

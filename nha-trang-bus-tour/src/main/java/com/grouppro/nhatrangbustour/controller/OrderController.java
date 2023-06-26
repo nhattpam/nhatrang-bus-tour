@@ -4,6 +4,7 @@ import com.grouppro.nhatrangbustour.Entity.Order;
 import com.grouppro.nhatrangbustour.Entity.Payment;
 import com.grouppro.nhatrangbustour.response.OrderResponse;
 import com.grouppro.nhatrangbustour.service.OrderService;
+import com.grouppro.nhatrangbustour.service.interfaces.IOrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -28,10 +29,10 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "orders")
+@Tag(name = "Order-API")
 @RequestMapping("api/orders")
 public class OrderController {
-    private final OrderService orderService;
+    private final IOrderService orderService;
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "When don't have any Order"),
             @ApiResponse( content = @Content(schema = @Schema(implementation = Order.class)))

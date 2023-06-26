@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "drivers")
+@Tag(name = "Driver-API")
 @RequestMapping("api/drivers")
 public class DriverController {
     private final IDriverService driverService;

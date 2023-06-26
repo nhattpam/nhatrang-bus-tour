@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "trips")
+@Tag(name = "Trip-API")
 @RequestMapping("api/trips")
 public class TripController {
     private final ITripService tripService;
@@ -60,7 +60,7 @@ public class TripController {
     })
     @Operation(summary = "Create a new trip ")
     @PostMapping("/")
-    public ResponseEntity<?> addTrio(@RequestParam("departureTime")LocalDate depart, @RequestParam("arrivalTime") LocalDate arrival,
+    public ResponseEntity<?> addTrip(@RequestParam("departureTime")LocalDate depart, @RequestParam("arrivalTime") LocalDate arrival,
                                      @RequestParam("route")Long rid, @RequestParam("driver")Long did, @RequestParam("bus") Long bid,
                                      @RequestParam("priceframe")Long pfid) {
         Trip trip = new Trip();
@@ -72,6 +72,32 @@ public class TripController {
         } else {
 
             return new ResponseEntity<>(id,HttpStatus.CREATED);
+        }
+    }
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "404", description = "When don't have any trip"),
+            @ApiResponse( content = @Content(schema = @Schema(implementation = Trip.class)))
+    })
+    @Operation(summary = "Search trip ")
+    @GetMapping("/{From}/{To}")
+    public ResponseEntity<?> searchTrip(@RequestParam("From")String from, @RequestParam("To")String to) {
+        List<Trip> trips = tripService.searchTrip(from, to);
+        List<TripResponse> tripResponses = trips.stream()
+                .map(trip -> new TripResponse(
+                        trip.getTripID(),
+                        trip.getDepartureTime(),
+                        trip.getArrivalTime(),
+                        trip.getBus(),
+                        trip.getDriver(),
+                        trip.getPriceFrame(),
+                        trip.getRoute()
+                ))
+                .collect(Collectors.toList());
+
+        if (!tripResponses.isEmpty()) {
+            return ResponseEntity.ok(tripResponses);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.emptyList());
         }
     }
 }

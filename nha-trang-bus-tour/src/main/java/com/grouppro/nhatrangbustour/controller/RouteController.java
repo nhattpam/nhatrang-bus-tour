@@ -20,7 +20,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "routes")
+@Tag(name = "Route-API")
 @RequestMapping("api/routes")
 public class RouteController {
     private final IRouteService routeService;

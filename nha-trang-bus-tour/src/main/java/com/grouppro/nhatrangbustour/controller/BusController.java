@@ -18,7 +18,7 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "buses")
+@Tag(name = "Bus-API")
 @RequestMapping("api/buses")
 public class BusController {
 private final IBusService busService;
