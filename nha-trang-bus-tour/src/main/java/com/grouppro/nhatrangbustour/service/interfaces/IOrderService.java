@@ -6,5 +6,7 @@ import java.util.List;
 
 public interface IOrderService {
     List<Order> getOrders();
-    List<Order> getOrderById(Long id);
+    Long saveOrder(Order order, Long pid, Long uid);
+    Long editOrder(Order order);
+    Order getOrderById(Long oid);
 }

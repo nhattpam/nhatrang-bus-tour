@@ -1,6 +1,8 @@
 package com.grouppro.nhatrangbustour.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -36,7 +38,7 @@ public class Route implements Serializable {
     private List<StationRoute> stationRoute;
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
-    private List<TicketType> TickeType;
+    private List<TicketType> TicketType;
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Trip> Trip;

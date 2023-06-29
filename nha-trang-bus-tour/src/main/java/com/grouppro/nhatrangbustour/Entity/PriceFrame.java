@@ -1,7 +1,6 @@
 package com.grouppro.nhatrangbustour.Entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,7 +31,7 @@ public class PriceFrame implements Serializable {
     private Route route;
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
-    private List<PriceFrameTicket> PriceFrame;
+    private List<PriceFrameTicket> PriceFrameTicket;
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Trip> Trip;
