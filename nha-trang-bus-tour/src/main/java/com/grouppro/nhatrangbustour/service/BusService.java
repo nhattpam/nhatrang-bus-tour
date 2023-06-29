@@ -1,8 +1,6 @@
 package com.grouppro.nhatrangbustour.service;
 
 import com.grouppro.nhatrangbustour.Entity.Bus;
-import com.grouppro.nhatrangbustour.dto.BusDTO;
-import com.grouppro.nhatrangbustour.mapper.BusMapper;
 import com.grouppro.nhatrangbustour.repository.BusRepostory;
 import com.grouppro.nhatrangbustour.service.interfaces.IBusService;
 import jakarta.transaction.Transactional;
@@ -10,8 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
-import static java.util.stream.Collectors.toList;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -25,15 +22,30 @@ public class BusService implements IBusService {
     }
 
     @Override
-    public Long save(String BusNumber, int seat) {
-        Bus bus = new Bus();
-//        boolean check = busRepostory.existsByBusID(bus.getBusID());
-        bus.setBusNumber(BusNumber);
-        bus.setSeat(seat);
+    public Long save(Bus bus) {
         busRepostory.save(bus);
         if(bus!=null){
             return bus.getBusId();
         }
-        return  null;
+        return null;
     }
+
+    @Override
+    public Bus getBusById(Long busId) {
+        return busRepostory.findById(busId).orElse(null);
+    }
+    
+    @Override
+    public void deleteBusById(Long id) {
+    Optional<Bus> busOptional = busRepostory.findById(id);
+    
+    if (busOptional.isPresent()) {
+        Bus bus = busOptional.get();
+        busRepostory.delete(bus);
+    } else {
+        throw new IllegalArgumentException("Bus not found with id: " + id);
+    }
+}
+
+    
 }

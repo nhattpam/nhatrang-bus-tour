@@ -1,7 +1,6 @@
 package com.grouppro.nhatrangbustour.controller;
 
 import com.grouppro.nhatrangbustour.Entity.Driver;
-import com.grouppro.nhatrangbustour.dto.BusDTO;
 import com.grouppro.nhatrangbustour.service.interfaces.IDriverService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -20,7 +19,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "Driver-API")
-@RequestMapping("api/driver")
+@RequestMapping("api/drivers")
 public class DriverController {
     private final IDriverService driverService;
     @ApiResponses(value = {
@@ -28,7 +27,7 @@ public class DriverController {
             @ApiResponse( content = @Content(schema = @Schema(implementation = Driver.class)))
     })
     @Operation(summary = "Get all drivers")
-    @GetMapping("/Drivers")
+    @GetMapping("/")
     public ResponseEntity<?> getDrivers() {
         List<Driver> drivers = driverService.getDrivers();
         if (!drivers.isEmpty()) {
@@ -41,10 +40,10 @@ public class DriverController {
             @ApiResponse(responseCode = "201", description = "When Driver created successfully!"),
             @ApiResponse(responseCode = "400", description = "When Driver can't be created - Object is not valid!")
     })
-    @Operation(summary = "Create a new Driver")
+    @Operation(summary = "Create a new driver ")
     @PostMapping("/")
-    public ResponseEntity<?> addDriver(@RequestParam("drivername")String name, @RequestParam("driverphone") String phone) {
-        Long id = driverService.saveDriver(name, phone);
+    public ResponseEntity<?> addDriver(@RequestBody Driver driver) {
+        Long id = driverService.saveDriver(driver);
         if (id == null) {
             return new ResponseEntity<>("Can't create Driver", HttpStatus.BAD_REQUEST);
         } else {

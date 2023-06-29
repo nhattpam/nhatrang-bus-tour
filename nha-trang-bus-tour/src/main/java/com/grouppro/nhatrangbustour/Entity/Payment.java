@@ -1,7 +1,7 @@
 package com.grouppro.nhatrangbustour.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity(name = "Payment")
 @Table(name = "Payment")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Payment implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,4 +32,6 @@ public class Payment implements Serializable {
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Order> Order;
+    
+    
 }

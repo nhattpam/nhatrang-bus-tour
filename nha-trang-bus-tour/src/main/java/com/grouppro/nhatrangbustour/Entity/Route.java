@@ -1,14 +1,13 @@
 package com.grouppro.nhatrangbustour.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Nationalized;
 
-import javax.lang.model.element.Name;
 import java.io.Serializable;
 import java.util.List;
 
@@ -17,6 +16,8 @@ import java.util.List;
 @AllArgsConstructor
 @Entity(name = "Route")
 @Table(name = "Route")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
 public class Route implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,7 +37,7 @@ public class Route implements Serializable {
     private List<StationRoute> stationRoute;
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
-    private List<TicketType> TickeType;
+    private List<TicketType> TicketType;
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Trip> Trip;

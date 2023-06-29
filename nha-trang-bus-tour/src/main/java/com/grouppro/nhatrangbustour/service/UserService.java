@@ -32,6 +32,8 @@ public class UserService implements IUserService {
         return userRepository.findAll();
     }
 
-
-
+    @Override
+    public User getUserById(Long uid) {
+        return userRepository.getReferenceById(uid);
+    }
 }

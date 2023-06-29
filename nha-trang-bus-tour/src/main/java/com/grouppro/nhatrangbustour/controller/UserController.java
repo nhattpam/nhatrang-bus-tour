@@ -1,6 +1,5 @@
 package com.grouppro.nhatrangbustour.controller;
 
-import com.grouppro.nhatrangbustour.Entity.Bus;
 import com.grouppro.nhatrangbustour.Entity.User;
 import com.grouppro.nhatrangbustour.service.interfaces.IUserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -38,6 +37,24 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("There is no user");
         }
     }
+//    @GetMapping("/login/google")
+//    public String loginGoogle() {
+//        return "redirect:/oauth2/authorization/google";
+//    }
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "404", description = "When don't have any User"),
+//            @ApiResponse( content = @Content(schema = @Schema(implementation = User.class)))
+//    })
+//    @Operation(summary = "login by google")
+//    @GetMapping("/login/oauth2/code/google")
+//    public ResponseEntity<?> LoginByGoogle(@AuthenticationPrincipal OAuth2User oauth2User) {
+//        String name = oauth2User.getAttribute("name");
+//        String email = oauth2User.getAttribute("email");
+//        // Process the user details as needed
+//
+//        // Return a success response or any desired data
+//        return ResponseEntity.ok("Authentication successful");
+//    }
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "When User created successfully!"),
             @ApiResponse(responseCode = "400", description = "When User can't be created - Object is not valid!")

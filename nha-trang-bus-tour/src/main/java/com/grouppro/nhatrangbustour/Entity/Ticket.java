@@ -1,6 +1,6 @@
 package com.grouppro.nhatrangbustour.Entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -50,19 +50,19 @@ public class Ticket implements Serializable {
     )
     private String feedback;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonManagedReference
     @JoinColumn(name = "TripID")
+    @JsonBackReference
     private Trip trip;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonManagedReference
     @JoinColumn(name = "OrderID")
+    @JsonBackReference
     private Order order;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonManagedReference
     @JoinColumn(name = "ServiceID")
+    @JsonBackReference
     private Service service;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonManagedReference
     @JoinColumn(name = "TicketTypeID")
-    private TicketType TicketType;
+    @JsonBackReference
+    private TicketType ticketType;
 }

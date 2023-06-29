@@ -1,7 +1,7 @@
 package com.grouppro.nhatrangbustour.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,8 +10,6 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Data
@@ -20,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity(name = "Trip")
 @Table(name = "Trip")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Trip implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,22 +29,29 @@ public class Trip implements Serializable {
     @Column(name = "ArrivalTime", nullable = false)
     private LocalDate arrivalTime;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @JsonBackReference
     @JoinColumn(name = "RouteID")
     private Route route;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonManagedReference
     @JoinColumn(name = "BusID")
+    @JsonBackReference
     private Bus bus;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonManagedReference
     @JoinColumn(name = "DriverID")
+    @JsonBackReference
     private Driver driver;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @JsonBackReference
     @JoinColumn(name = "PriceFrameID")
     private PriceFrame priceFrame;
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Ticket> Ticket;
+
+    public Bus getBus(){
+        if (bus != null) {
+            return bus;
+        }
+        return null;
+    }
 }

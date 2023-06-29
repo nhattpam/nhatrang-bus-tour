@@ -1,7 +1,7 @@
 package com.grouppro.nhatrangbustour.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity(name = "PriceFrame")
 @Table(name = "PriceFrame")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class PriceFrame implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,12 +28,12 @@ public class PriceFrame implements Serializable {
     @Column(name = "PriceFrameName", nullable = false)
     private String priceFrameName;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @JsonBackReference
     @JoinColumn(name = "RouteID")
     private Route route;
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
-    private List<PriceFrameTicket> PriceFrame;
+    private List<PriceFrameTicket> PriceFrameTicket;
     @OneToMany(fetch = FetchType.LAZY)
     @JsonBackReference
     private List<Trip> Trip;
