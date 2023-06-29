@@ -7,6 +7,7 @@ import com.grouppro.nhatrangbustour.service.interfaces.IRouteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -19,7 +20,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "Price-Frame")
+@Tag(name = "Price-Frame-API")
 @RequestMapping("api/priceframes")
 public class PriceFrameController {
     private final IPriceFrameService priceFrameService;

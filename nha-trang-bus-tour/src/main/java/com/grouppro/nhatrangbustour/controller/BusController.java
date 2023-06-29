@@ -5,6 +5,7 @@ import com.grouppro.nhatrangbustour.service.interfaces.IBusService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -14,11 +15,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "Bus-API")
+@Tag(name = "Buses-API")
 @RequestMapping("api/buses")
 public class BusController {
 private final IBusService busService;
@@ -58,7 +57,6 @@ private final IBusService busService;
                     .body("Failed to delete bus: " + e.getMessage());
         }
     }
-
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "When Bus created successfully!"),
             @ApiResponse(responseCode = "400", description = "When Bus can't be created - Object is not valid!")
@@ -66,6 +64,7 @@ private final IBusService busService;
     @Operation(summary = "Create a new bus")
     @PostMapping("/")
     public ResponseEntity<?> addBus(@RequestBody Bus bus) {
+
         Long id = busService.save(bus);
         if (id == null) {
             return new ResponseEntity<>("Can't create bus", HttpStatus.BAD_REQUEST);

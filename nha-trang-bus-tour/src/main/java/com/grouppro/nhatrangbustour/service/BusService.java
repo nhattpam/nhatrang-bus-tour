@@ -23,8 +23,8 @@ public class BusService implements IBusService {
 
     @Override
     public Long save(Bus bus) {
-        busRepostory.save(bus);
-        if(bus!=null){
+        if(bus != null){
+            busRepostory.save(bus);
             return bus.getBusId();
         }
         return null;
@@ -37,15 +37,14 @@ public class BusService implements IBusService {
     
     @Override
     public void deleteBusById(Long id) {
-    Optional<Bus> busOptional = busRepostory.findById(id);
-    
-    if (busOptional.isPresent()) {
-        Bus bus = busOptional.get();
-        busRepostory.delete(bus);
-    } else {
-        throw new IllegalArgumentException("Bus not found with id: " + id);
-    }
-}
+        Optional<Bus> busOptional = busRepostory.findById(id);
 
-    
+        if (busOptional.isPresent()) {
+            Bus bus = busOptional.get();
+            busRepostory.delete(bus);
+        } else {
+            throw new IllegalArgumentException("Bus not found with id: " + id);
+        }
+
+    }
 }

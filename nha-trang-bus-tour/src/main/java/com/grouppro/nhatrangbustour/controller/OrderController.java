@@ -3,6 +3,7 @@ package com.grouppro.nhatrangbustour.controller;
 import com.grouppro.nhatrangbustour.Entity.Order;
 import com.grouppro.nhatrangbustour.response.OrderResponse;
 import com.grouppro.nhatrangbustour.service.interfaces.IOrderService;
+import com.grouppro.nhatrangbustour.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -45,17 +46,18 @@ public class OrderController {
         }
     }
 
+
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "When Order created successfully!"),
             @ApiResponse(responseCode = "400", description = "When Order can't be created - Object is not valid!")
     })
     @Operation(summary = "Create an order")
-    @PostMapping("/")
-    public ResponseEntity<?> addOrder(@RequestParam("user") Long uid, @RequestParam("payment") Long pid) {
+    @PostMapping("/{uid}/{pid}")
+    public ResponseEntity<?> addOrder(@PathVariable Long uid, @PathVariable Long pid) {
         Order order = new Order();
         LocalDate date = LocalDate.now();
         order.setOrderDate(date);
-        Long id = orderService.saveOrder(order, pid, uid);
+        Long id =orderService.saveOrder(order, pid,uid);
         if (id == null) {
             return new ResponseEntity<>("Can't create Order", HttpStatus.BAD_REQUEST);
         } else {

@@ -6,7 +6,6 @@ import com.grouppro.nhatrangbustour.service.interfaces.IRouteService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +33,6 @@ public class RouteService implements IRouteService {
     public Route getRouteByID(Long rid) {
         return routeRepository.getReferenceById(rid);
     }
-
     @Override
     public List<Route> SearchRoute(String fromDestination, String toDestination) {
         List<Route> routes = new ArrayList<>();

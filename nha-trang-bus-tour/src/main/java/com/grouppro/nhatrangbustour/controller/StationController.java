@@ -5,6 +5,7 @@ import com.grouppro.nhatrangbustour.service.interfaces.IStationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -42,7 +43,6 @@ public class StationController {
     @Operation(summary = "Create a new station ")
     @PostMapping("/")
     public ResponseEntity<?> addStation(@RequestBody Station station) {
-        
         Long id = stationService.saveStation(station);
         if (id == null) {
             return new ResponseEntity<>("Can't create Station", HttpStatus.BAD_REQUEST);
