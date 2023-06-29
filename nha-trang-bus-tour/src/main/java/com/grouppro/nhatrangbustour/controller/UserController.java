@@ -1,17 +1,21 @@
 package com.grouppro.nhatrangbustour.controller;
 
 import com.grouppro.nhatrangbustour.Entity.User;
+import com.grouppro.nhatrangbustour.config.JwtTokenProvider;
 import com.grouppro.nhatrangbustour.service.interfaces.IUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,14 +25,19 @@ import java.util.List;
 @Tag(name = "User-API")
 @RequestMapping("api/users")
 @Slf4j
+@SecurityRequirement(name = "Authorization")
 public class UserController {
     private final IUserService userService;
+    private static final String ADMIN="ROLE_Admin";
+    private static final String CUSTOMER="ROLE_Customer";
+    private final JwtTokenProvider tokenProvider;
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "When don't have any User"),
             @ApiResponse( content = @Content(schema = @Schema(implementation = User.class)))
     })
     @Operation(summary = "Get all users")
     @GetMapping("/")
+    @Secured({ADMIN, CUSTOMER})
     public ResponseEntity<?> getUsers() {
         List<User> users =userService.getUsers();
         if (!users.isEmpty()) {
@@ -69,5 +78,17 @@ public class UserController {
 
             return new ResponseEntity<>(id,HttpStatus.CREATED);
         }
+    }
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestParam("email") String email) {
+        try {
+            if (email!=null ){
+                String token = tokenProvider.generateToken(email);
+                return ResponseEntity.ok(token);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Invalid email");
+        }
+        return ResponseEntity.badRequest().body("Invalid email");
     }
 }
