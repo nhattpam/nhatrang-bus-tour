@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 const ListBuses = () => {
     const [busList, setBusList] = useState([]);
     const [msg, setMsg] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         busService.getAllBuses()
@@ -19,6 +20,18 @@ const ListBuses = () => {
                 console.log(error);
             });
     }, []);
+
+    const handleSearch = (event) => {
+        setSearchTerm(event.target.value);
+    };
+
+    const filteredBuses = busList.filter((bus) => {
+        return (
+            bus.busId.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+            bus.busNumber.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+            bus.seat.toString().toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    });
 
     // const deleteBus = (busId) => {
     //     busService.deleteBus(busId).then((res) => {
@@ -50,6 +63,17 @@ const ListBuses = () => {
                             {
                                 msg && <p className='text-center text-success'>{msg}</p>
                             }
+
+                            {/* Search Input */}
+                            <div className="mb-3">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Search Tickets"
+                                    value={searchTerm}
+                                    onChange={handleSearch}
+                                />
+                            </div>
                             {/* DataTales Example */}
 
                             <div class="card shadow mb-4">
@@ -67,14 +91,14 @@ const ListBuses = () => {
                                             <tbody>
                                                 {
 
-                                                    busList.map((e) => (
-                                                        <tr>
-                                                            <td key={e.busId}>{e.busId}</td>
-                                                            <td key={e.busNumber}>{e.busNumber}</td>
-                                                            <td key={e.seat}>{e.seat}</td>
+                                                    filteredBuses.map((bus) => (
+                                                        <tr key={bus.busId}>
+                                                            <td key={bus.busId}>{bus.busId}</td>
+                                                            <td key={bus.busNumber}>{bus.busNumber}</td>
+                                                            <td key={bus.seat}>{bus.seat}</td>
                                                             <td>
                                                                 <div className="btn-group" role="group">
-                                                                    <Link className="btn btn-primary" to={"/edit_bus/" + e.busId}>
+                                                                    <Link className="btn btn-primary" to={"/edit_bus/" + bus.busId}>
                                                                         Edit
                                                                     </Link>
                                                                     {/* <a className="btn btn-danger" onClick={() => deleteBus(e.busId)}>

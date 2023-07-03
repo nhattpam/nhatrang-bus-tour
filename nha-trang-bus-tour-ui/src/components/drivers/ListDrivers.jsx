@@ -6,6 +6,7 @@ import driverService from '../../services/driver.service';
 const ListDrivers = () => {
 
     const [driverList, setDriverList] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         driverService.getAllDrivers().then((res) => {
@@ -17,6 +18,18 @@ const ListDrivers = () => {
             console.log('lol');
         });
     }, []);
+
+    const handleSearch = (event) => {
+        setSearchTerm(event.target.value);
+    };
+
+    const filteredDrivers = driverList.filter((driver) => {
+        return (
+            driver.driverId.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+            driver.driverName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            driver.driverPhone.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    });
 
     return (
         <>
@@ -36,6 +49,16 @@ const ListDrivers = () => {
                             {/* Page Heading */}
 
                             <h1 class="h3 mb-2 text-gray-800">List Drivers</h1>
+                            {/* Search Input */}
+                            <div className="mb-3">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Search Tickets"
+                                    value={searchTerm}
+                                    onChange={handleSearch}
+                                />
+                            </div>
 
 
                             {/* DataTales Example */}
@@ -55,11 +78,11 @@ const ListDrivers = () => {
                                             <tbody>
                                                 {
 
-                                                    driverList.map((e) => (
-                                                        <tr>
-                                                            <td key={e.driverId}>{e.driverId}</td>
-                                                            <td key={e.driverName}>{e.driverName}</td>
-                                                            <td key={e.driverPhone}>{e.driverPhone}</td>
+                                                    filteredDrivers.map((driver) => (
+                                                        <tr key={driver.driverId}>
+                                                            <td>{driver.driverId}</td>
+                                                            <td>{driver.driverName}</td>
+                                                            <td>{driver.driverPhone}</td>
                                                         </tr>
                                                     ))
 

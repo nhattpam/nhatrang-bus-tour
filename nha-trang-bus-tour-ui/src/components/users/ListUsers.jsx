@@ -5,6 +5,7 @@ import userService from '../../services/user.service';
 const ListUsers = () => {
 
     const [userList, setUserList] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         userService.getAllUsers().then((res) => {
@@ -16,6 +17,19 @@ const ListUsers = () => {
             console.log('lol');
         });
     }, []);
+
+    const handleSearch = (event) => {
+        setSearchTerm(event.target.value);
+    };
+
+    const filteredUsers = userList.filter((user) => {
+        return (
+            user.userId.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+            user.userEmail.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            user.userName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            user.userPhone.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    });
 
     return (
         <>
@@ -36,6 +50,16 @@ const ListUsers = () => {
 
                             <h1 class="h3 mb-2 text-gray-800">List Users</h1>
 
+                            {/* Search Input */}
+                            <div className="mb-3">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Search Users"
+                                    value={searchTerm}
+                                    onChange={handleSearch}
+                                />
+                            </div>
 
                             {/* DataTales Example */}
 
@@ -55,12 +79,12 @@ const ListUsers = () => {
                                             <tbody>
                                                 {
 
-                                                    userList.map((e) => (
-                                                        <tr>
-                                                            <td key={e.userId}>{e.userId}</td>
-                                                            <td key={e.userEmail}>{e.userEmail}</td>
-                                                            <td key={e.userName}>{e.userName}</td>
-                                                            <td key={e.userPhone}>{e.userPhone}</td>
+                                                    filteredUsers.map((user) => (
+                                                        <tr key={user.userId}>
+                                                            <td>{user.userId}</td>
+                                                            <td>{user.userEmail}</td>
+                                                            <td>{user.userName}</td>
+                                                            <td>{user.userPhone}</td>
                                                         </tr>
                                                     ))
 

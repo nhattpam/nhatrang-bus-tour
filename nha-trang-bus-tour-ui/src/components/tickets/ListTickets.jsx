@@ -5,6 +5,7 @@ import ticketService from '../../services/ticket.service';
 
 const ListTickets = () => {
   const [ticketList, setTicketList] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     ticketService.getAllTickets().then((res) => {
@@ -16,6 +17,21 @@ const ListTickets = () => {
       console.log('lol');
     });
   }, []);
+
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredTickets = ticketList.filter((ticket) => {
+    return (
+      ticket.ticketId.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+      ticket.passengerEmail.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+      ticket.passengerName.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+      ticket.passengerPhone.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+      ticket.feedback.toString().toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  });
   return (
     <>
       {/* Page Wrapper */}
@@ -36,7 +52,16 @@ const ListTickets = () => {
 
               <h1 class="h3 mb-2 text-gray-800">List Tickets</h1>
 
-
+              {/* Search Input */}
+              <div className="mb-3">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search Tickets"
+                  value={searchTerm}
+                  onChange={handleSearch}
+                />
+              </div>
               {/* DataTales Example */}
 
               <div class="card shadow mb-4">
@@ -56,13 +81,13 @@ const ListTickets = () => {
                       <tbody>
                         {
 
-                          ticketList.map((e) => (
-                            <tr>
-                              <td key={e.ticketId}>{e.ticketId}</td>
-                              <td key={e.passengerEmail}>{e.passengerEmail}</td>
-                              <td key={e.passengerName}>{e.passengerName}</td>
-                              <td key={e.passengerPhone}>{e.passengerPhone}</td>
-                              <td key={e.feedback}>{e.feedback}</td>
+                          filteredTickets.map((ticket) => (
+                            <tr key={ticket.ticketId}>
+                              <td>{ticket.ticketId}</td>
+                              <td>{ticket.passengerEmail}</td>
+                              <td>{ticket.passengerName}</td>
+                              <td>{ticket.passengerPhone}</td>
+                              <td>{ticket.feedback}</td>
                             </tr>
                           ))
 
