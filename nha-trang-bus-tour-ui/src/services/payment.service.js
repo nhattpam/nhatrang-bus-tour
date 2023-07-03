@@ -1,8 +1,8 @@
 import axios from "axios";
 
 
-const BASE_API_URL = "http://localhost:8080/api"
-// const BASE_API_URL = "https://api.sampleapis.com/beers";
+// const BASE_API_URL = "http://localhost:8080/api"
+const BASE_API_URL = "https://nhatrangbustourbackend.azurewebsites.net/api"
 class PaymentService{
     
     getAllPayments()
