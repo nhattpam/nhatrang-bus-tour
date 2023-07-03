@@ -5,6 +5,7 @@ import paymentService from '../../services/payment.service';
 
 const ListPayments = () => {
     const [paymentList, setPaymentList] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         paymentService.getAllPayments().then((res) => {
@@ -16,6 +17,18 @@ const ListPayments = () => {
             console.log('lol');
         });
     }, []);
+
+    const handleSearch = (event) => {
+        setSearchTerm(event.target.value);
+    };
+
+    const filteredPayments = paymentList.filter((payment) => {
+        return (
+            payment.paymentId.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+            payment.paymentDate.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+            payment.paymentMethod.toString().toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    });
 
     return (
         <>
@@ -36,7 +49,16 @@ const ListPayments = () => {
 
                             <h1 class="h3 mb-2 text-gray-800">List Payments</h1>
 
-
+                            {/* Search Input */}
+                            <div className="mb-3">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Search Payments"
+                                    value={searchTerm}
+                                    onChange={handleSearch}
+                                />
+                            </div>
                             {/* DataTales Example */}
 
                             <div class="card shadow mb-4">
@@ -53,11 +75,11 @@ const ListPayments = () => {
                                             <tbody>
                                                 {
 
-                                                    paymentList.map((e) => (
-                                                        <tr>
-                                                            <td key={e.paymentId}>{e.paymentId}</td>
-                                                            <td key={e.paymentDate}>{e.paymentDate}</td>
-                                                            <td key={e.paymentMethod}>{e.paymentMethod}</td>
+                                                    filteredPayments.map((payment) => (
+                                                        <tr key={payment.paymentId}>
+                                                            <td>{payment.paymentId}</td>
+                                                            <td>{payment.paymentDate}</td>
+                                                            <td>{payment.paymentMethod}</td>
                                                         </tr>
                                                     ))
 
