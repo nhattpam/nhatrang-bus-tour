@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 const ListOrders = () => {
 
   const [orderList, setOrderList] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     orderService.getAllOrders().then((res) => {
@@ -18,6 +19,19 @@ const ListOrders = () => {
       console.log('lol');
     });
   }, []);
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredOrders = orderList.filter((order) => {
+    return (
+      order.orderId.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+      order.orderDate.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+      order.payment.paymentMethod.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+      order.userId.toString().toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  });
 
   return (
     <>
@@ -38,6 +52,16 @@ const ListOrders = () => {
 
               <h1 class="h3 mb-2 text-gray-800">List Orders</h1>
 
+              {/* Search Input */}
+              <div className="mb-3">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search Orders"
+                  value={searchTerm}
+                  onChange={handleSearch}
+                />
+              </div>
 
               {/* DataTales Example */}
 
@@ -57,12 +81,12 @@ const ListOrders = () => {
                       <tbody>
                         {
 
-                          orderList.map((e) => (
-                            <tr>
-                              <td key={e.orderId}>{e.orderId}</td>
-                              <td key={e.orderDate}>{e.orderDate}</td>
-                              <td key={e.payment.paymentMethod}>{e.payment.paymentMethod}</td>
-                              <td key={e.userId}>{e.userId}</td>
+                          filteredOrders.map((order) => (
+                            <tr key={order.orderId}>
+                              <td>{order.orderId}</td>
+                              <td>{order.orderDate}</td>
+                              <td>{order.payment.paymentMethod}</td>
+                              <td>{order.userId}</td>
                             </tr>
                           ))
 

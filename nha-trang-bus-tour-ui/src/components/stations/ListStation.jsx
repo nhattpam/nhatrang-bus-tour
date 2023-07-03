@@ -7,6 +7,7 @@ const ListStation = () => {
 
 
     const [stationList, setStationList] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         stationService.getAllStations().then((res) => {
@@ -18,6 +19,18 @@ const ListStation = () => {
             console.log('lol');
         });
     }, []);
+
+    const handleSearch = (event) => {
+        setSearchTerm(event.target.value);
+    };
+
+    const filteredStations = stationList.filter((station) => {
+        return (
+            station.stationId.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+            station.stationName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            station.stationLocation.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    });
 
     return (
         <>
@@ -37,7 +50,16 @@ const ListStation = () => {
                             {/* Page Heading */}
 
                             <h1 class="h3 mb-2 text-gray-800">List Stations</h1>
-
+                            {/* Search Input */}
+                            <div className="mb-3">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Search Stations"
+                                    value={searchTerm}
+                                    onChange={handleSearch}
+                                />
+                            </div>
 
                             {/* DataTales Example */}
 
@@ -57,11 +79,11 @@ const ListStation = () => {
                                             <tbody>
                                                 {
 
-                                                    stationList.map((e) => (
-                                                        <tr>
-                                                            <td key={e.stationId}>{e.stationId}</td>
-                                                            <td key={e.stationName}>{e.stationName}</td>
-                                                            <td key={e.stationLocation}>{e.stationLocation}</td>
+                                                    filteredStations.map((station) => (
+                                                        <tr key={station.stationId}>
+                                                            <td>{station.stationId}</td>
+                                                            <td>{station.stationName}</td>
+                                                            <td>{station.stationLocation}</td>
                                                         </tr>
                                                     ))
 

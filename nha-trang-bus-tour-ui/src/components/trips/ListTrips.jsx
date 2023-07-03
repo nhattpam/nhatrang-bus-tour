@@ -5,6 +5,8 @@ import tripService from '../../services/trip.service';
 const ListTrips = () => {
 
     const [tripList, setTripList] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+
 
     useEffect(() => {
         tripService.getAllTrips().then((res) => {
@@ -16,6 +18,22 @@ const ListTrips = () => {
             console.log('lol');
         });
     }, []);
+
+    const handleSearch = (event) => {
+        setSearchTerm(event.target.value);
+    };
+
+    const filteredTrips = tripList.filter((trip) => {
+        return (
+            trip.tripID.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+            trip.departureTime.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+            trip.arrivalTime.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+            trip.bus.busNumber.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+            trip.driver.driverName.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+            trip.priceFrame.priceFrameName.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+            trip.route.routeName.toString().toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    });
 
 
     return (
@@ -36,7 +54,16 @@ const ListTrips = () => {
                             {/* Page Heading */}
 
                             <h1 class="h3 mb-2 text-gray-800">List Trips</h1>
-
+                            {/* Search Input */}
+                            <div className="mb-3">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Search Trips"
+                                    value={searchTerm}
+                                    onChange={handleSearch}
+                                />
+                            </div>
 
                             {/* DataTales Example */}
 
@@ -59,15 +86,15 @@ const ListTrips = () => {
                                             <tbody>
                                                 {
 
-                                                    tripList.map((e) => (
-                                                        <tr>
-                                                            <td key={e.tripID}>{e.tripID}</td>
-                                                            <td key={e.departureTime}>{e.departureTime}</td>
-                                                            <td key={e.arrivalTime}>{e.arrivalTime}</td>
-                                                            <td key={e.bus.busNumber}>{e.bus.busNumber}</td>
-                                                            <td key={e.driver.driverName}>{e.driver.driverName}</td>
-                                                            <td key={e.priceFrame.priceFrameName}>{e.priceFrame.priceFrameName}</td>
-                                                            <td key={e.route.routeName}>{e.route.routeName}</td>
+                                                    filteredTrips.map((trip) => (
+                                                        <tr key={trip.tripID}>
+                                                            <td>{trip.tripID}</td>
+                                                            <td>{trip.departureTime}</td>
+                                                            <td>{trip.arrivalTime}</td>
+                                                            <td>{trip.bus.busNumber}</td>
+                                                            <td>{trip.driver.driverName}</td>
+                                                            <td>{trip.priceFrame.priceFrameName}</td>
+                                                            <td>{trip.route.routeName}</td>
                                                         </tr>
                                                     ))
 
