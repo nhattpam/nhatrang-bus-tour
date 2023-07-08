@@ -8,10 +8,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,14 +21,18 @@ import java.util.List;
 @RequiredArgsConstructor
 @Tag(name = "Buses-API")
 @RequestMapping("api/buses")
+@SecurityRequirement(name = "Authorization")
 public class BusController {
-private final IBusService busService;
+    private static final String ADMIN="ROLE_Admin";
+    private static final String CUSTOMER="ROLE_Customer";
+    private final IBusService busService;
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "When don't have any Bus"),
             @ApiResponse( content = @Content(schema = @Schema(implementation = Bus.class)))
     })
     @Operation(summary = "Get all buses")
     @GetMapping("/")
+    @Secured({ADMIN,CUSTOMER})
     public ResponseEntity<?> getBuses() {
         List<Bus> buses =busService.getBuses();
         if (!buses.isEmpty()) {
@@ -37,6 +43,7 @@ private final IBusService busService;
     }
     @Operation(summary = "Get a bus by its ID")
     @GetMapping("/{busId}")
+    @Secured({ADMIN,CUSTOMER})
     public ResponseEntity<?> getBusByID(@PathVariable("busId") Long busId) {
         Bus bus = busService.getBusById(busId);
         if (bus != null) {
@@ -48,6 +55,7 @@ private final IBusService busService;
 
     @Operation(summary = "Delete a bus by its ID")
     @DeleteMapping("/{id}")
+    @Secured({ADMIN})
     public ResponseEntity<String> deleteBus(@PathVariable Long id) {
         try {
             busService.deleteBusById(id);
@@ -63,6 +71,7 @@ private final IBusService busService;
     })
     @Operation(summary = "Create a new bus")
     @PostMapping("/")
+    @Secured({ADMIN})
     public ResponseEntity<?> addBus(@RequestBody Bus bus) {
 
         Long id = busService.save(bus);
@@ -76,6 +85,7 @@ private final IBusService busService;
     
     @Operation(summary = "Update a bus by its ID")
     @PutMapping("/{busID}")
+    @Secured({ADMIN})
     public ResponseEntity<?> updateBus(@PathVariable("busID") Long busId, @RequestBody Bus updatedBus) {
         Bus existingBus = busService.getBusById(busId);
         if (existingBus == null) {

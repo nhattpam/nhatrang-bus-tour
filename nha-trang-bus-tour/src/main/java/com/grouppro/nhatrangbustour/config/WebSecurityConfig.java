@@ -45,7 +45,7 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable();
-        http.authorizeHttpRequests().requestMatchers("/api/users/login", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+        http.authorizeHttpRequests().requestMatchers("/api/users/","/api/users/login", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 .anyRequest().authenticated();
 
         http.addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class).exceptionHandling().authenticationEntryPoint(new AuthenticationEntryPoint() {

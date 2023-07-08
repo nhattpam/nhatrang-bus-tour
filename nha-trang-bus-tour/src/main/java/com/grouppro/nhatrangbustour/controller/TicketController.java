@@ -7,10 +7,12 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,14 +21,18 @@ import java.util.List;
 @RequiredArgsConstructor
 @Tag(name = "Ticket-API")
 @RequestMapping("api/tickets")
+@SecurityRequirement(name = "Authorization")
 public class TicketController {
     private final TicketService ticketService;
+    private static final String ADMIN="ROLE_Admin";
+    private static final String CUSTOMER="ROLE_Customer";
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "When don't have any Ticket"),
             @ApiResponse( content = @Content(schema = @Schema(implementation = Ticket.class)))
     })
     @Operation(summary = "Get all tickets")
     @GetMapping("/")
+    @Secured({ADMIN,CUSTOMER})
     public ResponseEntity<?> getTickets() {
         List<Ticket> tickets = ticketService.getTickets();
         if (!tickets.isEmpty()) {
@@ -41,6 +47,7 @@ public class TicketController {
     })
     @Operation(summary = "Create a new ticket")
     @PostMapping("/")
+    @Secured(ADMIN)
     public ResponseEntity<?> addTicket(@RequestParam("passengername") String name, @RequestParam("passengerphone")String phone,
                                        @RequestParam("passengeremail")String email, @RequestParam("feedback") String feedback,
                                        @RequestParam("trip") Long tid, @RequestParam("order")Long oid,

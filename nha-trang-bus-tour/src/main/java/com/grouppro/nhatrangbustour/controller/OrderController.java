@@ -9,10 +9,12 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -25,7 +27,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Tag(name = "Order-API")
 @RequestMapping("api/orders")
+@SecurityRequirement(name = "Authorization")
 public class OrderController {
+    private static final String ADMIN="ROLE_Admin";
+    private static final String CUSTOMER="ROLE_Customer";
     private final IOrderService orderService;
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "When don't have any Order"),
@@ -33,6 +38,7 @@ public class OrderController {
     })
     @Operation(summary = "Get all orders")
     @GetMapping("/")
+    @Secured({ADMIN,CUSTOMER})
     public ResponseEntity<List<OrderResponse>> getOrders() {
         List<Order> orders = orderService.getOrders();
         List<OrderResponse> orderResponses = orders.stream()
@@ -53,6 +59,7 @@ public class OrderController {
     })
     @Operation(summary = "Create an order")
     @PostMapping("/{uid}/{pid}")
+    @Secured({ADMIN,CUSTOMER})
     public ResponseEntity<?> addOrder(@PathVariable Long uid, @PathVariable Long pid) {
         Order order = new Order();
         LocalDate date = LocalDate.now();

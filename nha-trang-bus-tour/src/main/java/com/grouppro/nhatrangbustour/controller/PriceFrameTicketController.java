@@ -8,10 +8,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +22,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @Tag(name = "Price-Frame-Ticket-API")
 @RequestMapping("api/priceframetickets")
+@SecurityRequirement(name = "Authorization")
 public class PriceFrameTicketController {
+    private static final String ADMIN="ROLE_Admin";
+    private static final String CUSTOMER="ROLE_Customer";
     private final PriceFrameTicketService priceFrameTicketService;
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "When don't have any Price Frame Ticket"),
@@ -28,6 +33,7 @@ public class PriceFrameTicketController {
     })
     @Operation(summary = "Get all price frame tickets")
     @GetMapping("/")
+    @Secured({ADMIN,CUSTOMER})
     public ResponseEntity<?> getPriceFrameTickets() {
         List<PriceFrameTicket> priceFrameTickets = priceFrameTicketService.getPriceFrameTickets();
         if (!priceFrameTickets.isEmpty()) {
@@ -42,6 +48,7 @@ public class PriceFrameTicketController {
     })
     @Operation(summary = "Create a new price frame ticket ")
     @PostMapping("/")
+    @Secured({ADMIN})
     public ResponseEntity<?> addPriceFrameTicket(@RequestParam("price")Double price, @RequestParam("priceframe") Long pfid,
                                                  @RequestParam("tickettype") Long ttid) {
         PriceFrameTicket priceFrameTicket = new PriceFrameTicket();

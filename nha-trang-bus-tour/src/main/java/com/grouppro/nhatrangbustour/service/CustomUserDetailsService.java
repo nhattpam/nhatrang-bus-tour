@@ -25,21 +25,25 @@ public class CustomUserDetailsService implements ICustomUserDetailsService,UserD
     private final UserRepository userRepository;
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        if (userRepository.getUserByUserEmail(email)==null){
-            throw new UsernameNotFoundException(email);
-        }
-        User customer = userRepository.getUserByUserEmail(email);
         String role="";
         Set<GrantedAuthority> authoritySet =new HashSet<>();
         if (email.equals("nhatrangbus@gmail.com"))
         {
             role="Admin";
             authoritySet.add(new SimpleGrantedAuthority("ROLE_Admin"));
+            User admin =new User();
+            admin.setUserName("admin");
+            admin.setUserEmail("nhatrangbus@gmail.com");
+            return new CustomUserDetails(admin,authoritySet,role);
         }
         else {
             role="Customer";
             authoritySet.add(new SimpleGrantedAuthority("ROLE_Customer"));
+            if (userRepository.getUserByUserEmail(email)==null){
+                throw new UsernameNotFoundException(email);
+            }
         }
+        User customer = userRepository.getUserByUserEmail(email);
         return new CustomUserDetails(customer, authoritySet,role);
     }
 }

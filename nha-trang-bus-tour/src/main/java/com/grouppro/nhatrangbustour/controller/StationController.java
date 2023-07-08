@@ -8,10 +8,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +22,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @Tag(name = "Station-API")
 @RequestMapping("api/stations")
+@SecurityRequirement(name = "Authorization")
 public class StationController {
+    private static final String ADMIN="ROLE_Admin";
+    private static final String CUSTOMER="ROLE_Customer";
     private final IStationService stationService;
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "When don't have any Station"),
@@ -28,6 +33,7 @@ public class StationController {
     })
     @Operation(summary = "Get all stations")
     @GetMapping("/")
+    @Secured({ADMIN,CUSTOMER})
     public ResponseEntity<?> getStations() {
         List<Station> stations = stationService.getStations();
         if (!stations.isEmpty()) {
@@ -42,6 +48,7 @@ public class StationController {
     })
     @Operation(summary = "Create a new station ")
     @PostMapping("/")
+    @Secured(ADMIN)
     public ResponseEntity<?> addStation(@RequestBody Station station) {
         Long id = stationService.saveStation(station);
         if (id == null) {
