@@ -4,11 +4,11 @@ const SideBar = () => {
     return (
         <>
             {/* Sidebar */}
-            <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <ul className="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar">
                 {/* Sidebar - Brand */}
                 <Link className="sidebar-brand d-flex align-items-center justify-content-center" to="/">
-                    <div className="sidebar-brand-icon rotate-n-15">
-                        <i className="fas fa-laugh-wink" />
+                    <div className="sidebar-brand-icon ">
+                       <i class="fas fa-user-cog"></i>
                     </div>
                     <div className="sidebar-brand-text mx-3">Admin</div>
                 </Link>
@@ -112,6 +112,23 @@ const SideBar = () => {
                 </li>
 
                 <li className="nav-item">
+                    <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseStationss" aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-route"></i>
+                        <span>Route </span>
+                    </a>
+                    <div id="collapseStationss" className="collapse" aria-labelledby="headingStation" data-parent="#accordionSidebar">
+                        <div className="bg-white py-2 collapse-inner rounded">
+                            <Link className="collapse-item" to="/list_routes">List Routes</Link>
+                        </div>
+                    </div>
+                    <div id="collapseStationss" className="collapse" aria-labelledby="headingStation" data-parent="#accordionSidebar">
+                        <div className="bg-white py-2 collapse-inner rounded">
+                            <Link className="collapse-item" to="/add_route">Add Route</Link>
+                        </div>
+                    </div>
+                </li>
+
+                <li className="nav-item">
                     <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDrivers" aria-expanded="true" aria-controls="collapsePages">
                         <i className="fas fa-male" />
                         <span>Driver </span>
@@ -127,6 +144,75 @@ const SideBar = () => {
                         </div>
                     </div>
                 </li>
+
+                <li className="nav-item">
+                    <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDriverss" aria-expanded="true" aria-controls="collapsePages">
+                        <i class="fas fa-sliders-h"></i>
+                        <span>Service </span>
+                    </a>
+                    <div id="collapseDriverss" className="collapse" aria-labelledby="headingFeedback" data-parent="#accordionSidebar">
+                        <div className="bg-white py-2 collapse-inner rounded">
+                            <Link className="collapse-item" to="/list_services">List Services</Link>
+                        </div>
+                    </div>
+                    <div id="collapseDriverss" className="collapse" aria-labelledby="headingFeedback" data-parent="#accordionSidebar">
+                        <div className="bg-white py-2 collapse-inner rounded">
+                            <Link className="collapse-item" to="/add_service">Add Service</Link>
+                        </div>
+                    </div>
+                </li>
+
+                <li className="nav-item">
+                    <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDriversss" aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-border-style"></i>
+                        <span>Ticket Type </span>
+                    </a>
+                    <div id="collapseDriversss" className="collapse" aria-labelledby="headingFeedback" data-parent="#accordionSidebar">
+                        <div className="bg-white py-2 collapse-inner rounded">
+                            <Link className="collapse-item" to="/list_tickettypes">List Ticket Types</Link>
+                        </div>
+                    </div>
+                    <div id="collapseDriversss" className="collapse" aria-labelledby="headingFeedback" data-parent="#accordionSidebar">
+                        <div className="bg-white py-2 collapse-inner rounded">
+                            <Link className="collapse-item" to="/add_tickettype">Add Ticket Type</Link>
+                        </div>
+                    </div>
+                </li>
+
+                <li className="nav-item">
+                    <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDriversss1" aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-hand-holding-usd"></i>
+                        <span>Price Frame </span>
+                    </a>
+                    <div id="collapseDriversss1" className="collapse" aria-labelledby="headingFeedback" data-parent="#accordionSidebar">
+                        <div className="bg-white py-2 collapse-inner rounded">
+                            <Link className="collapse-item" to="/list_priceframes">List Price Frames</Link>
+                        </div>
+                    </div>
+                    <div id="collapseDriversss1" className="collapse" aria-labelledby="headingFeedback" data-parent="#accordionSidebar">
+                        <div className="bg-white py-2 collapse-inner rounded">
+                            <Link className="collapse-item" to="/add_priceframe">Add Price Frame</Link>
+                        </div>
+                    </div>
+                </li>
+
+                <li className="nav-item">
+                    <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDriversss2" aria-expanded="true" aria-controls="collapsePages">
+                    <i class="far fa-money-bill-alt"></i>
+                        <span>Price Frame Ticket</span>
+                    </a>
+                    <div id="collapseDriversss2" className="collapse" aria-labelledby="headingFeedback" data-parent="#accordionSidebar">
+                        <div className="bg-white py-2 collapse-inner rounded">
+                            <Link className="collapse-item" to="/list_priceframetickets">List Price Frame Tickets</Link>
+                        </div>
+                    </div>
+                    <div id="collapseDriversss2" className="collapse" aria-labelledby="headingFeedback" data-parent="#accordionSidebar">
+                        <div className="bg-white py-2 collapse-inner rounded">
+                            <Link className="collapse-item" to="/add_priceframe">Add Price Frame Ticket</Link>
+                        </div>
+                    </div>
+                </li>
+
                 {/* Nav Item - Pages Collapse Menu */}
                 <li className="nav-item">
                     <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
