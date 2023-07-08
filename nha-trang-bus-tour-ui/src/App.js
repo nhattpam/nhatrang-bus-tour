@@ -17,6 +17,12 @@ import AddStation from './components/stations/AddStation';
 import EditBus from './components/buses/EditBus';
 import DeleteBus from './components/buses/DeleteBus';
 import ListPayments from './components/payments/ListPayments';
+import ListServices from './components/services/ListServices';
+import AddService from './components/services/AddService';
+import ListRoutes from './components/routes/ListRoutes';
+import ListTicketTypes from './components/tickettypes/ListTicketTypes';
+import ListPriceFrames from './components/priceframes/ListPriceFrames';
+import ListPriceFrameTickets from './components/priceframetickets/ListPriceFrameTickets';
 
 function App() {
   return (
@@ -37,6 +43,14 @@ function App() {
         <Route path='/list_stations' element={<ListStation />}></Route>
         <Route path='/add_station' element={<AddStation />}></Route>
         <Route path='/list_payments' element={<ListPayments />}></Route>
+        <Route path='/list_payments' element={<ListPayments />}></Route>
+        <Route path='/list_services' element={<ListServices />}></Route>
+        <Route path='/add_service' element={<AddService />}></Route>
+        <Route path='/list_routes' element={<ListRoutes />}></Route>
+        <Route path='/list_tickettypes' element={<ListTicketTypes />}></Route>
+        <Route path='/list_priceframes' element={<ListPriceFrames />}></Route>
+        <Route path='/list_priceframetickets' element={<ListPriceFrameTickets />}></Route>
+
       </Routes>
 
     </>

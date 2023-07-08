@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../Header';
 import SideBar from '../SideBar';
-import paymentService from '../../services/payment.service';
 import ReactPaginate from 'react-paginate';
+import routeService from '../../services/route.service';
 
-const ListPayments = () => {
-  const [paymentList, setPaymentList] = useState([]);
+const ListRoutes = () => {
+  const [routeList, setRouteList] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(0);
-  const [paymentsPerPage] = useState(5);
+  const [routesPerPage] = useState(5);
 
   useEffect(() => {
-    paymentService
-      .getAllPayments()
+    routeService
+      .getAllRoutes()
       .then((res) => {
         console.log(res.data);
-        setPaymentList(res.data);
+        setRouteList(res.data);
       })
       .catch((error) => {
         console.log(error);
@@ -26,22 +26,22 @@ const ListPayments = () => {
     setSearchTerm(event.target.value);
   };
 
-  const filteredPayments = paymentList.filter((payment) => {
+  const filteredRoutes = routeList.filter((route) => {
     return (
-      payment.paymentId.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
-      payment.paymentDate.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
-      payment.paymentMethod.toString().toLowerCase().includes(searchTerm.toLowerCase())
+        route.routeId.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+        route.routeName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        route.parentRouteID.toLowerCase().includes(searchTerm.toLowerCase())
     );
   });
 
-  const pageCount = Math.ceil(filteredPayments.length / paymentsPerPage);
+  const pageCount = Math.ceil(filteredRoutes.length / routesPerPage);
 
   const handlePageClick = (data) => {
     setCurrentPage(data.selected);
   };
 
-  const offset = currentPage * paymentsPerPage;
-  const currentPayments = filteredPayments.slice(offset, offset + paymentsPerPage);
+  const offset = currentPage * routesPerPage;
+  const currentRoutes = filteredRoutes.slice(offset, offset + routesPerPage);
 
   return (
     <>
@@ -55,14 +55,13 @@ const ListPayments = () => {
             <Header />
             <div className="container-fluid">
               {/* Page Heading */}
-              <h1 className="h3 mb-2 text-gray-800">List Payments</h1>
-
+              <h1 className="h3 mb-2 text-gray-800">List Routes</h1>
               {/* Search Input */}
               <div className="mb-3">
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Search Payments"
+                  placeholder="Search Routes"
                   value={searchTerm}
                   onChange={handleSearch}
                 />
@@ -74,17 +73,17 @@ const ListPayments = () => {
                     <table className="table table-bordered" id="" width="100%" cellSpacing="0">
                       <thead>
                         <tr>
-                          <th>Payment Id</th>
-                          <th>Payment Date</th>
-                          <th>Payment Method</th>
+                          <th>Route Id</th>
+                          <th>Name</th>
+                          <th>Parent Route</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {currentPayments.map((payment) => (
-                          <tr key={payment.paymentId}>
-                            <td>{payment.paymentId}</td>
-                            <td>{payment.paymentDate}</td>
-                            <td>{payment.paymentMethod}</td>
+                        {currentRoutes.map((route) => (
+                          <tr key={route.routeId}>
+                            <td>{route.routeId}</td>
+                            <td>{route.routeName}</td>
+                            <td>{route.parentRouteID}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -92,7 +91,6 @@ const ListPayments = () => {
                   </div>
                 </div>
               </div>
-              {/* Pagination */}
               <ReactPaginate
                 previousLabel={'Previous'}
                 nextLabel={'Next'}
@@ -121,4 +119,4 @@ const ListPayments = () => {
   );
 };
 
-export default ListPayments;
+export default ListRoutes;

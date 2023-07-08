@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../Header';
 import SideBar from '../SideBar';
-import paymentService from '../../services/payment.service';
 import ReactPaginate from 'react-paginate';
+import ticketTypeService from '../../services/tickettype.service';
 
-const ListPayments = () => {
-  const [paymentList, setPaymentList] = useState([]);
+const ListTicketTypes = () => {
+  const [ticketTypeList, setTicketTypeList] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(0);
-  const [paymentsPerPage] = useState(5);
+  const [ticketTypesPerPage] = useState(5);
 
   useEffect(() => {
-    paymentService
-      .getAllPayments()
+    ticketTypeService
+      .getAllTicketTypes()
       .then((res) => {
         console.log(res.data);
-        setPaymentList(res.data);
+        setTicketTypeList(res.data);
       })
       .catch((error) => {
         console.log(error);
@@ -26,22 +26,21 @@ const ListPayments = () => {
     setSearchTerm(event.target.value);
   };
 
-  const filteredPayments = paymentList.filter((payment) => {
+  const filteredTicketTypes = ticketTypeList.filter((ticketType) => {
     return (
-      payment.paymentId.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
-      payment.paymentDate.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
-      payment.paymentMethod.toString().toLowerCase().includes(searchTerm.toLowerCase())
+        ticketType.ticketTypeId.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+        ticketType.ticketTypeName.toLowerCase().includes(searchTerm.toLowerCase()) 
     );
   });
 
-  const pageCount = Math.ceil(filteredPayments.length / paymentsPerPage);
+  const pageCount = Math.ceil(filteredTicketTypes.length / ticketTypesPerPage);
 
   const handlePageClick = (data) => {
     setCurrentPage(data.selected);
   };
 
-  const offset = currentPage * paymentsPerPage;
-  const currentPayments = filteredPayments.slice(offset, offset + paymentsPerPage);
+  const offset = currentPage * ticketTypesPerPage;
+  const currentTicketTypes = filteredTicketTypes.slice(offset, offset + ticketTypesPerPage);
 
   return (
     <>
@@ -55,14 +54,13 @@ const ListPayments = () => {
             <Header />
             <div className="container-fluid">
               {/* Page Heading */}
-              <h1 className="h3 mb-2 text-gray-800">List Payments</h1>
-
+              <h1 className="h3 mb-2 text-gray-800">List Ticket Types</h1>
               {/* Search Input */}
               <div className="mb-3">
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Search Payments"
+                  placeholder="Search Ticket Types"
                   value={searchTerm}
                   onChange={handleSearch}
                 />
@@ -74,17 +72,15 @@ const ListPayments = () => {
                     <table className="table table-bordered" id="" width="100%" cellSpacing="0">
                       <thead>
                         <tr>
-                          <th>Payment Id</th>
-                          <th>Payment Date</th>
-                          <th>Payment Method</th>
+                          <th>Ticket Type Id</th>
+                          <th>Name</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {currentPayments.map((payment) => (
-                          <tr key={payment.paymentId}>
-                            <td>{payment.paymentId}</td>
-                            <td>{payment.paymentDate}</td>
-                            <td>{payment.paymentMethod}</td>
+                        {currentTicketTypes.map((ticketType) => (
+                          <tr key={ticketType.ticketTypeId}>
+                            <td>{ticketType.ticketTypeId}</td>
+                            <td>{ticketType.ticketTypeName}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -92,7 +88,6 @@ const ListPayments = () => {
                   </div>
                 </div>
               </div>
-              {/* Pagination */}
               <ReactPaginate
                 previousLabel={'Previous'}
                 nextLabel={'Next'}
@@ -121,4 +116,4 @@ const ListPayments = () => {
   );
 };
 
-export default ListPayments;
+export default ListTicketTypes;
