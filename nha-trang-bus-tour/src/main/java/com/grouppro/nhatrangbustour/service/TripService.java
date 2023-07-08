@@ -1,7 +1,6 @@
 package com.grouppro.nhatrangbustour.service;
 
 import com.grouppro.nhatrangbustour.Entity.*;
-import com.grouppro.nhatrangbustour.repository.PriceFrameRepository;
 import com.grouppro.nhatrangbustour.repository.TripRepository;
 import com.grouppro.nhatrangbustour.service.interfaces.ITripService;
 import jakarta.transaction.Transactional;

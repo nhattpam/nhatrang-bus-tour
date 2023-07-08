@@ -1,18 +1,20 @@
 package com.grouppro.nhatrangbustour.controller;
 
-import com.grouppro.nhatrangbustour.Entity.Driver;
 import com.grouppro.nhatrangbustour.Entity.Trip;
 import com.grouppro.nhatrangbustour.response.TripResponse;
 import com.grouppro.nhatrangbustour.service.interfaces.ITripService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import org.springframework.web.bind.annotation.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -24,14 +26,18 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Tag(name = "Trip-API")
 @RequestMapping("api/trips")
+@SecurityRequirement(name = "Authorization")
 public class TripController {
     private final ITripService tripService;
+    private static final String ADMIN="ROLE_Admin";
+    private static final String CUSTOMER="ROLE_Customer";
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "When don't have any trip"),
             @ApiResponse( content = @Content(schema = @Schema(implementation = Trip.class)))
     })
     @Operation(summary = "Get all trips")
     @GetMapping("/")
+    @Secured({ADMIN,CUSTOMER})
     public ResponseEntity<List<TripResponse>> getTrips() {
         List<Trip> trips = tripService.getTrips();
         List<TripResponse> tripResponses = trips.stream()
@@ -60,6 +66,7 @@ public class TripController {
     })
     @Operation(summary = "Create a new trip ")
     @PostMapping("/")
+    @Secured(ADMIN)
     public ResponseEntity<?> addTrip(@RequestParam("departureTime")LocalDate depart, @RequestParam("arrivalTime") LocalDate arrival,
                                      @RequestParam("route")Long rid, @RequestParam("driver")Long did, @RequestParam("bus") Long bid,
                                      @RequestParam("priceframe")Long pfid) {
@@ -80,6 +87,7 @@ public class TripController {
     })
     @Operation(summary = "Search trip ")
     @GetMapping("/{From}/{To}")
+    @Secured({ADMIN,CUSTOMER})
     public ResponseEntity<?> searchTrip(@RequestParam("From")String from, @RequestParam("To")String to) {
         List<Trip> trips = tripService.searchTrip(from, to);
         List<TripResponse> tripResponses = trips.stream()

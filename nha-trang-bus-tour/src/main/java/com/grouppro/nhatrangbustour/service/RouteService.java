@@ -1,13 +1,11 @@
 package com.grouppro.nhatrangbustour.service;
 
 import com.grouppro.nhatrangbustour.Entity.Route;
-import com.grouppro.nhatrangbustour.Entity.StationRoute;
 import com.grouppro.nhatrangbustour.repository.RouteRepository;
 import com.grouppro.nhatrangbustour.service.interfaces.IRouteService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +34,7 @@ public class RouteService implements IRouteService {
     public Route getRouteByID(Long rid) {
         return routeRepository.getReferenceById(rid);
     }
+
 
     @Override
     public List<Route> SearchRoute(String fromDestination, String toDestination) {

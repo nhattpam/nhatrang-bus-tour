@@ -2,7 +2,6 @@ package com.grouppro.nhatrangbustour.controller;
 
 import com.grouppro.nhatrangbustour.Entity.PriceFrame;
 import com.grouppro.nhatrangbustour.Entity.Route;
-import com.grouppro.nhatrangbustour.Entity.Station;
 import com.grouppro.nhatrangbustour.service.interfaces.IPriceFrameService;
 import com.grouppro.nhatrangbustour.service.interfaces.IRouteService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,10 +9,13 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.web.bind.annotation.RequestBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,8 +24,11 @@ import java.util.List;
 @RequiredArgsConstructor
 @Tag(name = "Route-API")
 @RequestMapping("api/routes")
+@SecurityRequirement(name = "Authorization")
 public class RouteController {
     private final IRouteService routeService;
+    private static final String ADMIN="ROLE_Admin";
+    private static final String CUSTOMER="ROLE_Customer";
     private final IPriceFrameService priceFrameService;
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "When don't have any Station"),
@@ -31,6 +36,7 @@ public class RouteController {
     })
     @Operation(summary = "Get all routes")
     @GetMapping("/")
+    @Secured({ADMIN,CUSTOMER})
     public ResponseEntity<?> getRoutes() {
         List<Route> routes = routeService.getRoutes();
         if (!routes.isEmpty()) {
@@ -45,6 +51,7 @@ public class RouteController {
     })
     @Operation(summary = "Create a new Route ")
     @PostMapping("/")
+    @Secured(ADMIN)
     public ResponseEntity<?> addRoute(@RequestParam("routename")String name, @RequestParam("parentid") Long parentid) {
         Route route = new Route();
         route.setRouteName(name);
@@ -58,6 +65,7 @@ public class RouteController {
         }
     }@Operation(summary = "Update a Route ")
     @PostMapping("/update")
+    @Secured(ADMIN)
     public ResponseEntity<?> updateRoute(@RequestParam("routeid")Long rid, @RequestParam("routename") String name, @RequestParam("parentid") Long parentid) {
         Route route = routeService.getRouteByID(rid);
         route.setRouteName(name);

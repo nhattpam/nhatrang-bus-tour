@@ -11,10 +11,13 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.web.bind.annotation.RequestBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -24,7 +27,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @Tag(name = "Station-Route-API")
 @RequestMapping("api/stationroute")
+@SecurityRequirement(name = "Authorization")
 public class StationRouteController {
+    private static final String ADMIN="ROLE_Admin";
+    private static final String CUSTOMER="ROLE_Customer";
     private final IStationRouteService stationRouteService;
     private final IRouteService routeService;
     private final IStationService stationService;
@@ -35,6 +41,7 @@ public class StationRouteController {
     })
     @Operation(summary = "Get all stationroutes")
     @GetMapping("/")
+    @Secured({ADMIN,CUSTOMER})
     public ResponseEntity<?> getStationRoutes() {
         List<StationRoute> stationRoutes = stationRouteService.getStationRoute();
         if (!stationRoutes.isEmpty()) {
@@ -49,6 +56,7 @@ public class StationRouteController {
     })
     @Operation(summary = "Create a new stationroute ")
     @PostMapping("/")
+    @Secured(ADMIN)
     public ResponseEntity<?> addStationRoute(@RequestParam("stationid")Long sid, @RequestParam("routeid") Long rid) {
         StationRoute stationRoute = new StationRoute();
         Route route = routeService.getRouteByID(rid);

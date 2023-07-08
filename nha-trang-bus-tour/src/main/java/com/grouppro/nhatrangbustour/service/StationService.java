@@ -1,7 +1,6 @@
 package com.grouppro.nhatrangbustour.service;
 
 import com.grouppro.nhatrangbustour.Entity.Station;
-import com.grouppro.nhatrangbustour.Entity.StationRoute;
 import com.grouppro.nhatrangbustour.repository.StationRepository;
 import com.grouppro.nhatrangbustour.service.interfaces.IStationService;
 import jakarta.transaction.Transactional;
