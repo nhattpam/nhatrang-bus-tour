@@ -42,7 +42,7 @@ public class OrderController {
     public ResponseEntity<List<OrderResponse>> getOrders() {
         List<Order> orders = orderService.getOrders();
         List<OrderResponse> orderResponses = orders.stream()
-                .map(order -> new OrderResponse(order.getOrderId(), order.getOrderDate(), order.getPayment(), order.getUserId()))
+                .map(order -> new OrderResponse(order.getOrderId(), order.getOrderDate(), order.getPayment(), order.getTotalPrice(), order.getUserId()))
                 .collect(Collectors.toList());
 
         if (!orderResponses.isEmpty()) {
@@ -56,12 +56,13 @@ public class OrderController {
             @ApiResponse(responseCode = "400", description = "When Order can't be created - Object is not valid!")
     })
     @Operation(summary = "Create an order")
-    @PostMapping("/{uid}/{pid}")
+    @PostMapping("/{uid}/{pid}/{totalPrice}")
     @Secured({ADMIN,CUSTOMER})
-    public ResponseEntity<?> addOrder(@PathVariable Long uid, @PathVariable Long pid) {
+    public ResponseEntity<?> addOrder(@PathVariable Long uid, @PathVariable Long pid, @PathVariable Double totalPrice) {
         Order order = new Order();
         LocalDate date = LocalDate.now();
         order.setOrderDate(date);
+        order.setTotalPrice(totalPrice);
         Long id = orderService.saveOrder(order, pid, uid);
         if (id == null) {
             return new ResponseEntity<>("Can't create Order", HttpStatus.BAD_REQUEST);

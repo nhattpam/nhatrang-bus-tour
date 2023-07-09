@@ -1,5 +1,6 @@
 package com.grouppro.nhatrangbustour.controller;
 
+import com.grouppro.nhatrangbustour.Entity.PriceFrame;
 import com.grouppro.nhatrangbustour.Entity.PriceFrameTicket;
 import com.grouppro.nhatrangbustour.service.PriceFrameTicketService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -61,5 +62,37 @@ public class PriceFrameTicketController {
             return new ResponseEntity<>(id,HttpStatus.CREATED);
         }
 
+    }
+    @Operation(summary = "Get a price frame ticket by its ID")
+    @GetMapping("/{priceFrameTicketId}")
+    @Secured({ADMIN,CUSTOMER})
+    public ResponseEntity<?> getPriceFrameTicketByID(@PathVariable("priceFrameTicketId") Long priceFrameTicketId) {
+        PriceFrameTicket priceFrameTicket = priceFrameTicketService.getPriceFrameTicketById(priceFrameTicketId);
+        if (priceFrameTicket != null) {
+            return ResponseEntity.ok(priceFrameTicket);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Price Frame Ticket not found");
+        }
+    }
+    @Operation(summary = "Update a price frame ticket by its ID")
+    @PutMapping("/{priceFrameTicketID}/{price}")
+    @Secured({ADMIN})
+    public ResponseEntity<?> updatePriceFrameTicket(@PathVariable("priceFrameTicketID") Long priceFrameTicketID, @PathVariable("price")Double price) {
+        PriceFrameTicket existingpriceframeticket = priceFrameTicketService.getPriceFrameTicketById(priceFrameTicketID);
+        if (existingpriceframeticket == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Price Frame Ticket not found");
+        }
+
+        existingpriceframeticket.setPrice(price);
+        // Update any other properties you need to modify
+
+        Long id = priceFrameTicketService.savePriceFrameTicket(existingpriceframeticket,existingpriceframeticket.getPriceFrame().getPriceFrameId(),
+                existingpriceframeticket.getTicketType().getTicketTypeId());
+        if (id == null) {
+            return new ResponseEntity<>("Can't update price frame ticket", HttpStatus.BAD_REQUEST);
+        } else {
+
+            return new ResponseEntity<>(id,HttpStatus.CREATED);
+        }
     }
 }

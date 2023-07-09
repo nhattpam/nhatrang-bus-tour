@@ -1,5 +1,6 @@
 package com.grouppro.nhatrangbustour.controller;
 
+import com.grouppro.nhatrangbustour.Entity.Driver;
 import com.grouppro.nhatrangbustour.Entity.PriceFrame;
 import com.grouppro.nhatrangbustour.Entity.Route;
 import com.grouppro.nhatrangbustour.service.interfaces.IPriceFrameService;
@@ -75,6 +76,39 @@ public class RouteController {
         Long id = routeService.saveRoute(route);
         if (id == null) {
             return new ResponseEntity<>("Can't create Station", HttpStatus.BAD_REQUEST);
+        } else {
+
+            return new ResponseEntity<>(id,HttpStatus.CREATED);
+        }
+    }
+    @Operation(summary = "Get a route by its ID")
+    @GetMapping("/{routeId}")
+    @Secured({ADMIN,CUSTOMER})
+    public ResponseEntity<?> getRouteByID(@PathVariable("routeId") Long routeId) {
+        Route route = routeService.getRouteByID(routeId);
+        if (route != null) {
+            return ResponseEntity.ok(route);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Route not found");
+        }
+    }
+    @Operation(summary = "Update a route by its ID")
+    @PutMapping("/{routeId}/{routeName}/{parentRouteId}")
+    @Secured({ADMIN})
+    public ResponseEntity<?> updateDriver(@PathVariable("routeId") Long routeId, @PathVariable("routeName")String name,
+                                          @PathVariable("parentRouteId")Long parent) {
+        Route existingroute = routeService.getRouteByID(routeId);
+        if (existingroute == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Route not found");
+        }
+
+        existingroute.setRouteName(name);
+        existingroute.setParentRouteID(parent);
+        // Update any other properties you need to modify
+
+        Long id = routeService.saveRoute(existingroute);
+        if (id == null) {
+            return new ResponseEntity<>("Can't update route", HttpStatus.BAD_REQUEST);
         } else {
 
             return new ResponseEntity<>(id,HttpStatus.CREATED);

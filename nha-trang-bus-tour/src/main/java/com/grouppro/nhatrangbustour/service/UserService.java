@@ -17,12 +17,9 @@ public class UserService implements IUserService {
 
     @Override
     public Long Register(User user) {
-        boolean check = userRepository.existsByUserEmail(user.getUserEmail());
-        if(!check){
+        if (user!=null){
             userRepository.save(user);
-            if (user!=null){
-                return user.getUserId();
-            }
+            return user.getUserId();
         }
         return null;
     }

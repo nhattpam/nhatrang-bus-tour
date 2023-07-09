@@ -15,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PriceFrameService implements IPriceFrameService {
     private final PriceFrameRepository priceFrameRepository;
+    private final RouteService routeService;
 
     @Override
     public List<PriceFrame> getPriceFrames() {

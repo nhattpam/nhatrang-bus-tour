@@ -92,4 +92,24 @@ public class UserController {
         }
         return ResponseEntity.badRequest().body("Invalid email");
     }
+    @Operation(summary = "Update a user by its ID")
+    @PutMapping("/{userID}/{userName}/{userEmail}/{userPhone}")
+    @Secured({ADMIN})
+    public ResponseEntity<?> updateUser(@PathVariable("userID") Long userId, @PathVariable("userName")String username,
+                                        @PathVariable("userEmail")String email, @PathVariable("userPhone") String phone) {
+        User existUser = userService.getUserById(userId);
+        if (existUser == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+        existUser.setUserPhone(phone);
+        existUser.setUserEmail(email);
+        existUser.setUserName(username);
+        Long id = userService.Register(existUser);
+        if (id == null) {
+            return new ResponseEntity<>("Can't update user", HttpStatus.BAD_REQUEST);
+        } else {
+
+            return new ResponseEntity<>(id,HttpStatus.CREATED);
+        }
+    }
 }
