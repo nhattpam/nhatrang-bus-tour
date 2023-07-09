@@ -9,12 +9,14 @@ public class OrderResponse {
     private Long orderId;
     private LocalDate orderDate;
     private Payment payment;
+    private Double totalprice;
     private Long userId;
 
-    public OrderResponse(Long orderId, LocalDate orderDate, Payment payment, Long userId) {
+    public OrderResponse(Long orderId, LocalDate orderDate, Payment payment, Double totalprice, Long userId) {
         this.orderId = orderId;
         this.orderDate = orderDate;
         this.payment = payment;
+        this.totalprice = totalprice;
         this.userId = userId;
     }
 
@@ -44,6 +46,8 @@ public class OrderResponse {
     public void setPayment(Payment payment) {
         this.payment = payment;
     }
+    public Double getTotalprice(){return totalprice;}
+    public void setTotalprice(Double totalprice){this.totalprice = totalprice;}
 
     public Long getUserId() {
         return userId;
