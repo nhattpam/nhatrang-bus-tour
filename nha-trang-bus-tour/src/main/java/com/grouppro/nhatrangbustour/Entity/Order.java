@@ -28,6 +28,8 @@ public class Order implements Serializable {
 
     @Column(name = "OrderDate", nullable = false)
     private LocalDate orderDate;
+    @Column(name = "TotalPrice")
+    private Double totalPrice;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "UserID")

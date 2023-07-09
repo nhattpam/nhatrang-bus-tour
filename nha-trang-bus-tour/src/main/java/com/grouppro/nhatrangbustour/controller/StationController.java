@@ -1,5 +1,6 @@
 package com.grouppro.nhatrangbustour.controller;
 
+import com.grouppro.nhatrangbustour.Entity.Route;
 import com.grouppro.nhatrangbustour.Entity.Station;
 import com.grouppro.nhatrangbustour.service.interfaces.IStationService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -53,6 +54,38 @@ public class StationController {
         Long id = stationService.saveStation(station);
         if (id == null) {
             return new ResponseEntity<>("Can't create Station", HttpStatus.BAD_REQUEST);
+        } else {
+
+            return new ResponseEntity<>(id,HttpStatus.CREATED);
+        }
+    }
+    @Operation(summary = "Get a station by its ID")
+    @GetMapping("/{stationId}")
+    @Secured({ADMIN,CUSTOMER})
+    public ResponseEntity<?> getRouteByID(@PathVariable("stationId") Long stationId) {
+        Station station = stationService.getStationById(stationId);
+        if (station != null) {
+            return ResponseEntity.ok(station);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Station not found");
+        }
+    }
+    @Operation(summary = "Update a route by its ID")
+    @PutMapping("/{stationId}")
+    @Secured({ADMIN})
+    public ResponseEntity<?> updateStation(@PathVariable("stationId") Long stationId, @RequestBody Station updatedStation) {
+        Station existingstation = stationService.getStationById(stationId);
+        if (existingstation == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Station not found");
+        }
+
+        existingstation.setStationName(updatedStation.getStationName());
+        existingstation.setStationLocation(updatedStation.getStationLocation());
+        // Update any other properties you need to modify
+
+        Long id = stationService.saveStation(existingstation);
+        if (id == null) {
+            return new ResponseEntity<>("Can't update station", HttpStatus.BAD_REQUEST);
         } else {
 
             return new ResponseEntity<>(id,HttpStatus.CREATED);

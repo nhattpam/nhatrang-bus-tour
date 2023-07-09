@@ -1,5 +1,6 @@
 package com.grouppro.nhatrangbustour.controller;
 
+import com.grouppro.nhatrangbustour.Entity.Driver;
 import com.grouppro.nhatrangbustour.Entity.PriceFrame;
 import com.grouppro.nhatrangbustour.Entity.Route;
 import com.grouppro.nhatrangbustour.service.interfaces.IPriceFrameService;
@@ -65,6 +66,37 @@ public class PriceFrameController {
             route.setPriceFrame(priceFrames);
             Long rid = routeService.saveRoute(route);
             return new ResponseEntity<>(id+", "+rid ,HttpStatus.CREATED);
+        }
+    }
+    @Operation(summary = "Get a price frame by its ID")
+    @GetMapping("/{priceFrameId}")
+    @Secured({ADMIN,CUSTOMER})
+    public ResponseEntity<?> getPriceFrameByID(@PathVariable("priceFrameId") Long priceFrameId) {
+        PriceFrame priceFrame = priceFrameService.getPriceFrameById(priceFrameId);
+        if (priceFrame != null) {
+            return ResponseEntity.ok(priceFrame);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Price Frame not found");
+        }
+    }
+    @Operation(summary = "Update a price frame by its ID")
+    @PutMapping("/{priceFrameID}/{priceFrameName}")
+    @Secured({ADMIN})
+    public ResponseEntity<?> updatePriceFrame(@PathVariable("priceFrameID") Long priceFrameID, @PathVariable("priceFrameName")String name) {
+        PriceFrame existingpriceframe = priceFrameService.getPriceFrameById(priceFrameID);
+        if (existingpriceframe == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Price Frame not found");
+        }
+
+        existingpriceframe.setPriceFrameName(name);
+        // Update any other properties you need to modify
+
+        Long id = priceFrameService.savePriceFrame(existingpriceframe);
+        if (id == null) {
+            return new ResponseEntity<>("Can't update price frame", HttpStatus.BAD_REQUEST);
+        } else {
+
+            return new ResponseEntity<>(id,HttpStatus.CREATED);
         }
     }
 }

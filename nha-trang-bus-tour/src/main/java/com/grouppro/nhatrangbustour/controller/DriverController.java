@@ -1,11 +1,12 @@
 package com.grouppro.nhatrangbustour.controller;
 
+import com.grouppro.nhatrangbustour.Entity.Bus;
 import com.grouppro.nhatrangbustour.Entity.Driver;
 import com.grouppro.nhatrangbustour.service.interfaces.IDriverService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -14,11 +15,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -59,6 +55,38 @@ public class DriverController {
         Long id = driverService.saveDriver(driver);
         if (id == null) {
             return new ResponseEntity<>("Can't create Driver", HttpStatus.BAD_REQUEST);
+        } else {
+
+            return new ResponseEntity<>(id,HttpStatus.CREATED);
+        }
+    }
+    @Operation(summary = "Get a driver by its ID")
+    @GetMapping("/{driverId}")
+    @Secured({ADMIN,CUSTOMER})
+    public ResponseEntity<?> getDriverByID(@PathVariable("driverId") Long driverId) {
+        Driver driver = driverService.getDriverById(driverId);
+        if (driver != null) {
+            return ResponseEntity.ok(driver);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Driver not found");
+        }
+    }
+    @Operation(summary = "Update a driver by its ID")
+    @PutMapping("/{driverID}")
+    @Secured({ADMIN})
+    public ResponseEntity<?> updateDriver(@PathVariable("driverID") Long driverId, @RequestBody Driver updateDriver) {
+        Driver existingdriver = driverService.getDriverById(driverId);
+        if (existingdriver == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Driver not found");
+        }
+
+        existingdriver.setDriverName(updateDriver.getDriverName());
+        existingdriver.setDriverPhone(updateDriver.getDriverPhone());
+        // Update any other properties you need to modify
+
+        Long id = driverService.saveDriver(existingdriver);
+        if (id == null) {
+            return new ResponseEntity<>("Can't update driver", HttpStatus.BAD_REQUEST);
         } else {
 
             return new ResponseEntity<>(id,HttpStatus.CREATED);
