@@ -6,7 +6,7 @@ const SideBar = () => {
             {/* Sidebar */}
             <ul className="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar">
                 {/* Sidebar - Brand */}
-                <Link className="sidebar-brand d-flex align-items-center justify-content-center" to="/">
+                <Link className="sidebar-brand d-flex align-items-center justify-content-center" to="/home">
                     <div className="sidebar-brand-icon ">
                        <i class="fas fa-user-cog"></i>
                     </div>

@@ -18,6 +18,7 @@ const ListBuses = () => {
       .then((res) => {
         console.log(res.data);
         setBusList(res.data);
+        
       })
       .catch((error) => {
         console.log(error);

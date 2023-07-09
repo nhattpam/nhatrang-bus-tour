@@ -94,7 +94,7 @@ const ListTrips = () => {
                             <td>{trip.arrivalTime}</td>
                             <td>{trip.bus.busNumber}</td>
                             <td>{trip.driver.driverName}</td>
-                            <td>{trip.priceFrame.priceFrameName}</td>
+                            <td>{trip.priceFrame?.priceFrameName}</td>
                             <td>{trip.route.routeName}</td>
                           </tr>
                         ))}
