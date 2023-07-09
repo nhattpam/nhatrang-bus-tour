@@ -3,12 +3,16 @@ import App from "../App";
 import Header from "./Header";
 import SideBar from "./SideBar";
 import orderService from "../services/order.service";
+import userService from "../services/user.service";
+import { Chart } from "chart.js";
 const Home = () => {
 
   const [orderCount, setOrderCount] = useState(0);
+  const [userCount, setUserCount] = useState(0);
 
   useEffect(() => {
     countOrders();
+    countUsers();
   }, []);
 
   // Create an instance of the OrderService class
@@ -24,6 +28,20 @@ const Home = () => {
       setOrderCount(orderCount);
     } catch (error) {
       console.error("Error counting orders:", error);
+    }
+  }
+
+  async function countUsers() {
+    try {
+      const response = await userService.getAllUsers();
+      const users = response.data;
+      const userCount = users.length;
+
+      console.log("Total users:", userCount);
+
+      setUserCount(userCount);
+    } catch (error) {
+      console.error("Error counting users:", error);
     }
   }
   
@@ -118,8 +136,8 @@ const Home = () => {
                         <div className="row no-gutters align-items-center">
                           <div className="col mr-2">
                             <div className="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                              New FeedBacks</div>
-                            <div className="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                              Users</div>
+                            <div className="h5 mb-0 font-weight-bold text-gray-800">{userCount}</div>
                           </div>
                           <div className="col-auto">
                             <i className="fas fa-comments fa-2x text-gray-300" />
