@@ -1,15 +1,159 @@
-import {React, useState, useEffect} from "react";
+import { React, useState, useEffect, useRef } from "react";
 import App from "../App";
 import Header from "./Header";
 import SideBar from "./SideBar";
 import orderService from "../services/order.service";
+import userService from "../services/user.service";
+import tripService from "../services/trip.service";
+import { Chart, PieController, ArcElement, registerables } from "chart.js";
 const Home = () => {
 
+  Chart.register(PieController, ArcElement);
+  Chart.register(...registerables);
+  const pieChartRef = useRef(null);
+
   const [orderCount, setOrderCount] = useState(0);
+  const [userCount, setUserCount] = useState(0);
+  const [sumForCurrentMonth, setSumForCurrentMonth] = useState(0);
+  const [sumForPreviousMonth, setSumForPreviousMonth] = useState(0);
+  const [sumForCurrentYear, setSumForCurrentYear] = useState(0);
+
 
   useEffect(() => {
     countOrders();
+    countUsers();
   }, []);
+
+  useEffect(() => {
+    if (sumForCurrentMonth !== 0 && sumForPreviousMonth !== 0) {
+      createPieChart();
+    }
+  }, [sumForCurrentMonth, sumForPreviousMonth]);
+  // console.log('thang nay' + sumForCurrentMonth);
+  // console.log('thang truoc' + sumForPreviousMonth);
+
+
+  //Income by month
+  const fetchOrdersAndCalculateSum = async () => {
+    try {
+      const response = await orderService.getAllOrders();
+      const orders = response.data;
+
+      const sumForCurrentMonth = calculateSumByMonth(orders);
+      setSumForCurrentMonth(sumForCurrentMonth);
+      console.log("Sum for current month:", sumForCurrentMonth);
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+    }
+  };
+
+  fetchOrdersAndCalculateSum();
+
+  const calculateSumByMonth = (orders) => {
+    // Get the current month
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth();
+
+    // Initialize the sum for the current month
+    let sumForCurrentMonth = 0;
+
+    // Iterate over each order
+    orders.forEach((order) => {
+      // Extract the month from the order date
+      const orderDate = new Date(order.orderDate);
+      const orderMonth = orderDate.getMonth() + 1; // Add 1 to match the format of order month
+
+      // Check if the order belongs to the current month
+      if (orderMonth === currentMonth + 1) { // Add 1 to match the format of current month
+        sumForCurrentMonth += order.totalprice; // Use the correct property name
+      }
+    });
+
+    return sumForCurrentMonth;
+  };
+
+  //Income by year
+  const fetchOrdersAndCalculateSum1 = async () => {
+    try {
+      const response = await orderService.getAllOrders();
+      const orders = response.data;
+
+      const sumForCurrentYear = calculateSumByYear(orders);
+      setSumForCurrentYear(sumForCurrentYear);
+      console.log("Sum for current year:", sumForCurrentYear);
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+    }
+  };
+
+  fetchOrdersAndCalculateSum1();
+
+  const calculateSumByYear = (orders) => {
+    // Get the current year
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+
+    // Initialize the sum for the current year
+    let sumForCurrentYear = 0;
+
+    // Iterate over each order
+    orders.forEach((order) => {
+      // Extract the year from the order date
+      const orderYear = new Date(order.orderDate).getFullYear();
+
+      // Check if the order belongs to the current year
+      if (orderYear === currentYear) {
+        sumForCurrentYear += order.totalprice;
+      }
+    });
+
+    return sumForCurrentYear;
+  };
+
+  const calculateSumByPreviousMonth = (orders) => {
+    // Get the current date
+    const currentDate = new Date();
+
+    // Calculate the previous month
+    let previousMonth = currentDate.getMonth() - 1;
+
+    // Adjust the month if the previous month was in the previous year
+    if (previousMonth < 0) {
+      previousMonth = 11;
+    }
+
+    // Initialize the sum for the previous month
+    let sumForPreviousMonth = 0;
+
+    // Iterate over each order
+    orders.forEach((order) => {
+      // Extract the month from the order date
+      const orderMonth = new Date(order.orderDate).getMonth();
+
+      // Check if the order belongs to the previous month
+      if (orderMonth === previousMonth) {
+        sumForPreviousMonth += order.totalprice;
+      }
+    });
+
+    return sumForPreviousMonth;
+  };
+
+  const fetchOrdersAndCalculateSum3 = async () => {
+    try {
+      const response = await orderService.getAllOrders();
+      const orders = response.data;
+
+      const sumForPreviousMonth = calculateSumByPreviousMonth(orders);
+      setSumForPreviousMonth(sumForPreviousMonth);
+      console.log("Sum for previous month:", sumForPreviousMonth);
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+    }
+  };
+
+  fetchOrdersAndCalculateSum3();
+
 
   // Create an instance of the OrderService class
   // Function to count the orders
@@ -19,14 +163,71 @@ const Home = () => {
       const orders = response.data;
       const orderCount = orders.length;
 
-      console.log("Total orders:", orderCount);
+      // console.log("Total orders:", orderCount);
 
       setOrderCount(orderCount);
     } catch (error) {
       console.error("Error counting orders:", error);
     }
   }
-  
+
+  async function countUsers() {
+    try {
+      const response = await userService.getAllUsers();
+      const users = response.data;
+      const userCount = users.length;
+
+      // console.log("Total users:", userCount);
+
+      setUserCount(userCount);
+    } catch (error) {
+      console.error("Error counting users:", error);
+    }
+  }
+
+  const createPieChart = () => {
+    const pieChartCanvas = pieChartRef.current.getContext("2d");
+
+    if (pieChartRef.current.chart) {
+      pieChartRef.current.chart.destroy();
+    }
+
+    const data = {
+      labels: ["Previous Month", "Current Month"],
+      datasets: [
+        {
+          data: [sumForPreviousMonth, sumForCurrentMonth],
+          backgroundColor: ["#088F8F", "#7CFC00"],
+          hoverBackgroundColor: ["#0047AB", "#008000"],
+        },
+      ],
+    };
+
+    const options = {
+      plugins: {
+        legend: {
+          display: true,
+        },
+        tooltip: {
+          enabled: true,
+          callbacks: {
+            label: (context) => {
+              const label = context.label;
+              const value = context.formattedValue;
+              return `${label}: $${value}`;
+            },
+          },
+        },
+      },
+    };
+
+    pieChartRef.current.chart = new Chart(pieChartCanvas, {
+      type: "pie",
+      data: data,
+      options: options,
+    });
+  };
+
 
 
   return (
@@ -61,7 +262,7 @@ const Home = () => {
                           <div className="col mr-2">
                             <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">
                               Earnings (Monthly)</div>
-                            <div className="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            <div className="h5 mb-0 font-weight-bold text-gray-800">${sumForCurrentMonth.toFixed(2)}</div>
                           </div>
                           <div className="col-auto">
                             <i className="fas fa-calendar fa-2x text-gray-300" />
@@ -78,7 +279,7 @@ const Home = () => {
                           <div className="col mr-2">
                             <div className="text-xs font-weight-bold text-success text-uppercase mb-1">
                               Earnings (Annual)</div>
-                            <div className="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                            <div className="h5 mb-0 font-weight-bold text-gray-800">${sumForCurrentYear.toFixed(2)}</div>
                           </div>
                           <div className="col-auto">
                             <i className="fas fa-dollar-sign fa-2x text-gray-300" />
@@ -98,7 +299,7 @@ const Home = () => {
                             <div className="row no-gutters align-items-center">
                               <div className="col-auto">
                                 <div className="h5 mb-0 font-weight-bold text-gray-800">
-                                <span className="orderCount">{orderCount}</span>
+                                  <span className="orderCount">{orderCount}</span>
                                 </div>
                               </div>
 
@@ -118,8 +319,8 @@ const Home = () => {
                         <div className="row no-gutters align-items-center">
                           <div className="col mr-2">
                             <div className="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                              New FeedBacks</div>
-                            <div className="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                              Users</div>
+                            <div className="h5 mb-0 font-weight-bold text-gray-800">{userCount}</div>
                           </div>
                           <div className="col-auto">
                             <i className="fas fa-comments fa-2x text-gray-300" />
@@ -159,39 +360,14 @@ const Home = () => {
                     </div>
                   </div>
                   {/* Pie Chart */}
-                  <div className="col-xl-4 col-lg-5">
-                    <div className="card shadow mb-4">
-                      {/* Card Header - Dropdown */}
-                      <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 className="m-0 font-weight-bold text-primary">Revenue Sources</h6>
-                        <div className="dropdown no-arrow">
-                          <a className="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i className="fas fa-ellipsis-v fa-sm fa-fw text-gray-400" />
-                          </a>
-                          <div className="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                            <div className="dropdown-header">Dropdown Header:</div>
-                            <a className="dropdown-item" href="#">Action</a>
-                            <a className="dropdown-item" href="#">Another action</a>
-                            <div className="dropdown-divider" />
-                            <a className="dropdown-item" href="#">Something else here</a>
-                          </div>
-                        </div>
+                  <div class="col-xl-4 col-lg-5 d-flex align-items-center ">
+                    <div class="card shadow mb-4">
+                      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-success">Income Comparison</h6>
                       </div>
-                      {/* Card Body */}
-                      <div className="card-body">
+                      <div class="card-body">
                         <div className="chart-pie pt-4 pb-2">
-                          <canvas id="myPieChart" />
-                        </div>
-                        <div className="mt-4 text-center small">
-                          <span className="mr-2">
-                            <i className="fas fa-circle text-primary" /> Direct
-                          </span>
-                          <span className="mr-2">
-                            <i className="fas fa-circle text-success" /> Social
-                          </span>
-                          <span className="mr-2">
-                            <i className="fas fa-circle text-info" /> Referral
-                          </span>
+                          <canvas ref={pieChartRef} id="myPieChart3"></canvas>
                         </div>
                       </div>
                     </div>
