@@ -5,7 +5,7 @@ import busService from '../../services/bus.service';
 import { Link } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 
-const ListBuses = () => {
+const ListBuses = ({ setIsLoggedIn }) => {
   const [busList, setBusList] = useState([]);
   const [msg, setMsg] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
@@ -18,6 +18,7 @@ const ListBuses = () => {
       .then((res) => {
         console.log(res.data);
         setBusList(res.data);
+        
       })
       .catch((error) => {
         console.log(error);

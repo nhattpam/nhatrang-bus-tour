@@ -6,7 +6,7 @@ const SideBar = () => {
             {/* Sidebar */}
             <ul className="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar">
                 {/* Sidebar - Brand */}
-                <Link className="sidebar-brand d-flex align-items-center justify-content-center" to="/">
+                <Link className="sidebar-brand d-flex align-items-center justify-content-center" to="/home">
                     <div className="sidebar-brand-icon ">
                        <i class="fas fa-user-cog"></i>
                     </div>
@@ -16,7 +16,7 @@ const SideBar = () => {
                 <hr className="sidebar-divider my-0" />
                 {/* Nav Item - Dashboard */}
                 <li className="nav-item active">
-                    <Link className="nav-link" to="/">
+                    <Link className="nav-link" to="/home">
                         <i className="fas fa-fw fa-tachometer-alt" />
                         <span>Dashboard</span></Link>
                 </li>
