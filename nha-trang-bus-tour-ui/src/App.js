@@ -1,5 +1,5 @@
 import './App.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './components/Home';
@@ -28,6 +28,14 @@ import Login from './components/Login';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Add a state for login status
+
+  useEffect(() => {
+    // Check if the user is already logged in by retrieving the login status from local storage
+    const storedLoginStatus = localStorage.getItem('isLoggedIn');
+    setIsLoggedIn(storedLoginStatus === 'true');
+  }, []);
+
+
 
   return (
 

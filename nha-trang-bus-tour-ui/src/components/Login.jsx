@@ -19,6 +19,7 @@ const Login = ({ setIsLoggedIn }) => { // Add setIsLoggedIn prop
     const [email, setEmail] = useState('');
     const [email1, setEmail1] = useState('');
     const [token, setBearerToken] = useState('');
+    const [error, setError] = useState('');
     const navigate = useNavigate();
 
     const handleEmailChange = (e) => {
@@ -63,9 +64,11 @@ const Login = ({ setIsLoggedIn }) => { // Add setIsLoggedIn prop
 
             if (modifiedEmail === 'nhatrangbus%40gmail.com') {
                 setIsLoggedIn(true); // Update the isLoggedIn state
+                localStorage.setItem('isLoggedIn', 'true');
                 navigate('/home');
             } else {
                 setIsLoggedIn(false); // Update the isLoggedIn state
+                setError('Login failed. Please try again.'); // Set the error message
                 navigate('/login');
             }
         } catch (error) {
@@ -80,6 +83,7 @@ const Login = ({ setIsLoggedIn }) => { // Add setIsLoggedIn prop
                     <div className="card">
                         <div className="card-body">
                             <h2 className="card-title text-center">Login</h2>
+                            {error && <p className="text-danger">{error}</p>} {/* Display error message */}
                             <form onSubmit={handleSubmit}>
                                 <div className="form-group">
                                     <label htmlFor="email">Email:</label>
