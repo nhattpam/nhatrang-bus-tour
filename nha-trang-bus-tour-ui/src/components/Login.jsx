@@ -65,6 +65,7 @@ const Login = ({ setIsLoggedIn }) => { // Add setIsLoggedIn prop
             if (modifiedEmail === 'nhatrangbus%40gmail.com') {
                 setIsLoggedIn(true); // Update the isLoggedIn state
                 localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('token', response.data);
                 navigate('/home');
             } else {
                 setIsLoggedIn(false); // Update the isLoggedIn state

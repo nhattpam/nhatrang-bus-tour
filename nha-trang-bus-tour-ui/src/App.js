@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './components/Home';
-import { Route, Routes , Navigate} from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import SideBar from './components/SideBar';
 import ListUsers from './components/users/ListUsers';
 import ListOrders from './components/orders/ListOrders';
@@ -25,6 +25,19 @@ import ListTicketTypes from './components/tickettypes/ListTicketTypes';
 import ListPriceFrames from './components/priceframes/ListPriceFrames';
 import ListPriceFrameTickets from './components/priceframetickets/ListPriceFrameTickets';
 import Login from './components/Login';
+import busService from './services/bus.service';
+import driverService from './services/driver.service';
+import orderService from './services/order.service';
+import paymentService from './services/payment.service';
+import priceframeService from './services/priceframe.service';
+import priceframeticketService from './services/priceframeticket.service';
+import routeService from './services/route.service';
+import servService from './services/serv.service';
+import stationService from './services/station.service';
+import ticketService from './services/ticket.service';
+import tickettypeService from './services/tickettype.service';
+import tripService from './services/trip.service';
+import userService from './services/user.service';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Add a state for login status
@@ -33,6 +46,25 @@ function App() {
     // Check if the user is already logged in by retrieving the login status from local storage
     const storedLoginStatus = localStorage.getItem('isLoggedIn');
     setIsLoggedIn(storedLoginStatus === 'true');
+
+    // Retrieve the token from local storage and set it as the authentication token
+    const storedToken = localStorage.getItem('token');
+    if (storedToken) {
+      busService.setToken(storedToken);
+      driverService.setToken(storedToken);
+      orderService.setToken(storedToken);
+      paymentService.setToken(storedToken);
+      priceframeService.setToken(storedToken);
+      priceframeticketService.setToken(storedToken);
+      routeService.setToken(storedToken);
+      servService.setToken(storedToken);
+      routeService.setToken(storedToken);
+      stationService.setToken(storedToken);
+      ticketService.setToken(storedToken);
+      tickettypeService.setToken(storedToken);
+      tripService.setToken(storedToken);
+      userService.setToken(storedToken);
+    }
   }, []);
 
 
@@ -41,7 +73,7 @@ function App() {
 
     <>
       <Routes>
-      <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/" element={<Navigate to="/login" />} />
         <Route
           path="/login"
           element={<Login setIsLoggedIn={setIsLoggedIn} />} // Pass setIsLoggedIn prop to Login component
@@ -70,7 +102,7 @@ function App() {
             <Route path='/list_priceframes' element={<ListPriceFrames />}></Route>
             <Route path='/list_priceframetickets' element={<ListPriceFrameTickets />}></Route>
           </>
-        ) }
+        )}
 
 
 
