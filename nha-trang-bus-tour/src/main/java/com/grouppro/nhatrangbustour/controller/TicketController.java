@@ -1,7 +1,10 @@
 package com.grouppro.nhatrangbustour.controller;
 
+import com.grouppro.nhatrangbustour.Entity.Station;
 import com.grouppro.nhatrangbustour.Entity.Ticket;
+import com.grouppro.nhatrangbustour.Entity.User;
 import com.grouppro.nhatrangbustour.service.TicketService;
+import com.grouppro.nhatrangbustour.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -25,6 +28,7 @@ import java.util.List;
 @SecurityRequirement(name = "Authorization")
 public class TicketController {
     private final TicketService ticketService;
+    private final UserService userService;
     private static final String ADMIN="ROLE_Admin";
     private static final String CUSTOMER="ROLE_Customer";
     @ApiResponses(value = {
@@ -63,6 +67,21 @@ public class TicketController {
             return new ResponseEntity<>("Can't create Ticket", HttpStatus.BAD_REQUEST);
         } else {
             return new ResponseEntity<>(id,HttpStatus.CREATED);
+        }
+    }
+    @Operation(summary = "Get tickets by userId")
+    @GetMapping("/{userId}")
+    @Secured({ADMIN,CUSTOMER})
+    public ResponseEntity<?> getTicketsByUserID(@PathVariable("userId") Long userId) {
+        User user = userService.getUserById(userId);
+        if(user==null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+        List<Ticket> tickets = ticketService.getTicketsByOrder(user);
+        if (tickets != null) {
+            return ResponseEntity.ok(tickets);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tickets is empty");
         }
     }
 }
