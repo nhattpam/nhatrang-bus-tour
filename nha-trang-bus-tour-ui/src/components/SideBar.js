@@ -16,7 +16,7 @@ const SideBar = () => {
                 <hr className="sidebar-divider my-0" />
                 {/* Nav Item - Dashboard */}
                 <li className="nav-item active">
-                    <Link className="nav-link" to="/">
+                    <Link className="nav-link" to="/home">
                         <i className="fas fa-fw fa-tachometer-alt" />
                         <span>Dashboard</span></Link>
                 </li>

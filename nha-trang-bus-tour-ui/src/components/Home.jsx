@@ -29,14 +29,14 @@ const Home = () => {
       createPieChart();
     }
   }, [sumForCurrentMonth, sumForPreviousMonth]);
-  console.log('thang nay' + sumForCurrentMonth);
-  console.log('thang truoc' + sumForPreviousMonth);
+  // console.log('thang nay' + sumForCurrentMonth);
+  // console.log('thang truoc' + sumForPreviousMonth);
 
 
   //Income by month
   const fetchOrdersAndCalculateSum = async () => {
     try {
-      const response = await tripService.getAllTrips();
+      const response = await orderService.getAllOrders();
       const orders = response.data;
 
       const sumForCurrentMonth = calculateSumByMonth(orders);
@@ -60,16 +60,101 @@ const Home = () => {
     // Iterate over each order
     orders.forEach((order) => {
       // Extract the month from the order date
-      const orderMonth = new Date(order.orderDate).getMonth();
+      const orderDate = new Date(order.orderDate);
+      const orderMonth = orderDate.getMonth() + 1; // Add 1 to match the format of order month
 
       // Check if the order belongs to the current month
-      if (orderMonth === currentMonth) {
-        sumForCurrentMonth += order.total;
+      if (orderMonth === currentMonth + 1) { // Add 1 to match the format of current month
+        sumForCurrentMonth += order.totalprice; // Use the correct property name
       }
     });
 
     return sumForCurrentMonth;
   };
+
+  //Income by year
+  const fetchOrdersAndCalculateSum1 = async () => {
+    try {
+      const response = await orderService.getAllOrders();
+      const orders = response.data;
+
+      const sumForCurrentYear = calculateSumByYear(orders);
+      setSumForCurrentYear(sumForCurrentYear);
+      console.log("Sum for current year:", sumForCurrentYear);
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+    }
+  };
+
+  fetchOrdersAndCalculateSum1();
+
+  const calculateSumByYear = (orders) => {
+    // Get the current year
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+
+    // Initialize the sum for the current year
+    let sumForCurrentYear = 0;
+
+    // Iterate over each order
+    orders.forEach((order) => {
+      // Extract the year from the order date
+      const orderYear = new Date(order.orderDate).getFullYear();
+
+      // Check if the order belongs to the current year
+      if (orderYear === currentYear) {
+        sumForCurrentYear += order.totalprice;
+      }
+    });
+
+    return sumForCurrentYear;
+  };
+
+  const calculateSumByPreviousMonth = (orders) => {
+    // Get the current date
+    const currentDate = new Date();
+
+    // Calculate the previous month
+    let previousMonth = currentDate.getMonth() - 1;
+
+    // Adjust the month if the previous month was in the previous year
+    if (previousMonth < 0) {
+      previousMonth = 11;
+    }
+
+    // Initialize the sum for the previous month
+    let sumForPreviousMonth = 0;
+
+    // Iterate over each order
+    orders.forEach((order) => {
+      // Extract the month from the order date
+      const orderMonth = new Date(order.orderDate).getMonth();
+
+      // Check if the order belongs to the previous month
+      if (orderMonth === previousMonth) {
+        sumForPreviousMonth += order.totalprice;
+      }
+    });
+
+    return sumForPreviousMonth;
+  };
+
+  const fetchOrdersAndCalculateSum3 = async () => {
+    try {
+      const response = await orderService.getAllOrders();
+      const orders = response.data;
+
+      const sumForPreviousMonth = calculateSumByPreviousMonth(orders);
+      setSumForPreviousMonth(sumForPreviousMonth);
+      console.log("Sum for previous month:", sumForPreviousMonth);
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+    }
+  };
+
+  fetchOrdersAndCalculateSum3();
+
+
   // Create an instance of the OrderService class
   // Function to count the orders
   async function countOrders() {
@@ -78,7 +163,7 @@ const Home = () => {
       const orders = response.data;
       const orderCount = orders.length;
 
-      console.log("Total orders:", orderCount);
+      // console.log("Total orders:", orderCount);
 
       setOrderCount(orderCount);
     } catch (error) {
@@ -92,7 +177,7 @@ const Home = () => {
       const users = response.data;
       const userCount = users.length;
 
-      console.log("Total users:", userCount);
+      // console.log("Total users:", userCount);
 
       setUserCount(userCount);
     } catch (error) {
@@ -102,11 +187,11 @@ const Home = () => {
 
   const createPieChart = () => {
     const pieChartCanvas = pieChartRef.current.getContext("2d");
-  
+
     if (pieChartRef.current.chart) {
       pieChartRef.current.chart.destroy();
     }
-  
+
     const data = {
       labels: ["Previous Month", "Current Month"],
       datasets: [
@@ -117,7 +202,7 @@ const Home = () => {
         },
       ],
     };
-  
+
     const options = {
       plugins: {
         legend: {
@@ -135,14 +220,14 @@ const Home = () => {
         },
       },
     };
-  
+
     pieChartRef.current.chart = new Chart(pieChartCanvas, {
       type: "pie",
       data: data,
       options: options,
     });
   };
-  
+
 
 
   return (
@@ -177,7 +262,7 @@ const Home = () => {
                           <div className="col mr-2">
                             <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">
                               Earnings (Monthly)</div>
-                            <div className="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            <div className="h5 mb-0 font-weight-bold text-gray-800">${sumForCurrentMonth.toFixed(2)}</div>
                           </div>
                           <div className="col-auto">
                             <i className="fas fa-calendar fa-2x text-gray-300" />
@@ -194,7 +279,7 @@ const Home = () => {
                           <div className="col mr-2">
                             <div className="text-xs font-weight-bold text-success text-uppercase mb-1">
                               Earnings (Annual)</div>
-                            <div className="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                            <div className="h5 mb-0 font-weight-bold text-gray-800">${sumForCurrentYear.toFixed(2)}</div>
                           </div>
                           <div className="col-auto">
                             <i className="fas fa-dollar-sign fa-2x text-gray-300" />

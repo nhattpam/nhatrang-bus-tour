@@ -32,7 +32,8 @@ const ListOrders = () => {
       order.orderId.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
       order.orderDate.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
       order.payment.paymentMethod.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
-      order.userId.toString().toLowerCase().includes(searchTerm.toLowerCase())
+      order.userId.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
+      order.totalprice.toString().toLowerCase().includes(searchTerm.toLowerCase())
     );
   });
 
@@ -78,6 +79,7 @@ const ListOrders = () => {
                         <tr>
                           <th>Order Id</th>
                           <th>Order Date</th>
+                          <th>Total Price</th>
                           <th>Payment Method</th>
                           <th>User Id</th>
                         </tr>
@@ -87,6 +89,7 @@ const ListOrders = () => {
                           <tr key={order.orderId}>
                             <td>{order.orderId}</td>
                             <td>{order.orderDate}</td>
+                            <td>{order.totalprice} $</td>
                             <td>{order.payment.paymentMethod}</td>
                             <td>{order.userId}</td>
                           </tr>
