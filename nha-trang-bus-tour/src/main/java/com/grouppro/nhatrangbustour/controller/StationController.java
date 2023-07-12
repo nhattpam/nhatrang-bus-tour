@@ -62,7 +62,7 @@ public class StationController {
     @Operation(summary = "Get a station by its ID")
     @GetMapping("/{stationId}")
     @Secured({ADMIN,CUSTOMER})
-    public ResponseEntity<?> getRouteByID(@PathVariable("stationId") Long stationId) {
+    public ResponseEntity<?> getStationByID(@PathVariable("stationId") Long stationId) {
         Station station = stationService.getStationById(stationId);
         if (station != null) {
             return ResponseEntity.ok(station);
@@ -70,7 +70,7 @@ public class StationController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Station not found");
         }
     }
-    @Operation(summary = "Update a route by its ID")
+    @Operation(summary = "Update a station by its ID")
     @PutMapping("/{stationId}")
     @Secured({ADMIN})
     public ResponseEntity<?> updateStation(@PathVariable("stationId") Long stationId, @RequestBody Station updatedStation) {

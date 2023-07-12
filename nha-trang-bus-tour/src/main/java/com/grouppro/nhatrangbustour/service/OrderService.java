@@ -25,6 +25,11 @@ public class OrderService implements IOrderService {
     }
 
     @Override
+    public List<Order> getOrdersByUser(User user) {
+        return orderRepository.findAllByUser(user);
+    }
+
+    @Override
     public Long saveOrder(Order order, Long pid, Long uid) {
         Payment payment = paymentService.getPaymentById(pid);
         User user = userService.getUserById(uid);

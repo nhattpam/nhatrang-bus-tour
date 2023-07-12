@@ -59,6 +59,7 @@ public class OrderController {
     @PostMapping("/{uid}/{pid}/{totalPrice}")
     @Secured({ADMIN,CUSTOMER})
     public ResponseEntity<?> addOrder(@PathVariable Long uid, @PathVariable Long pid, @PathVariable Double totalPrice) {
+
         Order order = new Order();
         LocalDate date = LocalDate.now();
         order.setOrderDate(date);
