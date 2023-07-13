@@ -1,5 +1,6 @@
 package com.grouppro.nhatrangbustour.controller;
 
+import com.grouppro.nhatrangbustour.Entity.Service;
 import com.grouppro.nhatrangbustour.Entity.User;
 import com.grouppro.nhatrangbustour.config.JwtTokenProvider;
 import com.grouppro.nhatrangbustour.service.interfaces.IUserService;
@@ -65,21 +66,26 @@ public class UserController {
 //        // Return a success response or any desired data
 //        return ResponseEntity.ok("Authentication successful");
 //    }
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "When User created successfully!"),
-            @ApiResponse(responseCode = "400", description = "When User can't be created - Object is not valid!")
-    })
-    @Operation(summary = "Create a new user")
-    @PostMapping("/")
-    public ResponseEntity<?> Register(@RequestBody User user) {
-        Long id = userService.Register(user);
-        if (id == null) {
-            return new ResponseEntity<>("Can't create user", HttpStatus.BAD_REQUEST);
-        } else {
-
-            return new ResponseEntity<>(id,HttpStatus.CREATED);
-        }
-    }
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "201", description = "When User created successfully!"),
+//            @ApiResponse(responseCode = "400", description = "When User can't be created - Object is not valid!")
+//    })
+//    @Operation(summary = "Create a new user")
+//    @PostMapping("/{email}")
+//    public ResponseEntity<?> Register(@PathVariable("email") String email) {
+//        User user = new User();
+//        user.setUserEmail(email);
+//        user.setUserName("");
+//        user.setUserPhone("");
+//        Long id = userService.Register(user);
+//        System.out.println(user.getUserEmail());
+//        if (id == null) {
+//            return new ResponseEntity<>("Can't create user", HttpStatus.BAD_REQUEST);
+//        } else {
+//
+//            return new ResponseEntity<>(id,HttpStatus.CREATED);
+//        }
+//    }
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestParam("email") String email) {
         try {
@@ -92,9 +98,20 @@ public class UserController {
         }
         return ResponseEntity.badRequest().body("Invalid email");
     }
+    @Operation(summary = "Get a user by its ID")
+    @GetMapping("/{userId}")
+    @Secured({ADMIN,CUSTOMER})
+    public ResponseEntity<?> getUserByID(@PathVariable("userId") Long userId) {
+        User user = userService.getUserById(userId);
+        if (user != null) {
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Service not found");
+        }
+    }
     @Operation(summary = "Update a user by its ID")
     @PutMapping("/{userID}/{userName}/{userEmail}/{userPhone}")
-    @Secured({ADMIN})
+    @Secured({ADMIN, CUSTOMER})
     public ResponseEntity<?> updateUser(@PathVariable("userID") Long userId, @PathVariable("userName")String username,
                                         @PathVariable("userEmail")String email, @PathVariable("userPhone") String phone) {
         User existUser = userService.getUserById(userId);

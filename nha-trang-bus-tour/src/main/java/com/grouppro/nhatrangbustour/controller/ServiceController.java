@@ -1,6 +1,7 @@
 package com.grouppro.nhatrangbustour.controller;
 
 import com.grouppro.nhatrangbustour.Entity.Service;
+import com.grouppro.nhatrangbustour.Entity.Station;
 import com.grouppro.nhatrangbustour.service.interfaces.IServiceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -58,6 +59,25 @@ public class ServiceController {
             return new ResponseEntity<>("Can't create Service", HttpStatus.BAD_REQUEST);
         } else {
 
+            return new ResponseEntity<>(id,HttpStatus.CREATED);
+        }
+    }
+    @Operation(summary = "Update a service by its ID")
+    @PutMapping("/{serviceId}/{serviceName}")
+    @Secured({ADMIN})
+    public ResponseEntity<?> updateService(@PathVariable("serviceId") Long serviceId, @PathVariable("serviceName") String serviceName) {
+        Service existingservice = serviceService.getServiceById(serviceId);
+        if (existingservice == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Service not found");
+        }
+
+        existingservice.setServiceName(serviceName);
+        // Update any other properties you need to modify
+
+        Long id = serviceService.saveService(existingservice);
+        if (id == null) {
+            return new ResponseEntity<>("Can't update service", HttpStatus.BAD_REQUEST);
+        } else {
             return new ResponseEntity<>(id,HttpStatus.CREATED);
         }
     }

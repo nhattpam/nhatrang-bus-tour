@@ -74,7 +74,6 @@ public class TripService implements ITripService {
         List<Route> routes = routeService.SearchRoute(from,to);
         if (!routes.isEmpty()){
             for (Route item: routes) {
-                System.out.println(item.getRouteId());
                 List<Trip> trips1 = tripRepository.findAllByRoute(item);
                 trips.addAll(trips1);
             }

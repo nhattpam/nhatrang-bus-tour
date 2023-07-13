@@ -40,7 +40,11 @@ public class CustomUserDetailsService implements ICustomUserDetailsService,UserD
             role="Customer";
             authoritySet.add(new SimpleGrantedAuthority("ROLE_Customer"));
             if (userRepository.getUserByUserEmail(email)==null){
-                throw new UsernameNotFoundException(email);
+                User user = new User();
+                user.setUserEmail(email);
+                user.setUserName("");
+                user.setUserPhone("");
+                userRepository.save(user);
             }
         }
         User customer = userRepository.getUserByUserEmail(email);

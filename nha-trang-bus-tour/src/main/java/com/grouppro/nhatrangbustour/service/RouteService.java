@@ -44,8 +44,7 @@ public class RouteService implements IRouteService {
         for (Route fromroute: startRoutes) {
             for (Route toroute: endRoutes) {
                 if(fromroute.getParentRouteID()==toroute.getParentRouteID()){
-                    List<Route> routeList = routeRepository.findByParentRouteID(fromroute.getParentRouteID());
-                    routes.addAll(routeList);
+                    routes.add(fromroute);
                 }
             }
         }
