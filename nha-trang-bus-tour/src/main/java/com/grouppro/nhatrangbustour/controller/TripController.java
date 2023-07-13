@@ -1,7 +1,13 @@
 package com.grouppro.nhatrangbustour.controller;
 
+import com.grouppro.nhatrangbustour.Entity.Bus;
+import com.grouppro.nhatrangbustour.Entity.Driver;
+import com.grouppro.nhatrangbustour.Entity.PriceFrame;
 import com.grouppro.nhatrangbustour.Entity.Trip;
 import com.grouppro.nhatrangbustour.response.TripResponse;
+import com.grouppro.nhatrangbustour.service.interfaces.IBusService;
+import com.grouppro.nhatrangbustour.service.interfaces.IDriverService;
+import com.grouppro.nhatrangbustour.service.interfaces.IPriceFrameService;
 import com.grouppro.nhatrangbustour.service.interfaces.ITripService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -29,6 +35,9 @@ import java.util.stream.Collectors;
 @SecurityRequirement(name = "Authorization")
 public class TripController {
     private final ITripService tripService;
+    private final IBusService busService;
+    private final IDriverService driverService;
+    private final IPriceFrameService priceFrameService;
     private static final String ADMIN="ROLE_Admin";
     private static final String CUSTOMER="ROLE_Customer";
     @ApiResponses(value = {
@@ -106,6 +115,40 @@ public class TripController {
             return ResponseEntity.ok(tripResponses);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.emptyList());
+        }
+    }
+    @Operation(summary = "Get a trip by its ID")
+    @GetMapping("/{tripId}")
+    @Secured({ADMIN,CUSTOMER})
+    public ResponseEntity<?> getTripByID(@PathVariable("tripId") Long tripId) {
+        Trip trip = tripService.getTripByid(tripId);
+        if (trip != null) {
+            return ResponseEntity.ok(trip);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Trip not found");
+        }
+    }
+    @Operation(summary = "Update a trip by its ID")
+    @PutMapping("/{tripID}/{departureTime}/{arrivalTime}/{busId}/{driverId}/{priceFrameId}/{routeId}")
+    @Secured({ADMIN})
+    public ResponseEntity<?> updateTrip(@PathVariable("tripID") Long tripID, @PathVariable("departureTime") LocalDate departureTime,
+                                        @PathVariable("arrivalTime")LocalDate arrivalTime, @PathVariable("busId") Long busId,
+                                        @PathVariable("driverId") Long driverId, @PathVariable("priceFrameId")Long priceFrameId,
+                                        @PathVariable("routeId")Long routeId) {
+        Trip existingtrip = tripService.getTripByid(tripID);
+        if (existingtrip == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Trip not found");
+        }
+        existingtrip.setArrivalTime(arrivalTime);
+        existingtrip.setDepartureTime(departureTime);
+        // Update any other properties you need to modify
+
+        Long id = tripService.saveTrip(existingtrip, busId,driverId,routeId,priceFrameId);
+        if (id == null) {
+            return new ResponseEntity<>("Can't update driver", HttpStatus.BAD_REQUEST);
+        } else {
+
+            return new ResponseEntity<>(id,HttpStatus.CREATED);
         }
     }
 }
