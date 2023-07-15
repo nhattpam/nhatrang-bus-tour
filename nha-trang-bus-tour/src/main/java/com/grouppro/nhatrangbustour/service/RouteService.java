@@ -39,8 +39,8 @@ public class RouteService implements IRouteService {
     @Override
     public List<Route> SearchRoute(String fromDestination, String toDestination) {
         List<Route> routes = new ArrayList<>();
-        List<Route> startRoutes = routeRepository.findByRouteName(fromDestination);
-        List<Route> endRoutes = routeRepository.findByRouteName(toDestination);
+        List<Route> startRoutes = routeRepository.findByRouteNameContaining(fromDestination);
+        List<Route> endRoutes = routeRepository.findByRouteNameContaining(toDestination);
         for (Route fromroute: startRoutes) {
             for (Route toroute: endRoutes) {
                 if(fromroute.getParentRouteID()==toroute.getParentRouteID()){

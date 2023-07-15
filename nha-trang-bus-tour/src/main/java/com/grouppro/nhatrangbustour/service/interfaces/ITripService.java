@@ -2,6 +2,7 @@ package com.grouppro.nhatrangbustour.service.interfaces;
 
 import com.grouppro.nhatrangbustour.Entity.Trip;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface ITripService {
@@ -10,5 +11,5 @@ public interface ITripService {
     Long editTrip(Trip trip);
     Trip getTripByid(Long tid);
 
-    List<Trip> searchTrip(String from, String to);
+    List<Trip> searchTrip(String from, String to, LocalDate date);
 }
