@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'login_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -9,6 +11,28 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  Future<void> registerUser(String email, String password) async {
+    try {
+      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      User? user = userCredential.user;
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
+      print('User registered: ${user?.uid}');
+    } catch (e) {
+      // Registration failed, handle the error
+      print('Registration failed: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,6 +53,7 @@ class _RegisterPageState extends State<RegisterPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextFormField(
+                controller: emailController,
                 decoration: InputDecoration(
                   labelText: 'Email',
                   prefixIcon: Icon(Icons.email),
@@ -36,6 +61,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               SizedBox(height: 16.0),
               TextFormField(
+                controller: passwordController,
                 decoration: InputDecoration(
                   labelText: 'Password',
                   prefixIcon: Icon(Icons.lock),
@@ -45,8 +71,17 @@ class _RegisterPageState extends State<RegisterPage> {
               SizedBox(height: 30.0),
 
               ElevatedButton(
-                onPressed: (){
-                  //
+                onPressed: () {
+                  String email = emailController.text.trim();
+                  String password = passwordController.text.trim();
+
+                  if (email.isEmpty || password.isEmpty) {
+                    // Show an error message or handle the empty fields
+                    print('Email or password cannot be empty');
+                    return;
+                  }
+
+                  registerUser(email, password);
                 },
                 child: Text('CREATE AN ACCOUNT'),
                 style: ElevatedButton.styleFrom(

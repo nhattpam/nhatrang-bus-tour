@@ -96,7 +96,7 @@ class _BusBookingDetailPageState extends State<BusBookingDetailPage> {
                                     ),
                                   ),
                                 ),
-                                Text("Nha Trang 1",style: TextStyle(
+                                Text("Mia Resort Nha Trang",style: TextStyle(
                                   fontSize: 16,
                                 ),
                                 ),
@@ -122,7 +122,7 @@ class _BusBookingDetailPageState extends State<BusBookingDetailPage> {
                                   ),
                                 ),
                                 Text(
-                                  "Nha Trang 2",
+                                  "Viện Hải Dương Học",
                                   style: TextStyle(
                                     fontSize: 16,
                                   ),
@@ -183,120 +183,6 @@ class _BusBookingDetailPageState extends State<BusBookingDetailPage> {
                     ),
                   ),
                   Divider(),
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("Departure", style: TextStyle(
-                                  fontSize: 16,
-                                ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    vertical: 8,
-                                  ),
-                                  child: Text(
-                                    "8:30",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                ),
-                                Text("Nha Trang 1",style: TextStyle(
-                                  fontSize: 16,
-                                ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Text("Arrival", style: TextStyle(
-                                  fontSize: 16,
-                                ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    vertical: 8,
-                                  ),
-                                  child: Text(
-                                    "12:00",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                ),
-                                Text(
-                                  "Nha Trang 2",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 24),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.accessible),
-                              Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Icon(Icons.work),
-                              ),
-                              Icon(Icons.electrical_services),
-                            ],
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: (){
-                            context.push("/seat");
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.red,
-                                borderRadius: BorderRadius.circular(32)
-                            ),
-                            padding: EdgeInsets.symmetric(vertical: 16),
-                            child: Center(
-                              child: Text.rich(TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: "FROM",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: ' 10\$',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 22
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Divider(),
-
                 ],
               ),
             ),

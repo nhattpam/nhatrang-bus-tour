@@ -4,7 +4,6 @@ import 'package:swd392/src/ui/bus_booking_home_screen.dart';
 import 'package:swd392/src/ui/bus_booking_main_page.dart';
 import 'package:go_router/go_router.dart';
 import 'package:swd392/src/ui/bus_booking_select_page.dart';
-import 'package:swd392/src/ui/login_check.dart';
 import 'package:swd392/src/ui/login_page.dart';
 import 'package:swd392/src/ui/opening_page.dart';
 import 'package:swd392/src/ui/register_page.dart';

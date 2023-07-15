@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:swd392/model/station.dart';
+import 'package:swd392/network/network_request_station.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class BusBookingHomeScreen extends StatefulWidget {
@@ -13,31 +15,31 @@ class _BusBookingHomeScreenState extends State<BusBookingHomeScreen> {
   late String selectedFrom;
   late String selectedTo;
   late DateTime selectedDate;
-
-  List<String> fromOptions = [
-    'Nha Trang 1',
-    'Nha Trang 2',
-    'Nha Trang 3',
-    'Nha Trang 4',
-    'Nha Trang 5',
-    // Add more options as needed
-  ];
-
-  List<String> toOptions = [
-    'Nha Trang 2',
-    'Nha Trang 1',
-    'Nha Trang 3',
-    'Nha Trang 4',
-    'Nha Trang 5',
-    // Add more options as needed
-  ];
+  List<Station> stations = []; // List to hold the fetched stations
 
   @override
   void initState() {
     super.initState();
-    selectedFrom = fromOptions[0];
-    selectedTo = toOptions[0];
+    selectedFrom = '';
+    selectedTo = '';
     selectedDate = DateTime.now();
+
+    fetchStations(); // Fetch the stations from the API
+  }
+
+  Future<void> fetchStations() async {
+    try {
+      List<Station> fetchedStations = await NetworkRequestStation.fetchStation();
+      setState(() {
+        stations = fetchedStations;
+        if (stations.isNotEmpty) {
+          selectedFrom = stations[0].stationName ?? '';
+          selectedTo = stations[0].stationName ?? '';
+        }
+      });
+    } catch (e) {
+      print('Failed to fetch stations: $e');
+    }
   }
 
   Future<void> _selectDate() async {
@@ -133,7 +135,7 @@ class _BusBookingHomeScreenState extends State<BusBookingHomeScreen> {
                           SizedBox(width: 8),
                           Text(
                             "FROM",
-                            style: TextStyle(
+                            style: GoogleFonts.roboto(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
@@ -157,11 +159,11 @@ class _BusBookingHomeScreenState extends State<BusBookingHomeScreen> {
                                         selectedFrom = newValue!;
                                       });
                                     },
-                                    items: fromOptions.map((String option) {
+                                    items: stations.map((Station station) {
                                       return DropdownMenuItem<String>(
-                                        value: option,
+                                        value: station.stationName,
                                         child: Text(
-                                          option,
+                                          station.stationName ?? '',
                                           style: TextStyle(
                                             color: Colors.black,
                                             fontSize: 15,
@@ -200,6 +202,7 @@ class _BusBookingHomeScreenState extends State<BusBookingHomeScreen> {
                           Text(
                             "TO",
                             style: TextStyle(
+                              fontFamily: 'Roboto',
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
@@ -223,11 +226,11 @@ class _BusBookingHomeScreenState extends State<BusBookingHomeScreen> {
                                         selectedTo = newValue!;
                                       });
                                     },
-                                    items: toOptions.map((String option) {
+                                    items: stations.map((Station station) {
                                       return DropdownMenuItem<String>(
-                                        value: option,
+                                        value: station.stationName,
                                         child: Text(
-                                          option,
+                                          station.stationName ?? '',
                                           style: TextStyle(
                                             color: Colors.black,
                                             fontSize: 15,

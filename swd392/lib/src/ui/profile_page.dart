@@ -141,10 +141,15 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<void> _logout() async {
     final GoogleSignIn googleSignIn = GoogleSignIn();
 
+    // Check if the user logged in with Google
+    bool isGoogleUser = _user?.providerData.any((userInfo) => userInfo.providerId == 'google.com') ?? false;
+
     await _auth.signOut();
 
-    // Disconnect the user from Google Sign-In
-    await googleSignIn.disconnect();
+    if (isGoogleUser) {
+      // Disconnect the user from Google Sign-In only if logged in with Google
+      await googleSignIn.disconnect();
+    }
 
     Navigator.pushReplacement(
       context,
