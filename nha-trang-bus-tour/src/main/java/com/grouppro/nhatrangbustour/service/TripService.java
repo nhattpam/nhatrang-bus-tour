@@ -7,6 +7,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,15 +71,22 @@ public class TripService implements ITripService {
     }
 
     @Override
-    public List<Trip> searchTrip(String from, String to) {
+    public List<Trip> searchTrip(String from, String to, LocalDate date) {
         List<Trip> trips = new ArrayList<>();
         List<Route> routes = routeService.SearchRoute(from,to);
         if (!routes.isEmpty()){
             for (Route item: routes) {
                 List<Trip> trips1 = tripRepository.findAllByRoute(item);
-                trips.addAll(trips1);
+                for (Trip trip: trips1){
+                    System.out.println(trips1.stream().count());
+                    if (trip.getDepartureTime().isEqual(date)){
+                        trips.add(trip);
+                        System.out.println(trips.stream().count());
+                    }
+                }
             }
-        }else {
+        }
+        else {
             throw new RuntimeException("Can't find trip");
         }
         return trips;

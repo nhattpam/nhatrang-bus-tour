@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface RouteRepository extends JpaRepository<Route, Long> {
-    List<Route> findByRouteName (String routename);
+    List<Route> findByRouteNameContaining (String routename);
     List<Route> findByParentRouteID(Long parentid);
 }

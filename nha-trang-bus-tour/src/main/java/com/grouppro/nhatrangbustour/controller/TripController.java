@@ -95,10 +95,10 @@ public class TripController {
             @ApiResponse( content = @Content(schema = @Schema(implementation = Trip.class)))
     })
     @Operation(summary = "Search trip ")
-    @GetMapping("/{From}/{To}")
+    @GetMapping("/{From}/{To}/{Day}")
     @Secured({ADMIN,CUSTOMER})
-    public ResponseEntity<?> searchTrip(@RequestParam("From")String from, @RequestParam("To")String to) {
-        List<Trip> trips = tripService.searchTrip(from, to);
+    public ResponseEntity<?> searchTrip(@RequestParam("From")String from, @RequestParam("To")String to, @RequestParam("Day") LocalDate date) {
+        List<Trip> trips = tripService.searchTrip(from, to, date);
         List<TripResponse> tripResponses = trips.stream()
                 .map(trip -> new TripResponse(
                         trip.getTripID(),

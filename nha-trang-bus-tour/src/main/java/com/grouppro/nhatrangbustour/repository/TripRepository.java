@@ -4,6 +4,7 @@ import com.grouppro.nhatrangbustour.Entity.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -12,4 +13,5 @@ public interface TripRepository extends JpaRepository<Trip, Long> {
     List<Trip> findAllByBus(Bus bus);
     List<Trip> findAllByDriver(Driver driver);
     List<Trip> findAllByPriceFrame(PriceFrame priceFrame);
+    List<Trip> findAllByDepartureTime(LocalDate date);
 }
