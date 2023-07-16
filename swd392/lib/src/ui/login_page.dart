@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:swd392/src/ui/profile_page.dart';
+import 'package:http/http.dart' as http;
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'bus_booking_home_screen.dart';
@@ -248,6 +249,30 @@ class _LoginPageState extends State<LoginPage> {
 
       final UserCredential userCredential =
       await FirebaseAuth.instance.signInWithCredential(credential);
+
+      // Get the logged-in user's email
+      String? userEmail = userCredential.user?.email;// Make the API request with the logged-in user's email
+      Uri apiUrl = Uri.parse('https://nhatrangbustourbackend.azurewebsites.net/api/users/login');
+      Map<String, String> queryParams = {'email': userEmail ?? ''};
+      String queryString = Uri(queryParameters: queryParams).query;
+      String apiUrlWithQuery = '$apiUrl?$queryString';
+
+      String token = "";
+      // Prepare the URL for the API request with the logged-in user's email
+      String url = 'https://nhatrangbustourbackend.azurewebsites.net/api/users/login?email=$userEmail';
+
+      final response = await http.post(
+        Uri.parse(url)
+      );
+
+      print(response.body);
+
+
+
+
+      // Perform the HTTP GET request
+      // await http.get(apiUrlWithQuery);
+
 
       // Login successful, navigate to the next screen or perform any other logic
 
