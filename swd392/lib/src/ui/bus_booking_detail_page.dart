@@ -143,7 +143,7 @@ class _BusBookingDetailPageState extends State<BusBookingDetailPage> {
                               //startRoute
                               Text(
                                 routes.isNotEmpty
-                                    ? routes.map((route) => route.routeName?.split('-').first.trim() ?? "Unknown").join(", ")
+                                    ? routes.map((route) => route.routeName?.split('-').first.trim() ?? "Unknown").join("\n ")
                                     : "Unknown",
                                 style: TextStyle(
                                   fontSize: 16,
@@ -175,7 +175,7 @@ class _BusBookingDetailPageState extends State<BusBookingDetailPage> {
                               //endRoute
                               Text(
                                 routes.isNotEmpty
-                                    ? routes.map((route) => route.routeName?.split('-').last.trim() ?? "Unknown").join(", ")
+                                    ? routes.map((route) => route.routeName?.split('-').last.trim() ?? "Unknown").join("\n ")
                                     : "Unknown",
                                 style: TextStyle(
                                   fontSize: 16,
