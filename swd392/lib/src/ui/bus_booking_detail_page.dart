@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:swd392/network/network_request_route.dart';
 import 'package:swd392/model/route.dart' as postfix;
+import 'package:google_fonts/google_fonts.dart';
 
 class BusBookingDetailPage extends StatefulWidget {
   const BusBookingDetailPage({super.key});
@@ -131,14 +132,20 @@ class _BusBookingDetailPageState extends State<BusBookingDetailPage> {
                                   Padding(
                                     padding: EdgeInsets.symmetric(vertical: 8),
                                     child: Text(
-                                      "6:30",
+                                      route.trip?.isNotEmpty == true
+                                          ? route.trip!.first.departureTime ?? "Unknown"
+                                          : "Unknown",
                                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                                     ),
                                   ),
                                   // startRoute
                                   Text(
                                     route.routeName?.split('-').first.trim() ?? "Unknown",
-                                    style: TextStyle(fontSize: 16, color: Colors.red),
+                                    style: GoogleFonts.openSans(fontSize: 16, color: Colors.red),
+                                  ),
+                                  Divider( // Add a horizontal line after each column
+                                    thickness: 1.5,
+                                    color: Colors.grey, // Customize the color of the line if needed
                                   ),
                                 ],
                               );
@@ -155,7 +162,9 @@ class _BusBookingDetailPageState extends State<BusBookingDetailPage> {
                                   Padding(
                                     padding: EdgeInsets.symmetric(vertical: 8),
                                     child: Text(
-                                      "10:30",
+                                      route.trip?.isNotEmpty == true
+                                          ? route.trip!.first.arrivalTime ?? "Unknown"
+                                          : "Unknown",
                                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                                     ),
                                   ),
@@ -164,6 +173,10 @@ class _BusBookingDetailPageState extends State<BusBookingDetailPage> {
                                     route.routeName?.split('-').last.trim() ?? "Unknown",
                                     style: TextStyle(fontSize: 16, color: Colors.red),
                                   ),
+                                  Divider( // Add a horizontal line after each column
+                                  thickness: 1.5,
+                                  color: Colors.grey, // Customize the color of the line if needed
+                              ),
                                 ],
                               );
                             }).toList(),
