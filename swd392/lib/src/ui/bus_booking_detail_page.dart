@@ -123,67 +123,51 @@ class _BusBookingDetailPageState extends State<BusBookingDetailPage> {
                         children: [
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Departure", style: TextStyle(
-                                fontSize: 16,
-                              ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                  vertical: 8,
-                                ),
-                                child: Text(
-                                  "6:30",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
+                            children: routes.map((route) {
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("Departure", style: TextStyle(fontSize: 16)),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 8),
+                                    child: Text(
+                                      "6:30",
+                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                                    ),
                                   ),
-                                ),
-                              ),
-                              //startRoute
-                              Text(
-                                routes.isNotEmpty
-                                    ? routes.map((route) => route.routeName?.split('-').first.trim() ?? "Unknown").join("\n ")
-                                    : "Unknown",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                ),
-                              ),
-
-
-                            ],
+                                  // startRoute
+                                  Text(
+                                    route.routeName?.split('-').first.trim() ?? "Unknown",
+                                    style: TextStyle(fontSize: 16, color: Colors.red),
+                                  ),
+                                ],
+                              );
+                            }).toList(),
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text("Arrival", style: TextStyle(
-                                fontSize: 16,
-                              ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                  vertical: 8,
-                                ),
-                                child: Text(
-                                  "10:30",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ),
-                              //endRoute
-                              Text(
-                                routes.isNotEmpty
-                                    ? routes.map((route) => route.routeName?.split('-').last.trim() ?? "Unknown").join("\n ")
-                                    : "Unknown",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                ),
-                              ),
 
-                            ],
-                          )
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: routes.map((route) {
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("Arrival", style: TextStyle(fontSize: 16)),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 8),
+                                    child: Text(
+                                      "10:30",
+                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                                    ),
+                                  ),
+                                  // startRoute
+                                  Text(
+                                    route.routeName?.split('-').last.trim() ?? "Unknown",
+                                    style: TextStyle(fontSize: 16, color: Colors.red),
+                                  ),
+                                ],
+                              );
+                            }).toList(),
+                          ),
                         ],
                       ),
                       Padding(
