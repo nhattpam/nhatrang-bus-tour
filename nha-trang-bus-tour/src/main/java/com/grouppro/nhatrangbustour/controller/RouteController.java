@@ -50,7 +50,7 @@ public class RouteController {
             @ApiResponse(responseCode = "201", description = "When Route created successfully!"),
             @ApiResponse(responseCode = "400", description = "When Route can't be created - Object is not valid!")
     })
-    @Operation(summary = "requestbodt ")
+    @Operation(summary = "Create new route ")
     @PostMapping("/")
     @Secured(ADMIN)
     public ResponseEntity<?> addRoute(@RequestParam("routename")String name, @RequestParam("parentid") Long parentid) {
