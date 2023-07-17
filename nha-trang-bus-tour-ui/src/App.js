@@ -38,6 +38,7 @@ import ticketService from './services/ticket.service';
 import tickettypeService from './services/tickettype.service';
 import tripService from './services/trip.service';
 import userService from './services/user.service';
+import AddRoute from './components/routes/AddRoute';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Add a state for login status
@@ -98,6 +99,7 @@ function App() {
             <Route path='/list_services' element={<ListServices />}></Route>
             <Route path='/add_service' element={<AddService />}></Route>
             <Route path='/list_routes' element={<ListRoutes />}></Route>
+            <Route path='/add_route' element={<AddRoute />}></Route>
             <Route path='/list_tickettypes' element={<ListTicketTypes />}></Route>
             <Route path='/list_priceframes' element={<ListPriceFrames />}></Route>
             <Route path='/list_priceframetickets' element={<ListPriceFrameTickets />}></Route>
