@@ -50,29 +50,13 @@ public class RouteController {
             @ApiResponse(responseCode = "201", description = "When Route created successfully!"),
             @ApiResponse(responseCode = "400", description = "When Route can't be created - Object is not valid!")
     })
-    @Operation(summary = "Create a new Route ")
+    @Operation(summary = "requestbodt ")
     @PostMapping("/")
     @Secured(ADMIN)
     public ResponseEntity<?> addRoute(@RequestParam("routename")String name, @RequestParam("parentid") Long parentid) {
         Route route = new Route();
         route.setRouteName(name);
         route.setParentRouteID(parentid);
-        Long id = routeService.saveRoute(route);
-        if (id == null) {
-            return new ResponseEntity<>("Can't create Station", HttpStatus.BAD_REQUEST);
-        } else {
-
-            return new ResponseEntity<>(id,HttpStatus.CREATED);
-        }
-    }@Operation(summary = "Update a Route ")
-    @PostMapping("/update")
-    @Secured(ADMIN)
-    public ResponseEntity<?> updateRoute(@RequestParam("routeid")Long rid, @RequestParam("routename") String name, @RequestParam("parentid") Long parentid) {
-        Route route = routeService.getRouteByID(rid);
-        route.setRouteName(name);
-        route.setParentRouteID(parentid);
-        List<PriceFrame> priceFrames = priceFrameService.getPriceFramesbyRoute(route);
-        route.setPriceFrame(priceFrames);
         Long id = routeService.saveRoute(route);
         if (id == null) {
             return new ResponseEntity<>("Can't create Station", HttpStatus.BAD_REQUEST);
@@ -95,7 +79,7 @@ public class RouteController {
     @Operation(summary = "Update a route by its ID")
     @PutMapping("/{routeId}/{routeName}/{parentRouteId}")
     @Secured({ADMIN})
-    public ResponseEntity<?> updateDriver(@PathVariable("routeId") Long routeId, @PathVariable("routeName")String name,
+    public ResponseEntity<?> updateRoute(@PathVariable("routeId") Long routeId, @PathVariable("routeName")String name,
                                           @PathVariable("parentRouteId")Long parent) {
         Route existingroute = routeService.getRouteByID(routeId);
         if (existingroute == null) {

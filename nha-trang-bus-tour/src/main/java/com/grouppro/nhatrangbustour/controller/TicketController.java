@@ -69,11 +69,26 @@ public class TicketController {
             return new ResponseEntity<>(id,HttpStatus.CREATED);
         }
     }
-    @Operation(summary = "Get tickets by userId")
-    @GetMapping("/{userId}")
+//    @Operation(summary = "Get tickets by userId")
+//    @GetMapping("/{userId}")
+//    @Secured({ADMIN,CUSTOMER})
+//    public ResponseEntity<?> getTicketsByUserID(@PathVariable("userId") Long userId) {
+//        User user = userService.getUserById(userId);
+//        if(user==null){
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+//        }
+//        List<Ticket> tickets = ticketService.getTicketsByOrder(user);
+//        if (tickets != null) {
+//            return ResponseEntity.ok(tickets);
+//        } else {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tickets is empty");
+//        }
+//    }
+    @Operation(summary = "Get tickets by userEmail")
+    @GetMapping("/{userEmail}")
     @Secured({ADMIN,CUSTOMER})
-    public ResponseEntity<?> getTicketsByUserID(@PathVariable("userId") Long userId) {
-        User user = userService.getUserById(userId);
+    public ResponseEntity<?> getTicketsByUserEmail(@PathVariable("userEmail") String userEmail) {
+        User user = userService.getUserByEmail(userEmail);
         if(user==null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }
