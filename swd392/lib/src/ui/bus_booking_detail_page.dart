@@ -57,6 +57,7 @@ class _BusBookingDetailPageState extends State<BusBookingDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 1,

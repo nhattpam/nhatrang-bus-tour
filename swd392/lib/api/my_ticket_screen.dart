@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import '../model/ticket.dart';
 import '../network/network_request_my_ticket.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class MyTicketScreen extends StatelessWidget {
   const MyTicketScreen({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +28,27 @@ class ListViewPage extends StatefulWidget {
   @override
   State<ListViewPage> createState() => _ListViewPageState();
 }
+//get userEmail from SharePreferences
+Future<String?> getUserEmailFromSession() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getString('userEmail');
+}
+
 
 class _ListViewPageState extends State<ListViewPage> {
   List<Ticket> postData = [];
 
+
   @override
   void initState() {
     super.initState();
+    _loadData(); // Call a new method to load data and userEmail
+  }
+
+  Future<void> _loadData() async {
+    String? userEmail = await getUserEmailFromSession();
+    print("day la email: $userEmail"); // Print the userEmail
+
     NetworkRequestTicket.fetchTicket().then((dataFromServer) {
       setState(() {
         postData = dataFromServer as List<Ticket>;

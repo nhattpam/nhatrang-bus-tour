@@ -11,6 +11,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'bus_booking_home_screen.dart';
 import 'bus_booking_main_page.dart';
 import 'bus_booking_select_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -267,7 +269,9 @@ class _LoginPageState extends State<LoginPage> {
 
       print(response.body);
 
-
+      // Store userEmail in shared preferences
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('userEmail', userEmail ?? '');
 
 
       // Perform the HTTP GET request
