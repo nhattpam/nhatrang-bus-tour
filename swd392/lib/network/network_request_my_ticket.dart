@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:swd392/model/ticket.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 //change class
 class NetworkRequestTicket {
@@ -14,11 +15,22 @@ class NetworkRequestTicket {
     List<Ticket> ticket = list.map((model) => Ticket.fromJson(model)).toList();
     return ticket;
   }
+  //get userEmail from SharePreferences
+  static Future<String?> getUserEmailFromSession() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('userEmail');
+  }
+
 
   //change here
   static Future<List<Ticket>> fetchTicket({int page = 1}) async{
+    String? userEmail = await getUserEmailFromSession();
+    print("day la email 2: $userEmail"); // Print the userEmail
+
+    String baseUrl = '$url$userEmail';
+
     final response = await http.get(
-      Uri.parse(url),
+      Uri.parse(baseUrl),
       headers: {'Authorization': 'Bearer $bearerToken'},
     );
     if (response.statusCode == 200){
