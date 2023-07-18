@@ -15,6 +15,7 @@ import tickettypeService from '../services/tickettype.service';
 import tripService from '../services/trip.service';
 import userService from '../services/user.service';
 
+
 const Login = ({ setIsLoggedIn }) => { // Add setIsLoggedIn prop
     const [email, setEmail] = useState('');
     const [email1, setEmail1] = useState('');
@@ -78,31 +79,38 @@ const Login = ({ setIsLoggedIn }) => { // Add setIsLoggedIn prop
     };
 
     return (
-        <div className="container mt-20">
-            <div className="row justify-content-center mt-20">
-                <div className="col-md-3 ">
-                    <div className="card">
-                        <div className="card-body">
-                            <h2 className="card-title text-center">Login</h2>
-                            {error && <p className="text-danger">{error}</p>} {/* Display error message */}
-                            <form onSubmit={handleSubmit}>
-                                <div className="form-group">
-                                    <label htmlFor="email">Email:</label>
-                                    <input
-                                        type="email"
-                                        className="form-control"
-                                        id="email"
-                                        value={email}
-                                        onChange={handleEmailChange}
-                                        placeholder="Enter your email"
-                                        required
-                                    />
-                                </div>
-                                <div className="text-center">
-                                    <button type="submit" className="btn btn-primary">Login</button>
-                                </div>
-                            </form>
-                        </div>
+        <div className="container-fluid p-0 d-flex justify-content-center align-items-center" style={{ backgroundImage: `url(/banner_admin2.jpg)`, backgroundSize: 'cover', height: '100vh' }}>
+            <div className="col-md-3 ">
+                <div className="card">
+                    <div className="card-body">
+                        <h2 className="card-title text-center">Login</h2>
+                        {error && <p className="text-danger">{error}</p>} {/* Display error message */}
+                        <form onSubmit={handleSubmit}>
+                            <div className="form-group">
+                                <label htmlFor="email">Email:</label>
+                                <input
+                                    type="email"
+                                    className="form-control"
+                                    id="email"
+                                    value={email}
+                                    onChange={handleEmailChange}
+                                    placeholder="Enter your email"
+                                    required
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="password">Password:</label>
+                                <input
+                                    type="password"
+                                    className="form-control"
+                                    placeholder="Enter your password"
+                                    required
+                                />
+                            </div>
+                            <div className="text-center">
+                                <button type="submit" className="btn btn-primary">Login</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
