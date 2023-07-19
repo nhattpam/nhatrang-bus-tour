@@ -8,6 +8,8 @@ import 'package:swd392/src/ui/login_page.dart';
 import 'package:swd392/src/ui/opening_page.dart';
 import 'package:swd392/src/ui/register_page.dart';
 
+import 'api/my_ticket_screen.dart';
+
 class BusTicketBookingApp extends StatelessWidget {
   BusTicketBookingApp({super.key});
   final appRoute = GoRouter(
@@ -41,6 +43,10 @@ class BusTicketBookingApp extends StatelessWidget {
               GoRoute(
                 path: "register",
                 builder: (context, state)=> const  RegisterPage(),
+              ),
+              GoRoute(
+                path: "ticket",
+                builder: (context, state)=> const  MyTicketScreen(),
               ),
             ],
           ),

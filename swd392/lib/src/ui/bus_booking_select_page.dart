@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:swd392/service/notification_service.dart';
 
 class BusBookingSelectPage extends StatefulWidget {
   const BusBookingSelectPage({Key? key}) : super(key: key);
@@ -9,10 +10,18 @@ class BusBookingSelectPage extends StatefulWidget {
 }
 
 class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
+  NotificationServices notificationServices = NotificationServices();
+
   int adultCount = 0;
   int kidsCount = 0;
   int partnerCount = 0;
   int foreignTouristCount = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    notificationServices.initialiseNotification();
+  }
 
   void incrementCount(String ticketType) {
     setState(() {
@@ -42,7 +51,7 @@ class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
           kidsCount++;
         } else if (ticketType == 'partner' && partnerCount < 5) {
           partnerCount++;
-        } else if (ticketType == 'foreignTourist' && foreignTouristCount < 2) {
+        } else if (ticketType == 'foreignTourist' && foreignTouristCount < 5) {
           foreignTouristCount++;
         }
       }
@@ -284,7 +293,11 @@ class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
             ),
             child: TextButton(
               onPressed: () {
-                // Handle confirm button action
+                notificationServices.sendNotification(
+                  'Booking Complete',
+                  totalAmount,
+                );
+                context.push('/ticket');
               },
               child: Text(
                 'Confirm',
