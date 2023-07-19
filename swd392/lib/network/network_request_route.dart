@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 //change class
 class NetworkRequestRoute {
   static const String url = 'https://nhatrangbustourbackend.azurewebsites.net/api/routes/'; //change link
-  static const String bearerToken = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJuaGF0cmFuZ2J1c0BnbWFpbC5jb20iLCJpYXQiOjE2ODkwMDI3NzEsImV4cCI6MTY4OTYwNzU3MX0.EF-rdCb0QK0bKZoWhjdhqYMlhPamT4HIyLHNnNhT3FzJvSzHiFgfIlJjZiHMKxnkyt1WQIFAgcPIoSpGUT6OKA';
+  static const String bearerToken = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJuaGF0cmFuZ2J1c0BnbWFpbC5jb20iLCJpYXQiOjE2ODk3NzQ0NjcsImV4cCI6MTY5MDM3OTI2N30.XX3PWi7MgZpy8nKwucCkB9jyC6oQbV-MqV0JaGqFrSOoAzZ_5zraq5-_KeimvI0yHdZbd4M9AsCFsdbmtlM_Uw';
 
   //change here
   static List<Route> parsePostRoute(String responseBody){

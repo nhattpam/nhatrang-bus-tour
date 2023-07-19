@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swd392/service/notification_service.dart';
 
 class BusBookingSelectPage extends StatefulWidget {
@@ -11,6 +13,7 @@ class BusBookingSelectPage extends StatefulWidget {
 
 class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
   NotificationServices notificationServices = NotificationServices();
+  late Razorpay _razorpay;
 
   int adultCount = 0;
   int kidsCount = 0;
@@ -21,6 +24,73 @@ class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
   void initState() {
     super.initState();
     notificationServices.initialiseNotification();
+    //razorpay
+    // Initialize Razorpay with your API key
+    _razorpay = Razorpay();
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    // Remember to dispose of Razorpay when the widget is disposed
+    _razorpay.clear();
+  }
+
+  // Define the callback functions for payment events
+  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    // Payment successful, handle success here
+    print("Payment Successful");
+    // You can perform further actions after successful payment
+    notificationServices.sendNotification(
+      'Booking Complete',
+      255,
+    );
+
+    context.push('/ticket');
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    // Payment failed, handle error here
+    print("Payment Error: ${response.message}");
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    // Handle external wallet response here
+    print("External Wallet: ${response.walletName}");
+  }
+
+  void _startPayment() {
+    _getUserEmailFromSharedPreferences().then((userEmail) {
+      var options = {
+        'key': 'rzp_test_pZeKh9EQhVbOtn', // Replace with your Razorpay API key
+        'amount': 23500, // Amount in paise (e.g., for Rs 235, set 23500)
+        'name': userEmail ?? '',
+        'description': 'Payment Processing',
+        'prefill': {
+          'contact': '9876543210', // Replace with the customer's phone number
+          'email': userEmail ?? '', // Replace with the customer's email
+        },
+        'external': {
+          'wallets': ['paytm'], // Optionally, add supported wallets (if any)
+        }
+      };
+
+      try {
+        _razorpay.open(options);
+      } catch (e) {
+        print("Error: $e");
+      }
+    });
+  }
+
+  // Method to get userEmail from shared preferences
+  Future<String?> _getUserEmailFromSharedPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('userEmail');
   }
 
   void incrementCount(String ticketType) {
@@ -263,7 +333,7 @@ class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
 
   Widget buildTotalAmountRow() {
     final totalAmount =
-        (adultCount * 20) + (kidsCount * 10) + (partnerCount * 15) + (foreignTouristCount * 30);
+        235;
 
     return Container(
       margin: EdgeInsets.only(top: 24),
@@ -293,11 +363,12 @@ class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
             ),
             child: TextButton(
               onPressed: () {
-                notificationServices.sendNotification(
-                  'Booking Complete',
-                  totalAmount,
-                );
-                context.push('/ticket');
+                // notificationServices.sendNotification(
+                //   'Booking Complete',
+                //   totalAmount,
+                // );
+                // context.push('/ticket');
+                _startPayment(); // Call _startPayment
               },
               child: Text(
                 'Confirm',
