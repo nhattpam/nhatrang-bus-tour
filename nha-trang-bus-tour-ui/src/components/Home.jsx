@@ -6,6 +6,8 @@ import orderService from "../services/order.service";
 import userService from "../services/user.service";
 import tripService from "../services/trip.service";
 import { Chart, PieController, ArcElement, registerables } from "chart.js";
+import { CSVLink } from "react-csv";
+
 const Home = () => {
 
   Chart.register(PieController, ArcElement);
@@ -352,6 +354,13 @@ const Home = () => {
     });
   };
 
+  const csvData = [
+    ["Earnings (Monthly)", "$" + sumForCurrentMonth.toFixed(2)],
+    ["Earnings (Annual)", "$" + sumForCurrentYear.toFixed(2)],
+    ["Orders", orderCount],
+    ["Users", userCount],
+  ];
+
 
   return (
     <>
@@ -370,8 +379,13 @@ const Home = () => {
             <div className="container-fluid">
               <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                  class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                <CSVLink data={csvData} filename={"dashboard_report.csv"}>
+                  <button
+                    className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+                  >
+                    <i className="fas fa-download fa-sm text-white-50"></i> Generate Report
+                  </button>
+                </CSVLink>
               </div>
 
               <div>
