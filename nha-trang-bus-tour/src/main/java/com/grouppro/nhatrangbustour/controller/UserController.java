@@ -86,6 +86,7 @@ public class UserController {
 //            return new ResponseEntity<>(id,HttpStatus.CREATED);
 //        }
 //    }
+    @Operation(summary = "Return a jwt token")
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestParam("email") String email) {
         try {
@@ -106,7 +107,7 @@ public class UserController {
         if (user != null) {
             return ResponseEntity.ok(user);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Service not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }
     }
     @Operation(summary = "Update a user by its ID")
@@ -125,7 +126,6 @@ public class UserController {
         if (id == null) {
             return new ResponseEntity<>("Can't update user", HttpStatus.BAD_REQUEST);
         } else {
-
             return new ResponseEntity<>(id,HttpStatus.CREATED);
         }
     }

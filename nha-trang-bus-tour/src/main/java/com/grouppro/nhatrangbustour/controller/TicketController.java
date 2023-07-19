@@ -52,7 +52,7 @@ public class TicketController {
     })
     @Operation(summary = "Create a new ticket")
     @PostMapping("/")
-    @Secured(ADMIN)
+    @Secured({ADMIN, CUSTOMER})
     public ResponseEntity<?> addTicket(@RequestParam("passengername") String name, @RequestParam("passengerphone")String phone,
                                        @RequestParam("passengeremail")String email, @RequestParam("feedback") String feedback,
                                        @RequestParam("trip") Long tid, @RequestParam("order")Long oid,
