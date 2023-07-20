@@ -30,13 +30,13 @@ public class CustomUserDetailsService implements ICustomUserDetailsService,UserD
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         String role="";
         Set<GrantedAuthority> authoritySet =new HashSet<>();
-        List<String> adminEmails=jsonFileReader.getAdminEmails();
+//        List<String> adminEmails=jsonFileReader.getAdminEmails();
         //Iterator iterator=adminEmails.iterator();
         //System.out.println(adminEmails.size());
 //        while (iterator.hasNext()){
 //            System.out.println(iterator.next());
 //        }
-        if (adminEmails.contains(email))
+        if (email.equals("nhatrangbus@gmail.com"))
         {
             role="Admin";
             authoritySet.add(new SimpleGrantedAuthority("ROLE_Admin"));
