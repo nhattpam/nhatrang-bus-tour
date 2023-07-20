@@ -1,8 +1,11 @@
 package com.grouppro.nhatrangbustour.controller;
 
 import com.grouppro.nhatrangbustour.Entity.Order;
+import com.grouppro.nhatrangbustour.Entity.Ticket;
+import com.grouppro.nhatrangbustour.Entity.User;
 import com.grouppro.nhatrangbustour.response.OrderResponse;
 import com.grouppro.nhatrangbustour.service.interfaces.IOrderService;
+import com.grouppro.nhatrangbustour.service.interfaces.IUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -10,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.web.bind.annotation.RequestBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -32,6 +36,7 @@ public class OrderController {
     private static final String ADMIN="ROLE_Admin";
     private static final String CUSTOMER="ROLE_Customer";
     private final IOrderService orderService;
+    private final IUserService userService;
     @ApiResponses(value = {
             @ApiResponse(responseCode = "404", description = "When don't have any Order"),
             @ApiResponse( content = @Content(schema = @Schema(implementation = Order.class)))
@@ -69,6 +74,21 @@ public class OrderController {
             return new ResponseEntity<>("Can't create Order", HttpStatus.BAD_REQUEST);
         } else {
             return new ResponseEntity<>(id,HttpStatus.CREATED);
+        }
+    }
+    @Operation(summary = "Get orders by userEmail")
+    @GetMapping("/{userEmail}")
+    @Secured({ADMIN,CUSTOMER})
+    public ResponseEntity<?> getOrdersByUserEmail(@PathVariable("userEmail") String userEmail) {
+        User user = userService.getUserByEmail(userEmail);
+        if(user==null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+        List<Order> orders = orderService.getOrdersByUser(user);
+        if (orders != null) {
+            return ResponseEntity.ok(orders);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Order is empty");
         }
     }
 }
