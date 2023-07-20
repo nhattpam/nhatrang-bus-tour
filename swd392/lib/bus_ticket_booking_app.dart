@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:swd392/api/my_order_screen.dart';
 import 'package:swd392/src/ui/bus_booking_detail_page.dart';
 import 'package:swd392/src/ui/bus_booking_home_screen.dart';
 import 'package:swd392/src/ui/bus_booking_main_page.dart';
@@ -45,8 +46,8 @@ class BusTicketBookingApp extends StatelessWidget {
                 builder: (context, state)=> const  RegisterPage(),
               ),
               GoRoute(
-                path: "ticket",
-                builder: (context, state)=> const  MyTicketScreen(),
+                path: "order",
+                builder: (context, state)=> const  MyOrderScreen(),
               ),
             ],
           ),

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:swd392/api/my_order_screen.dart';
 import 'package:swd392/src/ui/bus_booking_home_screen.dart';
 import 'package:swd392/src/ui/profile_page.dart';
 
@@ -31,7 +32,7 @@ class _BusBookingMainPageState extends State<BusBookingMainPage> {
                 index: index,
                 children: [
                   const BusBookingHomeScreen(),
-                  const MyTicketScreen(),
+                  const MyOrderScreen(),
                   const NotificationScreen(),
                   const ProfilePage(),
                 ],
@@ -57,9 +58,9 @@ class _BusBookingMainPageState extends State<BusBookingMainPage> {
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(
-                      Icons.confirmation_num_rounded,
+                      Icons.room_service,
                     ),
-                    label: "MY TICKETS",
+                    label: "MY ORDERS",
                     backgroundColor: Colors.red,
                   ),
                   BottomNavigationBarItem(
