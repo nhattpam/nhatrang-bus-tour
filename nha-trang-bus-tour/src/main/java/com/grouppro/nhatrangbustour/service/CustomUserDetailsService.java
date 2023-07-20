@@ -2,6 +2,7 @@ package com.grouppro.nhatrangbustour.service;
 
 import com.grouppro.nhatrangbustour.Entity.CustomUserDetails;
 import com.grouppro.nhatrangbustour.Entity.User;
+import com.grouppro.nhatrangbustour.config.JsonFileReader;
 import com.grouppro.nhatrangbustour.repository.UserRepository;
 import com.grouppro.nhatrangbustour.service.interfaces.ICustomUserDetailsService;
 import jakarta.transaction.Transactional;
@@ -14,7 +15,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
-import java.util.Optional;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 
@@ -23,17 +25,24 @@ import java.util.Set;
 @Service
 public class CustomUserDetailsService implements ICustomUserDetailsService,UserDetailsService {
     private final UserRepository userRepository;
+    private final JsonFileReader jsonFileReader;
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         String role="";
         Set<GrantedAuthority> authoritySet =new HashSet<>();
-        if (email.equals("nhatrangbus@gmail.com"))
+        List<String> adminEmails=jsonFileReader.getAdminEmails();
+        //Iterator iterator=adminEmails.iterator();
+        //System.out.println(adminEmails.size());
+//        while (iterator.hasNext()){
+//            System.out.println(iterator.next());
+//        }
+        if (adminEmails.contains(email))
         {
             role="Admin";
             authoritySet.add(new SimpleGrantedAuthority("ROLE_Admin"));
             User admin =new User();
             admin.setUserName("admin");
-            admin.setUserEmail("nhatrangbus@gmail.com");
+            admin.setUserEmail(email);
             return new CustomUserDetails(admin,authoritySet,role);
         }
         else {
