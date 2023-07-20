@@ -47,7 +47,7 @@ class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
     // You can perform further actions after successful payment
     notificationServices.sendNotification(
       'Booking Complete',
-      255,
+      235,
     );
 
     context.push('/ticket');
