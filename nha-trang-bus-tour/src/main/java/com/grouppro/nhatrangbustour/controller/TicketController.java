@@ -1,8 +1,10 @@
 package com.grouppro.nhatrangbustour.controller;
 
+import com.grouppro.nhatrangbustour.Entity.Order;
 import com.grouppro.nhatrangbustour.Entity.Station;
 import com.grouppro.nhatrangbustour.Entity.Ticket;
 import com.grouppro.nhatrangbustour.Entity.User;
+import com.grouppro.nhatrangbustour.service.OrderService;
 import com.grouppro.nhatrangbustour.service.TicketService;
 import com.grouppro.nhatrangbustour.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,7 +30,7 @@ import java.util.List;
 @SecurityRequirement(name = "Authorization")
 public class TicketController {
     private final TicketService ticketService;
-    private final UserService userService;
+    private final OrderService orderService;
     private static final String ADMIN="ROLE_Admin";
     private static final String CUSTOMER="ROLE_Customer";
     @ApiResponses(value = {
@@ -84,15 +86,15 @@ public class TicketController {
 //            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tickets is empty");
 //        }
 //    }
-    @Operation(summary = "Get tickets by userEmail")
-    @GetMapping("/{userEmail}")
+    @Operation(summary = "Get tickets by order id")
+    @GetMapping("/{orderId}")
     @Secured({ADMIN,CUSTOMER})
-    public ResponseEntity<?> getTicketsByUserEmail(@PathVariable("userEmail") String userEmail) {
-        User user = userService.getUserByEmail(userEmail);
-        if(user==null){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+    public ResponseEntity<?> getTicketsByOrderId(@PathVariable("orderId") Long orderId) {
+        Order order = orderService.getOrderById(orderId);
+        if(order==null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Order not found");
         }
-        List<Ticket> tickets = ticketService.getTicketsByOrder(user);
+        List<Ticket> tickets = ticketService.getTicketsByOrderId(order);
         if (tickets != null) {
             return ResponseEntity.ok(tickets);
         } else {

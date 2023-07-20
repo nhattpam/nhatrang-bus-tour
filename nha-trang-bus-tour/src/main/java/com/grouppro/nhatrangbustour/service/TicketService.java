@@ -34,6 +34,12 @@ public class TicketService implements ITicketService {
         }
         return tickets;
     }
+
+    @Override
+    public List<Ticket> getTicketsByOrderId(Order order) {
+        return ticketRepository.findAllByOrder(order);
+    }
+
     @Override
     public Long saveTicket(Ticket ticket, Long tid, Long oid, Long sid, Long ttid) {
         Trip trip = tripService.getTripByid(tid);
