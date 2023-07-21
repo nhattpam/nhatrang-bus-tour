@@ -9,5 +9,6 @@ import java.util.List;
 public interface ITicketService {
     List<Ticket> getTickets();
     List<Ticket> getTicketsByOrder(User user);
+    List<Ticket> getTicketsByOrderId(Order order);
     Long saveTicket(Ticket ticket, Long tid, Long oid, Long sid, Long ttid);
 }
