@@ -202,7 +202,7 @@ class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
                       ),
                     ),
                     buildTicketTypeRow(
-                      title: ticketType.ticketTypeName!,
+                      title: getTicketTypeDescription(ticketType.ticketTypeName!),
                       price: 10,
                       count: getCountByType(ticketType.ticketTypeName!),
                       increment: () => incrementCount(ticketType.ticketTypeName!),
@@ -219,6 +219,37 @@ class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
       ),
     );
   }
+
+  String getTicketTypeTitle(String ticketTypeName) {
+    switch (ticketTypeName) {
+      case 'Adult':
+        return 'Adult:';
+      case 'Child':
+        return 'Kids:';
+      case 'Partner':
+        return 'Partner:';
+      case 'Foreign':
+        return 'Foreign Tourist:';
+      default:
+        return '';
+    }
+  }
+
+  String getTicketTypeDescription(String ticketTypeName) {
+    switch (ticketTypeName) {
+      case 'Adult':
+        return 'For passengers who have a height exceeding 1m3.';
+      case 'Child':
+        return 'For passengers who are shorter than or equal to 1m3.';
+      case 'Partner':
+        return 'For individuals who are eligible for a discount through a partnership or affiliation with a tourist company.';
+      case 'Foreign':
+        return 'Specifically tailored for international tourists.';
+      default:
+        return '';
+    }
+  }
+
 
   int getCountByType(String typeName) {
     switch (typeName) {
