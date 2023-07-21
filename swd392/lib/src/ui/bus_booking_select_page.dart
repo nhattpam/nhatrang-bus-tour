@@ -5,6 +5,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swd392/network/network_request_ticket_type.dart';
 import 'package:swd392/service/notification_service.dart';
 import 'package:swd392/model/TicketType.dart';
+import 'package:http/http.dart' as http;
+
 
 class BusBookingSelectPage extends StatefulWidget {
   const BusBookingSelectPage({Key? key}) : super(key: key);
@@ -16,6 +18,8 @@ class BusBookingSelectPage extends StatefulWidget {
 class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
   //total amount
   int totalAmount = 0; // Declare totalAmount at the class level
+  static const String bearerToken = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJuaGF0cmFuZ2J1c0BnbWFpbC5jb20iLCJpYXQiOjE2ODk3NzQ0NjcsImV4cCI6MTY5MDM3OTI2N30.XX3PWi7MgZpy8nKwucCkB9jyC6oQbV-MqV0JaGqFrSOoAzZ_5zraq5-_KeimvI0yHdZbd4M9AsCFsdbmtlM_Uw';
+
 
 
 
@@ -42,11 +46,21 @@ class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
   }
 
   Future<void> _loadData() async {
+    fetchAndPrintUserId();
+
     NetworkRequestTicketType.fetchTicketType().then((dataFromServer) {
       setState(() {
         postData = dataFromServer as List<TicketType>;
       });
     });
+
+
+  }
+
+  Future<void> fetchAndPrintUserId() async {
+    int id = await NetworkRequestTicketType.fetchUserId();
+
+    print("TOI LA ID: $id");
   }
 
   @override
@@ -67,7 +81,7 @@ class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
       totalAmount,
     );
 
-    context.push('/ticket');
+    context.push('/order');
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
@@ -80,8 +94,8 @@ class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
     print("External Wallet: ${response.walletName}");
   }
 
-  void _startPayment() {
-    _getUserEmailFromSharedPreferences().then((userEmail) {
+  void _startPayment() async {
+    _getUserEmailFromSharedPreferences().then((userEmail) async {
       var options = {
         'key': 'rzp_test_pZeKh9EQhVbOtn', // Replace with your Razorpay API key
         'amount': totalAmount * 100, // Amount in paise (e.g., for Rs 235, set 23500)
@@ -98,6 +112,39 @@ class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
 
       try {
         _razorpay.open(options);
+// Fetch the userId from the fetchUserId() function
+        int userId = await NetworkRequestTicketType.fetchUserId();
+
+
+        // Calculate the total amount in paise (multiply by 100)
+        int totalAmountInPaise = totalAmount;
+
+        // Build the request URL with the userId and totalAmount
+        String baseUrl = 'https://nhatrangbustourbackend.azurewebsites.net/api/orders/$userId/2/$totalAmountInPaise';
+        // Perform the POST request
+        try {
+          http.Response response = await http.post(
+            Uri.parse(baseUrl),
+            headers: {
+              'Authorization': 'Bearer $bearerToken',
+            },
+          );
+
+          if (response.statusCode == 200) {
+            // Successful response, continue with the payment process
+            throw Exception('OK');
+
+          } else if (response.statusCode == 404) {
+            throw Exception('Not Found');
+          } else if (response.statusCode == 401) {
+            throw Exception('Unauthorized user ID');
+          } else {
+            throw Exception('Error occurred while posting order');
+          }
+        } catch (e) {
+          print("Error: $e");
+        }
+
       } catch (e) {
         print("Error: $e");
       }
