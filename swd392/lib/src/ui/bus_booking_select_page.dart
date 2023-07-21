@@ -205,7 +205,7 @@ class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
                     ),
                     buildTicketTypeRow(
                       title: getTicketTypeDescription(ticketType.ticketTypeName!),
-                      price: ticketType.priceFrameTicket!.first.price,
+                      basePrice: ticketType.priceFrameTicket!.first.price,
                       count: getCountByType(ticketType.ticketTypeName!),
                       increment: () => incrementCount(ticketType.ticketTypeName!),
                       decrement: () => decrementCount(ticketType.ticketTypeName!),
@@ -323,11 +323,14 @@ class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
 
   Widget buildTicketTypeRow({
     required String title,
-    required double? price,
+    required double? basePrice, // Add basePrice parameter
     required int count,
     required VoidCallback increment,
     required VoidCallback decrement,
   }) {
+    // Calculate the total price based on the quantity and base price
+    double totalPrice = basePrice! * count;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -351,7 +354,7 @@ class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
         ),
         SizedBox(width: 8),
         Text(
-          '\$$price',
+          '\$$totalPrice', // Display the total price
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
@@ -360,6 +363,7 @@ class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
       ],
     );
   }
+
 
   Widget buildTotalAmountRow() {
     final totalAmount =
