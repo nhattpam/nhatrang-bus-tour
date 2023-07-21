@@ -40,6 +40,7 @@ import tripService from './services/trip.service';
 import userService from './services/user.service';
 import AddRoute from './components/routes/AddRoute';
 import OrderDetail from './components/orders/OrderDetail';
+import AddTrip from './components/trips/AddTrip';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Add a state for login status
@@ -94,6 +95,7 @@ function App() {
             <Route path='/list_drivers' element={<ListDrivers />}></Route>
             <Route path='/add_driver' element={<AddDriver />}></Route>
             <Route path='/list_trips' element={<ListTrips />}></Route>
+            <Route path='/add_trip' element={<AddTrip />}></Route>
             <Route path='/list_stations' element={<ListStation />}></Route>
             <Route path='/add_station' element={<AddStation />}></Route>
             <Route path='/list_payments' element={<ListPayments />}></Route>

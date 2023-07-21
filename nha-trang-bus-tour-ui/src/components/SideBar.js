@@ -76,6 +76,11 @@ const SideBar = () => {
                             <Link className="collapse-item" to="/list_trips">List Trips</Link>
                         </div>
                     </div>
+                    <div id="collapseFeedbacks" className="collapse" aria-labelledby="headingFeedback" data-parent="#accordionSidebar">
+                        <div className="bg-white py-2 collapse-inner rounded">
+                            <Link className="collapse-item" to="/add_trip">Add Trip</Link>
+                        </div>
+                    </div>
                 </li>
                 {/* Nav Item - Charts */}
                 <li className="nav-item">
