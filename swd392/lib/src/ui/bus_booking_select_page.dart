@@ -366,9 +366,13 @@ class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
 
 
   Widget buildTotalAmountRow() {
-    final totalAmount =
-        235;
-
+    // Calculate the total amount based on the quantities and ticket prices
+    double totalAmount = 0;
+    for (var ticketType in postData) {
+      double? basePrice = ticketType.priceFrameTicket!.first.price;
+      int count = getCountByType(ticketType.ticketTypeName!);
+      totalAmount += basePrice! * count;
+    }
     return Container(
       margin: EdgeInsets.only(top: 24),
       child: Column(
