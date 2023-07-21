@@ -23,11 +23,11 @@ class NetworkRequestTicket {
 
 
   //change here
-  static Future<List<Ticket>> fetchTicket({int page = 1}) async{
+  static Future<List<Ticket>> fetchTicket({int page = 1, int? orderId}) async{
     String? userEmail = await getUserEmailFromSession();
     print("day la email 2: $userEmail"); // Print the userEmail
 
-    String baseUrl = '$url$userEmail';
+    String baseUrl = '$url$orderId';
 
     final response = await http.get(
       Uri.parse(baseUrl),
