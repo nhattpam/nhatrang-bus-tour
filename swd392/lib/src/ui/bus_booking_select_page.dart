@@ -127,13 +127,13 @@ class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
           },
         );
       } else {
-        if (ticketType == 'Adult' && adultCount < 5) { // Update the letter case
+        if (ticketType.toLowerCase() == 'adult' && adultCount < 5) {
           adultCount++;
-        } else if (ticketType == 'Child' && kidsCount < 5) { // Update the letter case
+        } else if (ticketType.toLowerCase() == 'child' && kidsCount < 5) {
           kidsCount++;
-        } else if (ticketType == 'Partner' && partnerCount < 5) { // Update the letter case
+        } else if (ticketType.toLowerCase() == 'partner' && partnerCount < 5) {
           partnerCount++;
-        } else if (ticketType == 'Foreign' && foreignTouristCount < 5) { // Update the letter case
+        } else if (ticketType.toLowerCase() == 'foreign' && foreignTouristCount < 5) {
           foreignTouristCount++;
         }
       }
@@ -142,17 +142,18 @@ class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
 
   void decrementCount(String ticketType) {
     setState(() {
-      if (ticketType == 'Adult' && adultCount > 0) { // Update the letter case
+      if (ticketType.toLowerCase() == 'adult' && adultCount > 0) {
         adultCount--;
-      } else if (ticketType == 'Child' && kidsCount > 0) { // Update the letter case
+      } else if (ticketType.toLowerCase() == 'child' && kidsCount > 0) {
         kidsCount--;
-      } else if (ticketType == 'Partner' && partnerCount > 0) { // Update the letter case
+      } else if (ticketType.toLowerCase() == 'partner' && partnerCount > 0) {
         partnerCount--;
-      } else if (ticketType == 'Foreign' && foreignTouristCount > 0) { // Update the letter case
+      } else if (ticketType.toLowerCase() == 'foreign' && foreignTouristCount > 0) {
         foreignTouristCount--;
       }
     });
   }
+
 
 
   @override
@@ -256,11 +257,11 @@ class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
     switch (typeName) {
       case 'Adult':
         return adultCount;
-      case 'Kids':
+      case 'Child':
         return kidsCount;
       case 'Partner':
         return partnerCount;
-      case 'Foreign Tourist':
+      case 'Foreign':
         return foreignTouristCount;
       default:
         return 0;
