@@ -132,7 +132,7 @@ public class UserController {
     @Operation(summary = "Get a user Id by its email")
     @GetMapping("/getid/{email}")
     @Secured({ADMIN,CUSTOMER})
-    public ResponseEntity<?> getUserByID(@RequestParam("email") String email) {
+    public ResponseEntity<?> getUserByID(@PathVariable("email") String email) {
         Long user = userService.getUserIdByEmail(email);
         if (user != null) {
             return ResponseEntity.ok(user);
