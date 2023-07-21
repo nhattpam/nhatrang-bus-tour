@@ -161,7 +161,7 @@ const SideBar = () => {
                         </div>
                     </div>
                 </li>
-
+{/* 
                 <li className="nav-item">
                     <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDriversss" aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-border-style"></i>
@@ -177,9 +177,9 @@ const SideBar = () => {
                             <Link className="collapse-item" to="/add_tickettype">Add Ticket Type</Link>
                         </div>
                     </div>
-                </li>
+                </li> */}
 
-                <li className="nav-item">
+                {/* <li className="nav-item">
                     <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDriversss1" aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-hand-holding-usd"></i>
                         <span>Price Frame </span>
@@ -211,7 +211,7 @@ const SideBar = () => {
                             <Link className="collapse-item" to="/add_priceframe">Add Price Frame Ticket</Link>
                         </div>
                     </div>
-                </li>
+                </li> */}
 
                 {/* Nav Item - Pages Collapse Menu */}
                 <li className="nav-item">

@@ -82,6 +82,7 @@ const ListOrders = () => {
                           <th>Total Price</th>
                           <th>Payment Method</th>
                           <th>User Id</th>
+                          <th></th>
                         </tr>
                       </thead>
                       <tbody>
@@ -92,6 +93,14 @@ const ListOrders = () => {
                             <td>{order.totalprice} $</td>
                             <td>{order.payment.paymentMethod}</td>
                             <td>{order.userId}</td>
+                            <div className="btn-group" role="group">
+                              <Link className="btn btn-primary" to={`/order_detail/${order.orderId}`}>
+                                Edit
+                              </Link>
+                              {/* <a className="btn btn-danger" onClick={() => deleteBus(e.busId)}>
+                                  Delete
+                                </a> */}
+                            </div>
                           </tr>
                         ))}
                       </tbody>

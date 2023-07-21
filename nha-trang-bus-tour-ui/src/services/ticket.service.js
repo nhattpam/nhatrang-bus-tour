@@ -30,6 +30,18 @@ class TicketService{
             }
         });
     }
+
+    
+    getAllTicketsByOrderId(id)
+    {
+        // return axios.get(BASE_API_URL + "/ale");
+        return axios.get(BASE_API_URL + "/tickets/" + id, {
+            headers: {
+                Authorization: `Bearer ${this.token}` // Include the bearer token in the headers
+            }
+        });
+
+    }
 }
 
 export default new TicketService();
