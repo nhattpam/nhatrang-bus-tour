@@ -203,7 +203,7 @@ class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
                     ),
                     buildTicketTypeRow(
                       title: getTicketTypeDescription(ticketType.ticketTypeName!),
-                      price: 10,
+                      price: ticketType.priceFrameTicket!.first.price,
                       count: getCountByType(ticketType.ticketTypeName!),
                       increment: () => incrementCount(ticketType.ticketTypeName!),
                       decrement: () => decrementCount(ticketType.ticketTypeName!),
@@ -321,7 +321,7 @@ class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
 
   Widget buildTicketTypeRow({
     required String title,
-    required int price,
+    required double? price,
     required int count,
     required VoidCallback increment,
     required VoidCallback decrement,
