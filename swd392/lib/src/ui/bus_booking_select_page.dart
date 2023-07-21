@@ -127,13 +127,13 @@ class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
           },
         );
       } else {
-        if (ticketType == 'adult' && adultCount < 5) {
+        if (ticketType == 'Adult' && adultCount < 5) { // Update the letter case
           adultCount++;
-        } else if (ticketType == 'kids' && kidsCount < 5) {
+        } else if (ticketType == 'Child' && kidsCount < 5) { // Update the letter case
           kidsCount++;
-        } else if (ticketType == 'partner' && partnerCount < 5) {
+        } else if (ticketType == 'Partner' && partnerCount < 5) { // Update the letter case
           partnerCount++;
-        } else if (ticketType == 'foreignTourist' && foreignTouristCount < 5) {
+        } else if (ticketType == 'Foreign' && foreignTouristCount < 5) { // Update the letter case
           foreignTouristCount++;
         }
       }
@@ -142,17 +142,18 @@ class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
 
   void decrementCount(String ticketType) {
     setState(() {
-      if (ticketType == 'adult' && adultCount > 0) {
+      if (ticketType == 'Adult' && adultCount > 0) { // Update the letter case
         adultCount--;
-      } else if (ticketType == 'kids' && kidsCount > 0) {
+      } else if (ticketType == 'Child' && kidsCount > 0) { // Update the letter case
         kidsCount--;
-      } else if (ticketType == 'partner' && partnerCount > 0) {
+      } else if (ticketType == 'Partner' && partnerCount > 0) { // Update the letter case
         partnerCount--;
-      } else if (ticketType == 'foreignTourist' && foreignTouristCount > 0) {
+      } else if (ticketType == 'Foreign' && foreignTouristCount > 0) { // Update the letter case
         foreignTouristCount--;
       }
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
