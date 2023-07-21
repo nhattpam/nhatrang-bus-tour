@@ -126,29 +126,34 @@ class _BusBookingDetailPageState extends State<BusBookingDetailPage> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: routes.map((route) {
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Departure", style: TextStyle(fontSize: 16)),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 8),
-                                    child: Text(
-                                      route.trip?.isNotEmpty == true
-                                          ? route.trip!.first.departureTime ?? "Unknown"
-                                          : "Unknown",
-                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                                    ),
-                                  ),
-                                  // startRoute
-                                  Text(
-                                    route.routeName?.split('-').first.trim() ?? "Unknown",
-                                    style: GoogleFonts.openSans(fontSize: 16, color: Colors.red),
-                                  ),
-                                  Divider( // Add a horizontal line after each column
-                                    thickness: 1.5,
-                                    color: Colors.grey, // Customize the color of the line if needed
-                                  ),
-                                ],
+                              return GestureDetector(
+                                onTap: (){
+                                  context.push("/seat");
+                                },
+                                child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                              Text("Departure", style: TextStyle(fontSize: 16)),
+                              Padding(
+                              padding: EdgeInsets.symmetric(vertical: 8),
+                              child: Text(
+                              route.trip?.isNotEmpty == true
+                              ? route.trip!.first.departureTime ?? "Unknown"
+                                  : "Unknown",
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                              ),
+                              ),
+                              // startRoute
+                              Text(
+                              route.routeName?.split('-').first.trim() ?? "Unknown",
+                              style: GoogleFonts.openSans(fontSize: 16, color: Colors.red),
+                              ),
+                              Divider( // Add a horizontal line after each column
+                              thickness: 1.5,
+                              color: Colors.grey, // Customize the color of the line if needed
+                              ),
+                              ],
+                              ),
                               );
                             }).toList(),
                           ),
@@ -199,9 +204,9 @@ class _BusBookingDetailPageState extends State<BusBookingDetailPage> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: (){
-                          context.push("/seat");
-                        },
+                        // onTap: (){
+                        //   context.push("/seat");
+                        // },
                         child: Container(
                           decoration: BoxDecoration(
                               color: Colors.red,

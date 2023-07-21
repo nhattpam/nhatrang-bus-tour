@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:swd392/network/network_request_ticket_type.dart';
 import 'package:swd392/service/notification_service.dart';
+import 'package:swd392/model/TicketType.dart';
 
 class BusBookingSelectPage extends StatefulWidget {
   const BusBookingSelectPage({Key? key}) : super(key: key);
@@ -12,6 +14,7 @@ class BusBookingSelectPage extends StatefulWidget {
 }
 
 class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
+  List<TicketType> postData = [];
   NotificationServices notificationServices = NotificationServices();
   late Razorpay _razorpay;
 
@@ -24,12 +27,21 @@ class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
   void initState() {
     super.initState();
     notificationServices.initialiseNotification();
+    _loadData();
     //razorpay
     // Initialize Razorpay with your API key
     _razorpay = Razorpay();
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+  }
+
+  Future<void> _loadData() async {
+    NetworkRequestTicketType.fetchTicketType().then((dataFromServer) {
+      setState(() {
+        postData = dataFromServer as List<TicketType>;
+      });
+    });
   }
 
   @override
@@ -168,80 +180,65 @@ class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16),
-          child: Column(
+          child:
+          // Inside the build method, update the children of the Column widget as follows:
+
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               buildAnnouncementBlock(),
               SizedBox(height: 16),
               buildBusInformationBlock(),
               SizedBox(height: 16),
-              Text(
-                'Adult:',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+              for (var ticketType in postData)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      ticketType.ticketTypeName! + ':',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    buildTicketTypeRow(
+                      title: ticketType.ticketTypeName!,
+                      price: 10,
+                      count: getCountByType(ticketType.ticketTypeName!),
+                      increment: () => incrementCount(ticketType.ticketTypeName!),
+                      decrement: () => decrementCount(ticketType.ticketTypeName!),
+                    ),
+                    SizedBox(height: 16),
+                  ],
                 ),
-              ),
-              buildTicketTypeRow(
-                title: 'For passengers who have a height exceeding 1m3.',
-                price: 20,
-                count: adultCount,
-                increment: () => incrementCount('adult'),
-                decrement: () => decrementCount('adult'),
-              ),
-              SizedBox(height: 16),
-              Text(
-                'Kids:',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              buildTicketTypeRow(
-                title: 'For passengers who are shorter than or equal to 1m3.',
-                price: 10,
-                count: kidsCount,
-                increment: () => incrementCount('kids'),
-                decrement: () => decrementCount('kids'),
-              ),
-              SizedBox(height: 16),
-              Text(
-                'Partner:',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              buildTicketTypeRow(
-                title: 'For individuals who are eligible for a discount through a partnership or affiliation with a tourist company.',
-                price: 15,
-                count: partnerCount,
-                increment: () => incrementCount('partner'),
-                decrement: () => decrementCount('partner'),
-              ),
-              SizedBox(height: 16),
-              Text(
-                'Foreign Tourist:',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              buildTicketTypeRow(
-                title: 'Specifically tailored for international tourists.',
-                price: 30,
-                count: foreignTouristCount,
-                increment: () => incrementCount('foreignTourist'),
-                decrement: () => decrementCount('foreignTourist'),
-              ),
-              SizedBox(height: 16),
               buildTotalAmountRow(),
             ],
-          ),
+          )
+
         ),
       ),
     );
   }
+
+  int getCountByType(String typeName) {
+    switch (typeName) {
+      case 'Adult':
+        return adultCount;
+      case 'Kids':
+        return kidsCount;
+      case 'Partner':
+        return partnerCount;
+      case 'Foreign Tourist':
+        return foreignTouristCount;
+      default:
+        return 0;
+    }
+  }
+
+  TicketType getTicketTypeByName(String typeName) {
+    return postData.firstWhere((type) => type.ticketTypeName == typeName);
+  }
+
 
   Widget buildAnnouncementBlock() {
     return Container(
