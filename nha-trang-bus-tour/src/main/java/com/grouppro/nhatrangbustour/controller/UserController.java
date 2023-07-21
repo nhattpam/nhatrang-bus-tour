@@ -129,4 +129,15 @@ public class UserController {
             return new ResponseEntity<>(id,HttpStatus.CREATED);
         }
     }
+    @Operation(summary = "Get a user Id by its email")
+    @GetMapping("/getid/{email}")
+    @Secured({ADMIN,CUSTOMER})
+    public ResponseEntity<?> getUserByID(@RequestParam("email") String email) {
+        Long user = userService.getUserIdByEmail(email);
+        if (user != null) {
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+    }
 }
