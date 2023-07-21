@@ -14,6 +14,11 @@ class BusBookingSelectPage extends StatefulWidget {
 }
 
 class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
+  //total amount
+  int totalAmount = 0; // Declare totalAmount at the class level
+
+
+
   List<TicketType> postData = [];
   NotificationServices notificationServices = NotificationServices();
   late Razorpay _razorpay;
@@ -59,7 +64,7 @@ class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
     // You can perform further actions after successful payment
     notificationServices.sendNotification(
       'Booking Complete',
-      235,
+      totalAmount,
     );
 
     context.push('/ticket');
@@ -79,7 +84,7 @@ class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
     _getUserEmailFromSharedPreferences().then((userEmail) {
       var options = {
         'key': 'rzp_test_pZeKh9EQhVbOtn', // Replace with your Razorpay API key
-        'amount': 23500, // Amount in paise (e.g., for Rs 235, set 23500)
+        'amount': totalAmount * 100, // Amount in paise (e.g., for Rs 235, set 23500)
         'name': userEmail ?? '',
         'description': 'Payment Processing',
         'prefill': {
@@ -367,11 +372,11 @@ class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
 
   Widget buildTotalAmountRow() {
     // Calculate the total amount based on the quantities and ticket prices
-    double totalAmount = 0;
+    totalAmount = 0; // Reset the totalAmount before calculating it again
     for (var ticketType in postData) {
       double? basePrice = ticketType.priceFrameTicket!.first.price;
       int count = getCountByType(ticketType.ticketTypeName!);
-      totalAmount += basePrice! * count;
+      totalAmount += (basePrice! * count).toInt(); // Convert the result to an int
     }
     return Container(
       margin: EdgeInsets.only(top: 24),
