@@ -39,7 +39,7 @@ public class TicketController {
     })
     @Operation(summary = "Get all tickets")
     @GetMapping("/")
-    @Secured({ADMIN,CUSTOMER})
+    @Secured({ADMIN})
     public ResponseEntity<?> getTickets() {
         List<Ticket> tickets = ticketService.getTickets();
         if (!tickets.isEmpty()) {
@@ -56,15 +56,39 @@ public class TicketController {
     @PostMapping("/")
     @Secured({ADMIN, CUSTOMER})
     public ResponseEntity<?> addTicket(@RequestParam("passengername") String name, @RequestParam("passengerphone")String phone,
-                                       @RequestParam("passengeremail")String email, @RequestParam("feedback") String feedback,
+                                       @RequestParam("passengeremail")String email,
                                        @RequestParam("trip") Long tid, @RequestParam("order")Long oid,
                                        @RequestParam("service")Long sid, @RequestParam("tickettype")Long ttid) {
         Ticket ticket = new Ticket();
         ticket.setPassengerName(name);
         ticket.setPassengerPhone(phone);
         ticket.setPassengerEmail(email);
-        ticket.setFeedback(feedback);
+        ticket.setFeedback(" ");
         Long id = ticketService.saveTicket(ticket,tid,oid,sid,ttid);
+        if (id == null) {
+            return new ResponseEntity<>("Can't create Ticket", HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<>(id,HttpStatus.CREATED);
+        }
+    }@ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "When Ticket updated successfully!"),
+            @ApiResponse(responseCode = "400", description = "When Ticket can't be updated - Object is not valid!")
+    })
+    @Operation(summary = "Update a ticket by ticketId")
+    @PostMapping("/{ticketId}/{passengername}/{passengerphone}/{passengeremail}/{feedback}")
+    @Secured({ADMIN, CUSTOMER})
+    public ResponseEntity<?> updateTicket(@PathVariable("ticketId") Long tid,@PathVariable("passengername") String name,
+                                          @PathVariable("passengerphone")String phone, @PathVariable("passengeremail")String email,
+                                          @PathVariable(value = "feedback") String feedback) {
+        Ticket ticket = ticketService.getTicketByTicketId(tid);
+        if (ticket == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("There is no ticket");
+        }
+        ticket.setPassengerName(name);
+        ticket.setPassengerPhone(phone);
+        ticket.setPassengerEmail(email);
+        ticket.setFeedback(feedback);
+        Long id = ticketService.updateTicket(ticket);
         if (id == null) {
             return new ResponseEntity<>("Can't create Ticket", HttpStatus.BAD_REQUEST);
         } else {

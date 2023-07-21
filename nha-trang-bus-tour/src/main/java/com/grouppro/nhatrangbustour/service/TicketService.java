@@ -68,4 +68,18 @@ public class TicketService implements ITicketService {
         }
         return null;
     }
+
+    @Override
+    public Long updateTicket(Ticket ticket) {
+        if (ticket !=null){
+            ticketRepository.save(ticket);
+            return ticket.getTicketId();
+        }
+        return null;
+    }
+
+    @Override
+    public Ticket getTicketByTicketId(Long tid) {
+        return ticketRepository.getReferenceById(tid);
+    }
 }

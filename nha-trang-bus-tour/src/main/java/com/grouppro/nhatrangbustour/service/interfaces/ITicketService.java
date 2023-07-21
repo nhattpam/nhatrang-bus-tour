@@ -11,4 +11,6 @@ public interface ITicketService {
     List<Ticket> getTicketsByOrder(User user);
     List<Ticket> getTicketsByOrderId(Order order);
     Long saveTicket(Ticket ticket, Long tid, Long oid, Long sid, Long ttid);
+    Long updateTicket(Ticket ticket);
+    Ticket getTicketByTicketId(Long tid);
 }

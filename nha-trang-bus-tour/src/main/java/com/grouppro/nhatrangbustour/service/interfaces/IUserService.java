@@ -9,4 +9,5 @@ public interface IUserService {
     List<User> getUsers();
     User getUserById(Long uid);
     User getUserByEmail(String email);
+    Long getUserIdByEmail(String email);
 }
