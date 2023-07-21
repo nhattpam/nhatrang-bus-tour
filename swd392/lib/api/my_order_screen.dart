@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:swd392/model/order.dart';
 import 'package:swd392/network/network_request_my_order.dart';
+import 'package:swd392/src/ui/order_detail_screen.dart';
 import '../model/ticket.dart';
 import '../network/network_request_my_ticket.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -78,41 +80,38 @@ class _ListViewPageState extends State<ListViewPage> {
               padding: const EdgeInsets.all(10),
               itemCount: postData.length,
               itemBuilder: (context, index) {
-                return Card(
-                  elevation: 2,
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Order ID: ${postData[index].orderId}',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                return GestureDetector(
+                  // Wrap each Card with GestureDetector for detecting tap events
+                  onTap: () {
+                    // Navigate to the OrderDetailScreen with the orderId as a route parameter
+                    GoRouter.of(context).push('/order_detail/${postData[index].orderId}');
+                  },
+                  child: Card(
+                    elevation: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Order ID: ${postData[index].orderId}',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 5),
-                        Text(
-                          'Name: ${postData[index].orderId}',
-                          style: const TextStyle(fontSize: 14),
-                        ),
-                        const SizedBox(height: 5),
-                        Text(
-                          'Phone: ${postData[index].orderId}',
-                          style: const TextStyle(fontSize: 14),
-                        ),
-                        const SizedBox(height: 5),
-                        Text(
-                          'Email: ${postData[index].orderId}',
-                          style: const TextStyle(fontSize: 14),
-                        ),
-                        const SizedBox(height: 5),
-                        Text(
-                          'Feedback: ${postData[index].orderId}',
-                          style: const TextStyle(fontSize: 14),
-                        ),
-                      ],
+                          const SizedBox(height: 5),
+                          Text(
+                            'Order Date: ${postData[index].orderDate}',
+                            style: const TextStyle(fontSize: 14),
+                          ),
+                          const SizedBox(height: 5),
+                          Text(
+                            'Cost: \$ ${postData[index].totalPrice}',
+                            style: const TextStyle(fontSize: 14),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 );

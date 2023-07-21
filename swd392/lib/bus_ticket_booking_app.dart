@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:swd392/src/ui/bus_booking_select_page.dart';
 import 'package:swd392/src/ui/login_page.dart';
 import 'package:swd392/src/ui/opening_page.dart';
+import 'package:swd392/src/ui/order_detail_screen.dart';
 import 'package:swd392/src/ui/register_page.dart';
 
 import 'api/my_ticket_screen.dart';
@@ -49,6 +50,14 @@ class BusTicketBookingApp extends StatelessWidget {
                 path: "order",
                 builder: (context, state)=> const  MyOrderScreen(),
               ),
+              GoRoute(
+                path: "order_detail/:orderId", // Use the ':orderId' syntax to capture the orderId from the URL
+                builder: (context, state) {
+                  final orderId = state.pathParameters['orderId'];
+                  return OrderDetailScreen(orderId: int.tryParse(orderId ?? ''));
+                },
+              ),
+
             ],
           ),
         ],
