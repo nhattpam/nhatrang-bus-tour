@@ -126,7 +126,7 @@ public class TicketController {
     @GetMapping("/ticket-type/{ticketId}")
     @Secured({ADMIN,CUSTOMER})
     public ResponseEntity<?> getTicketTypeByticketId(@PathVariable("ticketId") Long ticketId) {
-        TicketType ticketType = ticketService.getTicketTypeByTicketId(ticketId);
+        String ticketType = ticketService.getTicketTypeByTicketId(ticketId);
         if (ticketType != null) {
             return ResponseEntity.ok(ticketType);
         } else {

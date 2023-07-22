@@ -14,5 +14,5 @@ public interface ITicketService {
     Long saveTicket(Ticket ticket, Long tid, Long oid, Long sid, Long ttid);
     Long updateTicket(Ticket ticket);
     Ticket getTicketByTicketId(Long tid);
-    TicketType getTicketTypeByTicketId(Long tid);
+    String getTicketTypeByTicketId(Long tid);
 }

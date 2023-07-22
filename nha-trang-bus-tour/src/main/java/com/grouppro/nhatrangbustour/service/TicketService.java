@@ -84,7 +84,7 @@ public class TicketService implements ITicketService {
     }
 
     @Override
-    public TicketType getTicketTypeByTicketId(Long tid) {
-        return ticketRepository.findTicketTypeByTicketId(tid);
+    public String getTicketTypeByTicketId(Long tid) {
+        return ticketRepository.findTicketTypeByTicketId(tid).getTicketTypeName();
     }
 }
