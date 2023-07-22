@@ -82,4 +82,9 @@ public class TicketService implements ITicketService {
     public Ticket getTicketByTicketId(Long tid) {
         return ticketRepository.getReferenceById(tid);
     }
+
+    @Override
+    public TicketType getTicketTypeByTicketId(Long tid) {
+        return ticketRepository.findTicketTypeByTicketId(tid);
+    }
 }
