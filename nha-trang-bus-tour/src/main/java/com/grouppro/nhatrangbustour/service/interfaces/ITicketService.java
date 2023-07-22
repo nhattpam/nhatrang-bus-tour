@@ -2,6 +2,7 @@ package com.grouppro.nhatrangbustour.service.interfaces;
 
 import com.grouppro.nhatrangbustour.Entity.Order;
 import com.grouppro.nhatrangbustour.Entity.Ticket;
+import com.grouppro.nhatrangbustour.Entity.TicketType;
 import com.grouppro.nhatrangbustour.Entity.User;
 
 import java.util.List;
@@ -13,4 +14,5 @@ public interface ITicketService {
     Long saveTicket(Ticket ticket, Long tid, Long oid, Long sid, Long ttid);
     Long updateTicket(Ticket ticket);
     Ticket getTicketByTicketId(Long tid);
+    TicketType getTicketTypeByTicketId(Long tid);
 }

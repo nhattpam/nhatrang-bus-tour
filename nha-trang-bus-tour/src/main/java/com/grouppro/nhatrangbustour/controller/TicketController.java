@@ -1,9 +1,6 @@
 package com.grouppro.nhatrangbustour.controller;
 
-import com.grouppro.nhatrangbustour.Entity.Order;
-import com.grouppro.nhatrangbustour.Entity.Station;
-import com.grouppro.nhatrangbustour.Entity.Ticket;
-import com.grouppro.nhatrangbustour.Entity.User;
+import com.grouppro.nhatrangbustour.Entity.*;
 import com.grouppro.nhatrangbustour.service.OrderService;
 import com.grouppro.nhatrangbustour.service.TicketService;
 import com.grouppro.nhatrangbustour.service.UserService;
@@ -123,6 +120,17 @@ public class TicketController {
             return ResponseEntity.ok(tickets);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tickets is empty");
+        }
+    }
+    @Operation(summary = "Get ticket type by ticket id")
+    @GetMapping("/ticket-type/{ticketId}")
+    @Secured({ADMIN,CUSTOMER})
+    public ResponseEntity<?> getTicketTypeByticketId(@PathVariable("ticketId") Long ticketId) {
+        TicketType ticketType = ticketService.getTicketTypeByTicketId(ticketId);
+        if (ticketType != null) {
+            return ResponseEntity.ok(ticketType);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ticket type is not found");
         }
     }
 }
