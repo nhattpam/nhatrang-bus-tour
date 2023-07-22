@@ -5,12 +5,15 @@ import tripService from '../../services/trip.service';
 import busService from '../../services/bus.service';
 import driverService from '../../services/driver.service';
 import routeService from '../../services/route.service';
+import priceFrameService from '../../services/priceframe.service';
+
 
 const AddTrip = () => {
 
     const [busOptions, setBusOptions] = useState([]);
     const [driverOptions, setDriverOptions] = useState([]);
     const [routeOptions, setRouteOptions] = useState([]);
+    const [priceFrameOptions, setPriceFrameOptions] = useState([]);
     useEffect(() => {
         // Fetch the buses when the component mounts
         busService.getAllBuses()
@@ -36,6 +39,13 @@ const AddTrip = () => {
             .catch((error) => {
                 console.error('Error fetching routes:', error);
             });
+        priceFrameService.getAllPriceFrames()
+            .then((response) => {
+                setPriceFrameOptions(response.data);
+            })
+            .catch((error) => {
+                console.error('Error fetching priceFrames:', error);
+            });
 
 
     }, []);
@@ -58,14 +68,16 @@ const AddTrip = () => {
 
 
     const submitBus = (e) => {
+        console.log(trip);
         e.preventDefault();
         tripService
             .saveTrip(trip)
             .then((res) => {
-                console.log(trip);
+
                 setMsg('Trip Added Successfully');
             })
             .catch((error) => {
+                setMsg('Trip Added Failed');
                 console.log(error);
             });
     }
@@ -158,6 +170,24 @@ const AddTrip = () => {
                                             {routeOptions.map((route) => (
                                                 <option key={route.routeId} value={route.routeId}>
                                                     {route.routeName}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label htmlFor="priceFrameSelect">Price Frame</label>
+                                        <select
+                                            name="priceFrameId" // Update name to 'driverId' to store the selected driver ID
+                                            value={trip.priceFrameId} // Use 'trip.driverId' to set the selected driver ID
+                                            onChange={handleChange}
+                                            className="form-control"
+                                            id="priceFrameSelect"
+                                        >
+                                            <option value="">Select a Price Frame</option>
+                                            {priceFrameOptions.map((priceFrame) => (
+                                                <option key={priceFrame.priceFrameId} value={priceFrame.priceFrameId}>
+                                                    {priceFrame.priceFrameName}
                                                 </option>
                                             ))}
                                         </select>

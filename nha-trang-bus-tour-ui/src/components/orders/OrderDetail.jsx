@@ -51,6 +51,7 @@ const OrderDetail = () => {
                               <th>Ticket Id</th>
                               <th>Passenger</th>
                               <th>Phone </th>
+                              <th></th>
                             </tr>
                           </thead>
                           <tbody>
@@ -59,6 +60,7 @@ const OrderDetail = () => {
                                 <td>{ticket.ticketId}</td>
                                 <td>{ticket.passengerName}</td>
                                 <td>{ticket.passengerPhone}</td>
+                                <td>{ticket.ticketType}</td>
                               </tr>
                             ))}
                           </tbody>

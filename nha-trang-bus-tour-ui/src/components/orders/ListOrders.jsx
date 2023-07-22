@@ -95,7 +95,7 @@ const ListOrders = () => {
                             <td>{order.userId}</td>
                             <div className="btn-group" role="group">
                               <Link className="btn btn-primary" to={`/order_detail/${order.orderId}`}>
-                                Edit
+                                Detail
                               </Link>
                               {/* <a className="btn btn-danger" onClick={() => deleteBus(e.busId)}>
                                   Delete
