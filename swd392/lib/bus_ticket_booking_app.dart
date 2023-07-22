@@ -27,8 +27,12 @@ class BusTicketBookingApp extends StatelessWidget {
                 builder: (context, state)=> const BusBookingDetailPage(),
               ),
               GoRoute(
-                path: "seat",
-                builder: (context, state)=> const BusBookingSelectPage(),
+                path: "seat/:tripId",
+                builder: (context, state) {
+                  final tripId = state.pathParameters['tripId'];
+                  return BusBookingSelectPage(tripId: int.tryParse(tripId ?? ''));
+
+                }
               ),
               GoRoute(
                 path: "main",

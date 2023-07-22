@@ -128,7 +128,7 @@ class _BusBookingDetailPageState extends State<BusBookingDetailPage> {
                             children: routes.map((route) {
                               return GestureDetector(
                                 onTap: (){
-                                  context.push("/seat");
+                                  context.push("/seat/${route.trip!.first.tripID}");
                                 },
                                 child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,

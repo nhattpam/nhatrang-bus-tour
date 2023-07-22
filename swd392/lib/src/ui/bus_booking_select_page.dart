@@ -6,10 +6,15 @@ import 'package:swd392/network/network_request_ticket_type.dart';
 import 'package:swd392/service/notification_service.dart';
 import 'package:swd392/model/TicketType.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 
 
 class BusBookingSelectPage extends StatefulWidget {
-  const BusBookingSelectPage({Key? key}) : super(key: key);
+
+  final int? tripId;
+
+  const BusBookingSelectPage({required this.tripId, Key? key}) :  super(key: key);
 
   @override
   State<BusBookingSelectPage> createState() => _BusBookingSelectPageState();
@@ -48,6 +53,10 @@ class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
   Future<void> _loadData() async {
     fetchAndPrintUserId();
 
+    final tripId = widget.tripId ?? 0;
+
+    print("DAy la tripID: $tripId");
+
     NetworkRequestTicketType.fetchTicketType().then((dataFromServer) {
       setState(() {
         postData = dataFromServer as List<TicketType>;
@@ -60,7 +69,7 @@ class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
   Future<void> fetchAndPrintUserId() async {
     int id = await NetworkRequestTicketType.fetchUserId();
 
-    print("TOI LA ID: $id");
+    print("TOI LA UserID: $id");
   }
 
   @override
@@ -114,13 +123,16 @@ class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
         _razorpay.open(options);
 // Fetch the userId from the fetchUserId() function
         int userId = await NetworkRequestTicketType.fetchUserId();
-
+        print("CO PHAI LA ID: $userId");
+        int? tripId =  widget.tripId ?? 0;
+        int? orderId = 0;
 
         // Calculate the total amount in paise (multiply by 100)
         int totalAmountInPaise = totalAmount;
 
         // Build the request URL with the userId and totalAmount
         String baseUrl = 'https://nhatrangbustourbackend.azurewebsites.net/api/orders/$userId/2/$totalAmountInPaise';
+        print("LINK post order: $baseUrl");
         // Perform the POST request
         try {
           http.Response response = await http.post(
@@ -130,27 +142,87 @@ class _BusBookingSelectPageState extends State<BusBookingSelectPage> {
             },
           );
 
+
+
+
           if (response.statusCode == 200) {
             // Successful response, continue with the payment process
-            throw Exception('OK');
-
+// Successful response, parse the response body and extract the orderId
+          throw Exception(response.body);
           } else if (response.statusCode == 404) {
             throw Exception('Not Found');
           } else if (response.statusCode == 401) {
-            throw Exception('Unauthorized user ID');
+            orderId = int.parse(response.body);
+            print("DAY LA ORDER ID trong 401: $orderId");
+            throw Exception('Unauthorized user ID (post oder)');
           } else {
+            orderId = int.parse(response.body);
+            print("DAY LA ORDER ID trong else: $orderId");
             throw Exception('Error occurred while posting order');
           }
         } catch (e) {
           print("Error: $e");
         }
 
+        // Collect ticketTypeIds with quantity greater than 0
+        List<int?> selectedTicketTypeIds = [];
+        for (var ticketType in postData) {
+          if (getCountByType(ticketType.ticketTypeName!) > 0) {
+            selectedTicketTypeIds.add(ticketType.ticketTypeId);
+          }
+        }
+        // print('Selected ticketTypeId: ${selectedTicketTypeIds}');
+        for (var ticketTypeId in selectedTicketTypeIds) {
+          int? quantity = getCountByTicketTypeId(ticketTypeId);
+          if (quantity != null) {
+            print("TicketTypeId: $ticketTypeId - Quantity: $quantity");
+            String baseUrl2 = 'https://nhatrangbustourbackend.azurewebsites.net/api/tickets/?passengername=Ha%20Pham&passengerphone=09897878787&passengeremail=$userEmail&trip=$tripId&order=$orderId&service=1&tickettype=$ticketTypeId';
+            print("LINK post ticket: $baseUrl2");
+            try {
+              http.Response response = await http.post(
+                Uri.parse(baseUrl2),
+                headers: {
+                  'Authorization': 'Bearer $bearerToken',
+                },
+              );
+
+              if (response.statusCode == 200) {
+                // Successful response, continue with the payment process
+                throw Exception('OK');
+
+              } else if (response.statusCode == 404) {
+                throw Exception('Not Found');
+              } else if (response.statusCode == 401) {
+                throw Exception('Unauthorized user ID (tickettype)');
+              } else {
+                throw Exception('Error occurred while posting ticket(order detail)');
+              }
+            }catch (e) {
+              print("Error: $e");
+            }
+          }
+        }
+
+
       } catch (e) {
         print("Error: $e");
       }
+
+
+
     });
   }
 
+  int? getCountByTicketTypeId(int? ticketTypeId) {
+    // Iterate through the postData list to find the ticketType with the given ticketTypeId
+    // and return its count
+    for (var ticketType in postData) {
+      if (ticketType.ticketTypeId == ticketTypeId) {
+        return getCountByType(ticketType.ticketTypeName!);
+      }
+    }
+    return null; // Return null if the ticketTypeId is not found in the postData list
+  }
   // Method to get userEmail from shared preferences
   Future<String?> _getUserEmailFromSharedPreferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
